@@ -87,15 +87,24 @@ The misuse case analysis generally aligns with security capabilities available i
 
 ---
 
-### Interaction 2: <title> — <name>
+### Interaction 5: Directory Federation (LDAP/Active Directory User Federation — @isaiahjames11
 
 **Interaction description:**
-*(1–2 sentences: actor, feature, why it's essential)*
+Active Directory supplies employee identities, group memberships, and password verification to Keycloak through its LDAP User Federation feature, which Keycloak uses to authenticate employees and map their AD groups to the realm roles that govern access to every connected business application. This interaction is essential because it is the "User federation" link to the Protected Data zone in our systems engineering view, and every workforce identity and role assignment passes through it.
 
 **Use/misuse case diagram:**
-`![Diagram](images/usecase-1.png)`
+![Interaction 5 Use/Misuse Case Diagram](diagrams/keycloak-ldap-usecase.png)
 
-**Misuser profile:** *(name, motive, resources, attack of choice, access)*
+
+
+**Misuser profile:**
+**misuser:** Rogue IT insider with AD group-write rights seeking Keycloak admin access
+
+- **Motive:** Gain administrative access to enterprise applications through Keycloak without authorization.
+- **Resources:** Delegated write permissions on Active Directory groups, a workstation on the internal network, and packet-capture tools.
+- **Attack of choice:** Manipulating AD group data that Keycloak trusts, and harvesting credentials that cross the federation link.
+- **Available access:** Internal network access and limited AD administrative rights, but no Keycloak administrator account.
+
 
 **Iteration narrative:** *(brief: misuse case → countermeasure → next misuse case → …)*
 
