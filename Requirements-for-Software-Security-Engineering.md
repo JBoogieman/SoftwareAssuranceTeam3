@@ -95,7 +95,12 @@ The misuse case analysis generally aligns with security capabilities available i
 **Use/misuse case diagram:**
 `![Diagram](images/usecase-1.png)`
 
-**Misuser profile:** *(name, motive, resources, attack of choice, access)*
+**Misuser profile:** *(name, motive, resources, attack of choice, access)* 
+**Name:** Insider with admin control of the partner organization's identity provider
+**Motive:** Reach the finance and HR/payroll systems the contract does not cover, and keep that access after the engagement ends.
+**Resources:** Admin control of an identity provider our realm already trusts. They can sign assertions with the partner IdP's key, set any claim or attribute value, change the metadata document Keycloak imports, and hit the IdP-initiated SSO endpoint whenever they want.
+**Attack of Choice:** Getting Keycloak to accept an identity, an email address, or a role claim that the partner organization was never authorized to assert.
+**Access:** Keycloak's public broker endpoints and a valid low-privilege contractor account. No admin console, no corporate network access, and no access to the realm signing keys.
 
 **Iteration narrative:** *(brief: misuse case → countermeasure → next misuse case → …)*
 
@@ -115,6 +120,7 @@ The misuse case analysis generally aligns with security capabilities available i
 
 **Interaction description:**
 *(1–2 sentences: actor, feature, why it's essential)*
+Contractors authenticate through their own organization's SAML 2.0 identity provider, and Keycloak's identity brokering feature takes that assertion and maps it onto our realm roles, which is the role mapping from federated sources our proposal's systems engineering view places in the authorization and credential subsystem.
 
 **Use/misuse case diagram:**
 `![Diagram](images/usecase-1.png)`
