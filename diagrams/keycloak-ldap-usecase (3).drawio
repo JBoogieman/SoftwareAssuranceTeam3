@@ -1,0 +1,139 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="ldap-federation" name="LDAP Federation Use-Misuse">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="900" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- System boundary -->
+        <mxCell id="boundary" value="Keycloak – LDAP User Federation Subsystem" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontColor=#000000;verticalAlign=top;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="260" y="30" width="640" height="830" as="geometry" />
+        </mxCell>
+
+        <!-- Actor -->
+        <mxCell id="actor" value="Directory Service&lt;br&gt;(Active Directory / LDAP)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="280" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Use cases -->
+        <mxCell id="uc3" value="UC3: Authenticate Federated User" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="80" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uc1" value="UC1: Synchronize LDAP Users" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="280" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="uc2" value="UC2: Map LDAP Groups to Realm Roles" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="480" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Security use cases -->
+        <mxCell id="sc1" value="SC1: Enforce LDAPS/StartTLS with Certificate Validation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="660" y="170" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sc2" value="SC2: Store Bind Credential as Vault Reference" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="660" y="370" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sc3" value="SC3: Restrict Group Mapping to Configured Group DN Subtree" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="660" y="570" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sc4" value="SC4: Audit Role Assignments Made by LDAP Mappers" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="660" y="760" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Misuse cases -->
+        <mxCell id="mu1" value="MU1: Sniff Plaintext LDAP Bind Credentials" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="980" y="80" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mu2" value="MU2: Steal Stored LDAP Bind Credential" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="980" y="280" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mu3" value="MU3: Inject Look-Alike Group to Gain Admin Role" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="980" y="480" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mu4" value="MU4: Add Self to Legitimate Mapped Group" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="980" y="660" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Misuser -->
+        <mxCell id="misuser" value="Rogue IT Insider with&lt;br&gt;AD Group-Write Rights&lt;br&gt;Seeking Keycloak Admin Access" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#000000;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="370" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Actor associations -->
+        <mxCell id="a1" style="endArrow=none;html=1;edgeStyle=none;strokeColor=#000000;" edge="1" parent="1" source="actor" target="uc3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" style="endArrow=none;html=1;edgeStyle=none;strokeColor=#000000;" edge="1" parent="1" source="actor" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" style="endArrow=none;html=1;edgeStyle=none;strokeColor=#000000;" edge="1" parent="1" source="actor" target="uc2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Misuser associations -->
+        <mxCell id="m1" style="endArrow=none;html=1;edgeStyle=none;strokeColor=#000000;" edge="1" parent="1" source="misuser" target="mu1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2" style="endArrow=none;html=1;edgeStyle=none;strokeColor=#000000;" edge="1" parent="1" source="misuser" target="mu2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m3" style="endArrow=none;html=1;edgeStyle=none;strokeColor=#000000;" edge="1" parent="1" source="misuser" target="mu3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m4" style="endArrow=none;html=1;edgeStyle=none;strokeColor=#000000;" edge="1" parent="1" source="misuser" target="mu4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Include dependencies between use cases -->
+        <mxCell id="i1" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="uc3" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="uc1" target="uc2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Include dependencies to security use cases -->
+        <mxCell id="i3" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="uc3" target="sc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i4" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="uc1" target="sc2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i5" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="uc2" target="sc3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i6" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="uc2" target="sc4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Threatens -->
+        <mxCell id="t1" value="&amp;lt;&amp;lt;threatens&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="mu1" target="uc3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" value="&amp;lt;&amp;lt;threatens&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="mu2" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" value="&amp;lt;&amp;lt;threatens&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="mu3" target="uc2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4" value="&amp;lt;&amp;lt;threatens&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="mu4" target="sc3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Mitigates -->
+        <mxCell id="g1" value="&amp;lt;&amp;lt;mitigates&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sc1" target="mu1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g2" value="&amp;lt;&amp;lt;mitigates&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sc2" target="mu2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g3" value="&amp;lt;&amp;lt;mitigates&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sc3" target="mu3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="g4" value="&amp;lt;&amp;lt;mitigates&amp;gt;&amp;gt;" style="endArrow=open;dashed=1;html=1;endFill=0;edgeStyle=none;strokeColor=#000000;fontColor=#000000;labelBackgroundColor=#ffffff;" edge="1" parent="1" source="sc4" target="mu4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
