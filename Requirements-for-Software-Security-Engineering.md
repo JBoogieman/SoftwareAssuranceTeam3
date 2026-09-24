@@ -106,16 +106,27 @@ Active Directory supplies employee identities, group memberships, and password v
 - **Available access:** Internal network access and limited AD administrative rights, but no Keycloak administrator account.
 
 
-**Iteration narrative:** *(brief: misuse case → countermeasure → next misuse case → …)*
+**Iteration narrative:**
+**Iteration 1 – Credential Interception:** Since Keycloak checks employee passwords through Active Directory, an attacker could capture credentials if the connection is not encrypted. The misuse case Sniff Plaintext LDAP Bind Credentials threatens Authenticate Federated User. Using LDAPS/StartTLS with certificate validation helps prevent this by encrypting the connection and verifying the AD server.
+
+**Iteration 2 – Bind Credential Theft:** Keycloak stores a service-account credential to connect to Active Directory. If an insider gets access to Keycloak's configuration or backups, they could steal it. The misuse case Steal Stored LDAP Bind Credential threatens Synchronize LDAP Users. Storing the credential in an external vault instead of Keycloak helps protect it.
+
+**Iteration 3 – Look-Alike Group Injection:** An insider with AD group-write access could create a fake group with the same name as a privileged group and try to gain admin access. The misuse case Inject Look-Alike Group to Gain Admin Role threatens Map LDAP Groups to Realm Roles. Restricting group mapping to the configured LDAP Groups DN helps prevent this by only importing groups from that location.
+
+**Iteration 4 – Membership abuse inside the permitted subtree:** The DN restriction does not stop an insider from adding themselves to a legitimate group in the allowed subtree. The misuse case Add Self to Legitimate Mapped Group threatens Restrict Group Mapping to Configured Group DN Subtree. Auditing LDAP role assignments helps by showing which group granted the role, making unauthorized access easier to detect and trace.
 
 **Derived security requirements:**
 
 | ID | Requirement | Addresses misuse case | Implemented in Keycloak? (doc/code link) |
 |---|---|---|---|
-| SR-1.1 | | | |
-| SR-1.2 | | | |
+| SR-1.1 | Keycloak shall connect to LDAP federation providers over LDAPS or StartTLS and shall reject connections whose server certificate fails validation against the configured truststore. | Sniff Plaintext LDAP Bind Credentials | **Partially.** Keycloak supports LDAPS, StartTLS, and truststore validation, but plaintext ldap:// connections are still permitted if an administrator configures them. [Server Administration Guide](https://www.keycloak.org/docs/latest/server_admin/)  |
+| SR-1.2 | Keycloak shall support retrieving the LDAP bind credential from an external vault so that the secret is not stored in the Keycloak database. | Steal Stored LDAP Bind Credential | **Yes.** when configured. The LDAP bind credential field accepts vault references [Server Administration Guide](https://www.keycloak.org/docs/latest/server_admin/) |
+| SR-1.3 | Keycloak shall import and map only LDAP groups whose distinguished name falls under the group mapper's configured LDAP Groups DN. | Inject Look-Alike Group to Gain Admin Role | **Yes.** The group mapper searches only under the configured Groups DN. [Server Administration Guide](https://www.keycloak.org/docs/latest/server_admin/) |
+| SR-1.4 | Keycloak shall record an audit event whenever an LDAP mapper grants or removes a role, including the user, the role, and the group DN that triggered the change. | Add Self to Legitimate Mapped Group | **No.** Admin events record configuration changes, but role grants produced by LDAP mappers during sync are not individually audited. |
 
-**Alignment observations:** *(sufficiency of Keycloak's features vs. what the analysis expects)*
+
+**Alignment observations:**
+Keycloak has the main controls needed here, including encrypted LDAP connections, certificate validation, vault support, and Group DN scoping. However, some of these must be configured by the administrator, so plaintext LDAP or database-stored credentials are still possible. Keycloak also trusts Active Directory for group membership, so it may not detect when a legitimate group is abused. Detecting this type of insider activity depends on auditing in Active Directory.
 
 ### Interaction 3: <title> — <name>
 *(same structure)*
