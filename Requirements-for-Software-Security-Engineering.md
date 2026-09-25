@@ -108,8 +108,76 @@ The misuse case analysis generally aligns with security capabilities available i
 
 **Alignment observations:** *(sufficiency of Keycloak's features vs. what the analysis expects)*
 
-### Interaction 3: <title> — <name>
-*(same structure)*
+## Interaction 3: Relying Client Application: Token Acquisition via the OIDC Authorization Code Flow
+
+*Owner:* Justin Brueggemann
+
+### Description
+
+A registered client application, such as a confidential server-side web app or a public single-page or mobile app, sends the user's browser to Keycloak's authorization endpoint, receives a short-lived authorization code at its registered redirect URI, and exchanges that code at the token endpoint for ID, access, and refresh tokens. It later uses the refresh token to obtain new access tokens without sending the user back through login. Every protected resource in a Keycloak deployment is ultimately reached through tokens obtained this way, which makes this the highest-value machine-to-machine interaction in the system. It sits inside the authorization and credential subsystem our team scoped for the design and code-analysis deliverables.
+
+### Use/misuse case diagram
+
+<img width="2583" height="1406" alt="usecase-3-oidc-token-flow_1" src="https://github.com/user-attachments/assets/af8761a6-5f3f-4058-ae86-bf7604bdf1bc" />
+
+### Actors and misusers
+
+| *Type* | *Name* | *Motive, resources, attack of choice, access* |
+| ----- | ----- | ----- |
+| Actor | *Relying Client Application* | Registered confidential or public client that needs tokens to act on a user's behalf. |
+| Actor | *End User (Resource Owner)* | Authenticates in the browser and consents to the scopes the client requests. |
+| Misuser | *Co-resident Code Interceptor* | A malicious app on the same mobile device as a public client. Needs no network position; registers the same URI scheme and captures the code as the OS routes the redirect. Wants tokens without ever learning the password. |
+| Misuser | *Redirect-Manipulating Phisher* | External, no account, no insider access. Sends victims an authorization link built from a legitimate `client_id` and an attacker-controlled `redirect_uri`. The phish is convincing because the login page really is Keycloak. |
+| Misuser | *Refresh Token Scavenger* | Holds a refresh token lifted from browser storage (via XSS), a mobile backup, or a log. Wants durable access that survives a password change, and will race the legitimate client to use it. |
+
+### Iteration narrative
+
+Each round introduces a countermeasure, then asks what defeats that countermeasure. Requirement IDs refer to the table below.
+
+*Round 1, Code interception.* The base use case is *Authorization Code Grant*. The Co-resident Code Interceptor captures the code as the OS delivers the redirect. For a public client with no secret, whoever presents the code receives the tokens, so neither TLS nor the user's correct login helps. → *PKCE Verification*: the client sends a SHA-256 hash of a one-time secret (`code_challenge`) with the authorization request and must present the secret itself (`code_verifier`) at the token endpoint, over a back channel the interceptor cannot observe. Keycloak enforces this whenever a challenge was sent (SR-3.1).
+
+*Round 2, Defeating PKCE by avoiding it.* PKCE only protects flows that use it. A client that never sends a challenge, whether it is legacy, misconfigured, or not written for PKCE, receives codes bound to nothing, which reopens Round 1. A client that uses the `plain` method sends the verifier itself through the front channel, where the interceptor can read it. Keycloak already rejects a `code_verifier` presented when no challenge was sent, which is the downgrade described in RFC 9700 §4.8.2 (SR-3.3). For a client without a PKCE requirement, though, it has no basis to refuse an authorization request that simply omits the challenge. → *Require PKCE (S256) per Client*: a server-side policy that refuses any authorization request without an S256 challenge (SR-3.2). A control the attacker can opt out of is not a control.
+
+*Round 3, Attacking the redirect instead.* The Redirect-Manipulating Phisher sends a victim an authorization link that pairs a legitimate `client_id` with the attacker's own `redirect_uri`. The victim signs in at the real Keycloak domain, sees a valid certificate, and the code is delivered to the attacker. PKCE does not help here because the attacker started the flow, meaning the attacker generated the verifier. What makes the attacker's URI acceptable is loose matching, such as a trailing wildcard or a localhost registration left in production. → *Exact Redirect URI Validation*, with wildcard registrations prohibited (SR-3.4).
+
+*Round 4, Stealing what the flow produces.* With the code path hardened, the Refresh Token Scavenger targets the output of the flow. A refresh token is a long-lived bearer credential that mints new access tokens and can outlive the user's password change. The base use case is now *Refresh Access Token*. → *Refresh Token Rotation & Reuse Detection*: each refresh returns a new refresh token and invalidates the old one, so a spent token is rejected (SR-3.5). Because the server cannot tell which party presented a spent token, the safe response to detected reuse is to revoke the active token as well (SR-3.6). Access tokens stay short-lived regardless of session length (SR-3.7).
+
+*Round 5, Winning the race.* Rotation only helps if the legitimate client refreshes first. If the Scavenger refreshes first, the legitimate client is left holding the spent token. Our review of Keycloak's refresh path found that it rejects the spent token (`Stale token`) but found no logic that revokes the active one, so in that race it is the legitimate client that gets locked out while the attacker keeps a valid, rotating chain. Even with revocation, rotation is detective: a thief can use the token until the next legitimate refresh trips detection. → *Sender-Constrained Tokens (DPoP / mTLS)*: bind tokens to a key the thief does not hold, so a copied token is useless on its own (SR-3.8).
+
+*Scope note.* Three further attack classes were considered and left out to keep the diagram focused on the chain above. Replaying a code harvested from logs is already mitigated by default because codes are single-use, and a replay detaches the client session created by the first redemption (`OAuth2CodeParser`, `AuthorizationCodeGrantType`). A leaked confidential-client secret is addressed by Keycloak's signed-JWT and X.509 client authenticators, which are available but not the default. Token forgery through `alg: none` or algorithm confusion is ultimately decided by how resource servers validate tokens, which occurs outside Keycloak.
+
+### Derived security requirements
+
+Status key: *Default* (enforced out of the box). *Opt-in* (implemented but off until an administrator enables it). *Partial* (implemented with a material limitation). *Not found* (no implementation located in our code review).
+
+| *ID* | *Round* | *Requirement* | *In Keycloak* | *Evidence* |
+| ----- | ----- | ----- | ----- | ----- |
+| SR-3.1 | 1 | Keycloak shall verify the PKCE `code_verifier` against the stored `code_challenge` before issuing tokens whenever a challenge was supplied. | *Default* | `PkceUtils`; RFC 7636 |
+| SR-3.2 | 2 | Keycloak shall let an administrator require PKCE with the S256 method for a client, and shall then reject authorization requests that omit the challenge or use `plain`. | *Opt-in*, configured via "Require PKCE" in the admin console (26.6+) or the `pkce-enforcer` client-policy executor. Without it the request proceeds; the code logs "PKCE non-supporting Client". | `AuthorizationEndpointChecker`; PR #44365; RFC 9700 §2.1.1 |
+| SR-3.3 | 2 | Keycloak shall reject a token request that presents a `code_verifier` when no `code_challenge` was sent in the authorization request. | *Default*, triggers "PKCE code verifier specified but challenge not present in authorization" | `PkceUtils`; RFC 9700 §4.8.2 |
+| SR-3.4 | 3 | Keycloak shall match `redirect_uri` against registered values by exact string comparison and shall let an administrator prohibit wildcard registrations. | *Partial*, exact when no wildcard is registered, but a trailing `*` is honored as a prefix match. The `secure-redirect-uris-enforcer` executor (Keycloak 24+) can prohibit wildcards, yet "there are no client policies configured by default." | `RedirectUtils`; Client policies docs; RFC 9700 §2.1 |
+| SR-3.5 | 4 | Keycloak shall issue a new refresh token on every refresh and reject any previously issued one. | *Opt-in*, configured via *Revoke Refresh Token* / *Refresh Token Max Reuse*, realm-wide only (a per-client override is an open proposal, PR #51798). See CVE-2026-9802. | `TokenManager`; RFC 9700 §2.2.2 |
+| SR-3.6 | 4 | On detecting reuse of a spent refresh token, Keycloak shall also revoke the currently active token for that grant. | *Not found*, spent tokens are rejected ("Stale token"), but no revocation of the active token was located. | `TokenManager`; `RefreshTokenGrantType` |
+| SR-3.7 | 4 | Keycloak shall issue short-lived access tokens with a lifespan independent of session length. | *Default*, configured via realm *Access Token Lifespan*, overridable per client. | Realm settings → Tokens |
+| SR-3.8 | 5 | Keycloak shall support sender-constrained tokens so that a copied token cannot be used without the holder's key. | *Opt-in*, DPoP officially supported since 26.4 (*Require DPoP bound tokens*; can bind only refresh tokens for public clients); mTLS certificate-bound tokens. | DPoP in 26.4; RFC 9449; RFC 8705; RFC 9700 §2.2.1 |
+
+### Alignment observations
+
+*Coverage is complete; the default posture is not.* Keycloak implements a mitigation for every misuse case in this analysis, and three of the eight requirements are enforced out of the box. The four that answer the likeliest attacks are opt-in or only partially enforced: requiring PKCE (SR-3.2), exact redirect matching (SR-3.4), refresh token rotation (SR-3.5), and sender-constrained tokens (SR-3.8). Keycloak even ships the enforcement pre-packaged, including the `pkce-enforcer` and `secure-redirect-uris-enforcer` executors, plus global client profiles pre-configured for FAPI and OAuth 2.1. Yet, in the documentation's own words, "there are no client policies configured by default." The code states the consequence plainly: for a client without a PKCE requirement, the authorization endpoint logs "PKCE non-supporting Client" and carries on. The security of this interaction therefore rests on administrator configuration rather than on the software's defaults.
+
+*Measured against current best practice.* At default settings, Keycloak meets RFC 9700's authorization-server obligations for PKCE: it supports PKCE, enforces the verifier whenever a challenge was sent, and blocks the §4.8.2 downgrade. It falls short of two authorization-server MUSTs until an administrator acts: exact string matching of redirect URIs (§2.1), which a registered wildcard defeats, and rotation or sender-constraining of public-client refresh tokens (§2.2.2), both of which are off by default. RFC 9700 also requires public clients to use PKCE, but Keycloak does not compel them to unless the requirement is configured. The one requirement we could not locate at all, revoking the active token when reuse is detected (SR-3.6), is the difference between rotation that *responds* to theft and rotation that only *notices* it.
+
+*The weak points are where the vulnerabilities have been.* Keycloak's redirect URI validation received three CVEs between December 2023 and September 2024: CVE-2023-6927 (code or token theft from clients using a wildcard with the JARM `form_post.jwt` response mode), CVE-2024-1132 (redirect validation bypass, CVSS 8.1), and CVE-2024-8883 (open redirect when localhost or 127.0.0.1 is registered as a redirect URI). `RedirectUtils` now carries a guard against percent-encoded `../` sequences that is needed only because prefix matching exists; exact matching would make that code unnecessary. The refresh path received CVE-2026-9802 in May 2026: with rotation enabled and persistent sessions, a server restart allowed previously rotated refresh tokens to be reused. Both findings support the analysis, as the redirect CVEs sit in the wildcard and loopback handling that exact matching would switch off, and the rotation CVE shows that even the opt-in rotation control can fail silently, which is the case for sender-constrained tokens made in Round 5.
+
+*Where Keycloak's responsibility ends.* A sender-constrained access token only helps if each resource server checks the binding, such as the DPoP proof or the client certificate, on every request. Keycloak can issue bound tokens, but that enforcement happens outside it. Bound refresh tokens are different because Keycloak checks those itself at the token endpoint. mTLS also depends on a PKI, a dependency DPoP removes. DPoP has been officially supported since Keycloak 26.4, needs no certificates, and can bind only the refresh tokens of public clients, which is exactly where RFC 9700 §2.2.2 places the obligation. Most of the gap identified here can therefore be closed from inside Keycloak's own configuration, which is why its defaults are the finding. Keycloak 26.6 moved in this direction by adding a "Require PKCE" switch, with a warning shown for public clients, to the admin console (PR #44365). This acts as a nudge rather than a changed default, keeping existing clients working. These configuration dependencies carry forward as explicit assumptions in our assurance case.
+
+### References
+
+- IETF. RFC 9700 — Best Current Practice for OAuth 2.0 Security (January 2025).
+- IETF. RFC 7636 — Proof Key for Code Exchange; RFC 9449 — DPoP; RFC 8705 — OAuth 2.0 Mutual-TLS.
+- Keycloak. Server Administration Guide — Client Policies; Official Support for DPoP in Keycloak 26.4; PR #44365 — Improve client creation with PKCE; PR #51798 — Per-client Revoke Refresh Token.
+- Keycloak source (`main` branch): `AuthorizationEndpointChecker`, `PkceUtils`, `RedirectUtils`, `OAuth2CodeParser`, `AuthorizationCodeGrantType`, `TokenManager`, `RefreshTokenGrantType`.
+- CVE records: CVE-2023-6927, CVE-2024-1132, CVE-2024-8883, CVE-2026-9802 (Keycloak issue #49426).
 
 ### Interaction 4: <title> — <name>
 *(same structure)*
