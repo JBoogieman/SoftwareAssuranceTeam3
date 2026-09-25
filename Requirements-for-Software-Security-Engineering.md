@@ -214,7 +214,7 @@ Suggested split if we want everyone touching it — each person reviews one doc 
 |---|---|---|
 | Server installation & hardening guide | | |
 | Authentication / credential configuration |[@Sewhenu-Ayeni](https://github.com/Sewhenu-Ayeni) | The documentation provides detailed guidance for password policies, OTP policies, authentication flows, and brute-force protection. However, the security guidance is spread across multiple sections and could be improved by providing a consolidated secure authentication configuration example for production environments. A step-by-step example combining a strong password policy, required OTP/2FA, and brute-force protection would make it clearer which protections should be configured together rather than requiring administrators to identify them across separate sections.|
-| Client & token configuration | | |
+| Client & token configuration | [@JBoogieman](https://github.com/JBoogieman) | The client and token documentation describes each security setting but rarely says which value is safe, so several risky defaults go unflagged. The PKCE method setting lists blank, `S256`, and `plain` as equal choices and notes that blank means PKCE "is not required," but it never recommends `S256`, warns that `plain` exposes the verifier, or says public clients should always require PKCE. The Valid Redirect URIs description says exact matching is used, then allows trailing wildcards; its only explicit warning is against the full `*` wildcard, it says nothing about localhost registrations left in production, and the `secure-redirect-uris-enforcer` that can block wildcards is described only in other chapters. Revoke Refresh Token gets two sentences with no advice on when to enable it, and Refresh Token Max Reuse is not documented anywhere in the Server Administration Guide. The "Compromised access and refresh tokens" section suggests mTLS-bound tokens but never mentions refresh token rotation or DPoP, even though both are documented elsewhere in the guide. The guide also says authorization codes should stay valid for under 10 seconds, yet the default Client login timeout is 60 seconds, and the timeouts table mentions neither number. A single secure-baseline page for OIDC clients (require PKCE with `S256`, exact redirect URIs, and rotation or DPoP for public-client refresh tokens) would close most of these gaps. |
 | Federation / brokering configuration | | |
 | Other: | | |
 
@@ -223,6 +223,15 @@ Suggested split if we want everyone touching it — each person reviews one doc 
 - [Keycloak OTP Policies documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/authentication/otp-policies.adoc)
 - [Keycloak Authentication Flows documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/authentication/flows.adoc)
 - [Keycloak Brute-Force documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/threat/brute-force.adoc)
+
+**Client & token configuration sources reviewed:**
+- [Keycloak OIDC Client Settings documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/clients/oidc/con-basic-settings.adoc)
+- [Keycloak Session and Token Timeouts documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/sessions/timeouts.adoc)
+- [Keycloak Unspecific Redirect URIs documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/threat/redirect.adoc)
+- [Keycloak Compromised Authorization Code documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/threat/compromised-codes.adoc)
+- [Keycloak Compromised Access and Refresh Tokens documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/threat/compromised-tokens.adoc)
+- [Keycloak Client Policies documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/clients/client-policies.adoc)
+- [Keycloak default realm timeouts (Constants.java)](https://github.com/keycloak/keycloak/blob/main/server-spi-private/src/main/java/org/keycloak/models/Constants.java)
 
 **Summary of observations:** *(what could be improved or is missing, overall)*
 
