@@ -110,8 +110,6 @@ The misuse case analysis generally aligns with security capabilities available i
 
 ### Interaction 3: Relying Client Application — Token Acquisition via the OIDC Authorization Code Flow — [@JBoogieman](https://github.com/JBoogieman)
 
-*Owner:* Justin Brueggemann
-
 #### Description
 
 A registered client application, such as a confidential server-side web app or a public single-page or mobile app, sends the user's browser to Keycloak's authorization endpoint, receives a short-lived authorization code at its registered redirect URI, and exchanges that code at the token endpoint for ID, access, and refresh tokens. It later uses the refresh token to obtain new access tokens without sending the user back through login. In our environment, these clients are the HR and payroll, IT service desk, and finance applications described in our proposal, used by employees on managed workstations, remote employees, and contractors. Every protected resource in a Keycloak deployment is ultimately reached through tokens obtained this way, which makes this the highest-value interaction between Keycloak and the applications it protects. It sits inside the authorization and credential subsystem our team scoped for the design and code-analysis deliverables.
