@@ -108,19 +108,19 @@ The misuse case analysis generally aligns with security capabilities available i
 
 **Alignment observations:** *(sufficiency of Keycloak's features vs. what the analysis expects)*
 
-## Interaction 3: Relying Client Application: Token Acquisition via the OIDC Authorization Code Flow
+### Interaction 3: Relying Client Application: Token Acquisition via the OIDC Authorization Code Flow
 
 *Owner:* Justin Brueggemann
 
-### Description
+#### Description
 
 A registered client application, such as a confidential server-side web app or a public single-page or mobile app, sends the user's browser to Keycloak's authorization endpoint, receives a short-lived authorization code at its registered redirect URI, and exchanges that code at the token endpoint for ID, access, and refresh tokens. It later uses the refresh token to obtain new access tokens without sending the user back through login. Every protected resource in a Keycloak deployment is ultimately reached through tokens obtained this way, which makes this the highest-value machine-to-machine interaction in the system. It sits inside the authorization and credential subsystem our team scoped for the design and code-analysis deliverables.
 
-### Use/misuse case diagram
+#### Use/misuse case diagram
 
 <img width="2583" height="1406" alt="usecase-3-oidc-token-flow_1" src="https://github.com/user-attachments/assets/af8761a6-5f3f-4058-ae86-bf7604bdf1bc" />
 
-### Actors and misusers
+#### Actors and misusers
 
 | *Type* | *Name* | *Motive, resources, attack of choice, access* |
 | ----- | ----- | ----- |
@@ -146,7 +146,7 @@ Each round introduces a countermeasure, then asks what defeats that countermeasu
 
 *Scope note.* Three further attack classes were considered and left out to keep the diagram focused on the chain above. Replaying a code harvested from logs is already mitigated by default because codes are single-use, and a replay detaches the client session created by the first redemption (`OAuth2CodeParser`, `AuthorizationCodeGrantType`). A leaked confidential-client secret is addressed by Keycloak's signed-JWT and X.509 client authenticators, which are available but not the default. Token forgery through `alg: none` or algorithm confusion is ultimately decided by how resource servers validate tokens, which occurs outside Keycloak.
 
-### Derived security requirements
+#### Derived security requirements
 
 Status key: *Default* (enforced out of the box). *Opt-in* (implemented but off until an administrator enables it). *Partial* (implemented with a material limitation). *Not found* (no implementation located in our code review).
 
@@ -161,7 +161,7 @@ Status key: *Default* (enforced out of the box). *Opt-in* (implemented but off u
 | SR-3.7 | 4 | Keycloak shall issue short-lived access tokens with a lifespan independent of session length. | *Default*, configured via realm *Access Token Lifespan*, overridable per client. | Realm settings → Tokens |
 | SR-3.8 | 5 | Keycloak shall support sender-constrained tokens so that a copied token cannot be used without the holder's key. | *Opt-in*, DPoP officially supported since 26.4 (*Require DPoP bound tokens*; can bind only refresh tokens for public clients); mTLS certificate-bound tokens. | DPoP in 26.4; RFC 9449; RFC 8705; RFC 9700 §2.2.1 |
 
-### Alignment observations
+#### Alignment observations
 
 *Coverage is complete; the default posture is not.* Keycloak implements a mitigation for every misuse case in this analysis, and three of the eight requirements are enforced out of the box. The four that answer the likeliest attacks are opt-in or only partially enforced: requiring PKCE (SR-3.2), exact redirect matching (SR-3.4), refresh token rotation (SR-3.5), and sender-constrained tokens (SR-3.8). Keycloak even ships the enforcement pre-packaged, including the `pkce-enforcer` and `secure-redirect-uris-enforcer` executors, plus global client profiles pre-configured for FAPI and OAuth 2.1. Yet, in the documentation's own words, "there are no client policies configured by default." The code states the consequence plainly: for a client without a PKCE requirement, the authorization endpoint logs "PKCE non-supporting Client" and carries on. The security of this interaction therefore rests on administrator configuration rather than on the software's defaults.
 
@@ -171,7 +171,7 @@ Status key: *Default* (enforced out of the box). *Opt-in* (implemented but off u
 
 *Where Keycloak's responsibility ends.* A sender-constrained access token only helps if each resource server checks the binding, such as the DPoP proof or the client certificate, on every request. Keycloak can issue bound tokens, but that enforcement happens outside it. Bound refresh tokens are different because Keycloak checks those itself at the token endpoint. mTLS also depends on a PKI, a dependency DPoP removes. DPoP has been officially supported since Keycloak 26.4, needs no certificates, and can bind only the refresh tokens of public clients, which is exactly where RFC 9700 §2.2.2 places the obligation. Most of the gap identified here can therefore be closed from inside Keycloak's own configuration, which is why its defaults are the finding. Keycloak 26.6 moved in this direction by adding a "Require PKCE" switch, with a warning shown for public clients, to the admin console (PR #44365). This acts as a nudge rather than a changed default, keeping existing clients working. These configuration dependencies carry forward as explicit assumptions in our assurance case.
 
-### References
+#### References
 
 - IETF. RFC 9700 — Best Current Practice for OAuth 2.0 Security (January 2025).
 - IETF. RFC 7636 — Proof Key for Code Exchange; RFC 9449 — DPoP; RFC 8705 — OAuth 2.0 Mutual-TLS.
