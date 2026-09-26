@@ -130,6 +130,14 @@ The misuse case analysis generally aligns with security capabilities available i
 | GitHub Project Board up to date + link in report: `<link here>` | | |
 | Final assembly/formatting of this file + Canvas submission | | |
 
+## AI-Assisted Use/Misuse Case Diagram Review
+
+**Prompt used:**  
+*(Representative prompt from the team issue)*
+
+**Reflection on usefulness:**  
+*(Combined team reflection based on the comments)*
+
 ## Team Reflection (Part 1)
 
 *(Compiled from individual reflections — each member answers: What did you learn? What did you find most useful?)*
