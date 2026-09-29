@@ -303,6 +303,13 @@ Suggested split if we want everyone touching it — each person reviews one doc 
 - [Keycloak Client Policies documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/clients/client-policies.adoc)
 - [Keycloak default realm timeouts (Constants.java)](https://github.com/keycloak/keycloak/blob/main/server-spi-private/src/main/java/org/keycloak/models/Constants.java)
 
+**Federation / brokering configuration sources reviewed:**
+- [Keycloak SAML v2.0 Identity Providers documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/saml.adoc)
+- [Keycloak Identity Provider Mappers documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/mappers.adoc)
+- [Keycloak First Login Flow documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/first-login-flow.adoc)
+- [Keycloak SAML signature checks (SAMLEndpoint.java)](https://github.com/keycloak/keycloak/blob/6688a3d63f59e0c4a9131bfdd556c4312799f04e/services/src/main/java/org/keycloak/broker/saml/SAMLEndpoint.java#L603-L606)
+- [Keycloak Identity Provider General Configuration documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/configuration.adoc)
+  
 **Summary of observations:** *(what could be improved or is missing, overall)*
 
 *(Optional stretch: note whether any finding is worth an actual docs issue/PR to the Keycloak project.)*
