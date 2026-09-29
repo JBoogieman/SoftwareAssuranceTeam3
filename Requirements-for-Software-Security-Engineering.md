@@ -41,11 +41,12 @@ The misuse case analysis generally aligns with security capabilities available i
 ---
 ## Interaction 2: Realm admin manages credentials and password policy
 
-## Interaction description
+**Interaction description**
 
 The Realm admin sets or resets user credentials and configures the realm's password policy (length, composition, hashing, history, blacklist). Every account in the realm depends on this, so a mistake here weakens every login.
 
-## Use/misuse case diagram
+**Use/misuse case diagram**
+
 ![Interaction 2 Use/Misuse Case Diagram](diagrams/interaction_2_misuse_case_diagram.png)
 
 **Use cases (4):**
@@ -66,7 +67,7 @@ The Realm admin sets or resets user credentials and configures the realm's passw
 | MU-3 | Credential stuffing or brute force exploiting a weak policy (new) | UC-3 |
 | MU-4 | Offline cracking of dumped credential hashes (new) | UC-1, UC-2 |
 
-## Misuser profile
+**Misuser profile**
 
 | Misuser | Motive | Resources | Attack of choice | Access level |
 |---|---|---|---|---|
@@ -75,7 +76,7 @@ The Realm admin sets or resets user credentials and configures the realm's passw
 | **Stuffing Hacker** (MU-3) | Resale of accounts and fraud | Medium: leaked password lists, botnet, proxy rotation | Credential stuffing and password spraying against the login endpoint | External and unauthenticated |
 | **Exploit Hacker** (MU-4) | Reusing cracked passwords on other sites | Medium to high: GPU rig, hashcat, a database backup or SQL injection foothold | Offline dictionary attack on stolen credential hashes | Read-only access to the Keycloak database or backups |
 
-## Iteration narrative
+**Iteration narrative**
 
 1. **MU-1 (Hacker).** Hacker reaches the exposed admin console, tries the bootstrap admin, and resets a privileged user's password. The countermeasure is to restrict the console to an internal network and replace the bootstrap admin with a named admin.
 2. **MU-1 residual.** Hacker phishes a real admin and logs in with the stolen password. The countermeasure is mandatory MFA (WebAuthn) for admin roles, plus brute-force lockout.
@@ -85,7 +86,7 @@ The Realm admin sets or resets user credentials and configures the realm's passw
 6. **MU-4 (Hacker).** Hacker gets a database dump and cracks the hashes offline. The countermeasures are a memory-hard hash (Argon2) or high PBKDF2 iterations, database encryption and backup protection, and forcing a rehash and rotation after a suspected breach.
 7. **MU-4 residual.** Weak passwords still fall to a dictionary attack. The countermeasure is to combine the blacklist and length policy with passkeys or WebAuthn, so there is no password to crack.
 
-## Derived security requirements
+**Derived security requirements**
 
 | ID | Requirement | Addresses misuse case | Implemented in Keycloak? (doc/code link) |
 |---|---|---|---|
@@ -101,7 +102,7 @@ The Realm admin sets or resets user credentials and configures the realm's passw
 | SR-2.10 | Phishing-resistant credentials (WebAuthn or passkeys) shall be available for all users. | MU-3, MU-4 | **Yes.** WebAuthn and passkey support: [WebAuthn](https://www.keycloak.org/docs/latest/server_admin/#_webauthn) |
 | SR-2.11 | Alerts shall be raised when the password policy is weakened or a service account gains admin roles. | MU-2 | **No.** There is no built-in alerting, so it needs SIEM rules over admin events. |
 
-## Alignment observations
+**Alignment observations**
 
 - **Well covered:** Password composition, blacklist, history, expiry, hashing choice, temporary passwords, brute-force lockout, and WebAuthn are all native, and each one is directly traceable to a misuse case.
 - **Off by default, so easy to miss:** Brute-force detection and admin event logging are disabled in a new realm. A deployment can therefore satisfy the feature list and still be exposed to MU-2 and MU-3. Hardening guidance should treat them as mandatory settings.
@@ -111,15 +112,15 @@ The Realm admin sets or resets user credentials and configures the realm's passw
 ---
 ## Interaction 3: Relying Client Application — Token Acquisition via the OIDC Authorization Code Flow 
 
-## Description
+**Description**
 
 A registered client application, such as a confidential server-side web app or a public single-page or mobile app, sends the user's browser to Keycloak's authorization endpoint, receives a short-lived authorization code at its registered redirect URI, and exchanges that code at the token endpoint for ID, access, and refresh tokens. It later uses the refresh token to obtain new access tokens without sending the user back through login. In our environment, these clients are the HR and payroll, IT service desk, and finance applications described in our proposal, used by employees on managed workstations, remote employees, and contractors. Every protected resource in a Keycloak deployment is ultimately reached through tokens obtained this way, which makes this the highest-value interaction between Keycloak and the applications it protects. It sits inside the authorization and credential subsystem our team scoped for the design and code-analysis deliverables.
 
-## Use/misuse case diagram
+**Use/misuse case diagram**
 
 <img width="2583" height="1406" alt="Interaction 3 use/misuse case diagram" src="https://github.com/user-attachments/assets/af8761a6-5f3f-4058-ae86-bf7604bdf1bc" />
 
-## Actors and misusers
+**Actors and misusers**
 
 | *Type* | *Name* | *Motive, resources, attack of choice, access* |
 | ----- | ----- | ----- |
@@ -129,7 +130,7 @@ A registered client application, such as a confidential server-side web app or a
 | Misuser | *Redirect-Manipulating Phisher* | External, no account, no insider access. Wants an employee's or contractor's authorization code, and through it their access to payroll or finance data, without needing the password. Sends victims an authorization link built from a legitimate `client_id` and an attacker-controlled `redirect_uri`. The phish is convincing because the login page really is Keycloak. |
 | Misuser | *Refresh Token Scavenger* | Holds a refresh token lifted from browser storage (via XSS), a mobile backup, or a log. Wants durable access that survives a password change, and will race the legitimate client to use it. |
 
-## Iteration narrative
+**Iteration narrative**
 
 Each round introduces a countermeasure, then asks what defeats that countermeasure. Requirement IDs refer to the table below.
 
@@ -145,7 +146,7 @@ Each round introduces a countermeasure, then asks what defeats that countermeasu
 
 *Scope note.* Three further attack classes were considered and left out to keep the diagram focused on the chain above. Replaying a code harvested from logs is already mitigated by default because codes are single-use, and a replay detaches the client session created by the first redemption ([`OAuth2CodeParser`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/utils/OAuth2CodeParser.java), [`AuthorizationCodeGrantType`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/grants/AuthorizationCodeGrantType.java)). A leaked confidential-client secret is addressed by Keycloak's signed-JWT and X.509 client authenticators, which are available but not the default. Token forgery through `alg: none` or algorithm confusion is ultimately decided by how resource servers validate tokens, which occurs outside Keycloak.
 
-## Derived security requirements
+**Derived security requirements**
 
 Status key: *Default* (enforced out of the box). *Opt-in* (implemented but off until an administrator enables it). *Partial* (implemented with a material limitation). *Not found* (no implementation located in our code review).
 
@@ -160,7 +161,7 @@ Status key: *Default* (enforced out of the box). *Opt-in* (implemented but off u
 | SR-3.7 | Replay Stolen Refresh Token (4) | Keycloak shall issue short-lived access tokens with a lifespan independent of session length. | *Default*, configured via realm *Access Token Lifespan*, overridable per client. | [Keycloak Server Administration Guide](https://www.keycloak.org/docs/latest/server_admin/index.html) |
 | SR-3.8 | Win the Refresh Race (5) | Keycloak shall support sender-constrained tokens so that a copied token cannot be used without the holder's key. | *Opt-in*, DPoP officially supported since 26.4 (*Require DPoP bound tokens*; can bind only refresh tokens for public clients); mTLS certificate-bound tokens. | [DPoP in Keycloak 26.4](https://www.keycloak.org/2025/10/dpop-support-26-4); [RFC 9449](https://www.rfc-editor.org/rfc/rfc9449.html); [RFC 8705](https://www.rfc-editor.org/rfc/rfc8705.html); [RFC 9700 §2.2.1](https://www.rfc-editor.org/rfc/rfc9700.html#section-2.2.1) |
 
-## Alignment observations
+**Alignment observations**
 
 *Coverage is complete; the default posture is not.* Keycloak implements a mitigation for every misuse case in this analysis, and three of the eight requirements are enforced out of the box. The four that answer the likeliest attacks are opt-in or only partially enforced: requiring PKCE (SR-3.2), exact redirect matching (SR-3.4), refresh token rotation (SR-3.5), and sender-constrained tokens (SR-3.8). Keycloak even ships the enforcement pre-packaged, including the `pkce-enforcer` and `secure-redirect-uris-enforcer` executors, plus global client profiles pre-configured for FAPI and OAuth 2.1. Yet, in the documentation's own words, "there are no client policies configured by default." The code states the consequence plainly: for a client without a PKCE requirement, the authorization endpoint logs "PKCE non-supporting Client" at debug level, invisible under default logging, and carries on. The security of this interaction therefore rests on administrator configuration rather than on the software's defaults. This is the configuration-mistake risk our proposal identified: whether our HR, payroll, and finance applications are protected against these attacks depends on how each of their clients was configured.
 
@@ -170,7 +171,7 @@ Status key: *Default* (enforced out of the box). *Opt-in* (implemented but off u
 
 *Where Keycloak's responsibility ends.* A sender-constrained access token only helps if each resource server checks the binding, such as the DPoP proof or the client certificate, on every request. Keycloak can issue bound tokens, but that enforcement happens outside it. Bound refresh tokens are different because Keycloak checks those itself at the token endpoint. mTLS also depends on a PKI, a dependency DPoP removes. DPoP has been officially supported since Keycloak 26.4, needs no certificates, and can bind only the refresh tokens of public clients, which is exactly where RFC 9700 §2.2.2 places the obligation. Most of the gap identified here can therefore be closed from inside Keycloak's own configuration, which is why its defaults are the finding. Keycloak 26.6 moved in this direction by adding a "Require PKCE" switch, with a warning shown for public clients, to the admin console ([PR #44365](https://github.com/keycloak/keycloak/pull/44365)). This acts as a nudge rather than a changed default, keeping existing clients working. These configuration dependencies carry forward as explicit assumptions in our assurance case.
 
-## References
+**References**
 
 - IETF. [RFC 9700 — Best Current Practice for OAuth 2.0 Security](https://www.rfc-editor.org/rfc/rfc9700.html) (January 2025).
 - IETF. [RFC 7636 — Proof Key for Code Exchange](https://www.rfc-editor.org/rfc/rfc7636.html); [RFC 9449 — DPoP](https://www.rfc-editor.org/rfc/rfc9449.html); [RFC 8705 — OAuth 2.0 Mutual-TLS](https://www.rfc-editor.org/rfc/rfc8705.html).
@@ -178,6 +179,7 @@ Status key: *Default* (enforced out of the box). *Opt-in* (implemented but off u
 - Keycloak source (`main` branch): [`AuthorizationEndpointChecker`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/endpoints/AuthorizationEndpointChecker.java), [`PkceUtils`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/utils/PkceUtils.java), [`RedirectUtils`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/utils/RedirectUtils.java), [`OAuth2CodeParser`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/utils/OAuth2CodeParser.java), [`AuthorizationCodeGrantType`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/grants/AuthorizationCodeGrantType.java), [`TokenManager`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/TokenManager.java), [`RefreshTokenGrantType`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/protocol/oidc/grants/RefreshTokenGrantType.java).
 - CVE records: [CVE-2023-6927](https://www.cve.org/CVERecord?id=CVE-2023-6927), [CVE-2024-1132](https://www.cve.org/CVERecord?id=CVE-2024-1132), [CVE-2024-8883](https://www.cve.org/CVERecord?id=CVE-2024-8883), [CVE-2026-9802](https://www.cve.org/CVERecord?id=CVE-2026-9802) ([Keycloak issue #49426](https://github.com/keycloak/keycloak/issues/49426)).
 
+---
 ## Interaction 4: Identity Brokering - External Identity Provider
 
 **Interaction description:**
@@ -219,6 +221,7 @@ A partner organization's SAML 2.0 identity provider (IdP) authenticates contract
 **Alignment observations:**
 Keycloak's features are mostly sufficient for what this analysis expects, but not fully. Of the five requirements, two are fully met, account-link verification and consistent checks on IdP-initiated logins, two are only partially met, and one is not met. The partial ones depend on configuration or have exceptions: signature validation runs only when an administrator enables it for each identity provider, and offline tokens are not ended by Keycloak's session timeouts or when the user signs out. The requirement Keycloak does not meet is limiting which roles an identity provider mapper can grant, so a mapper created by a lower-privileged administrator could give brokered users admin access. Keycloak also cannot tell when the partner IdP has been compromised or has disabled an account, so it relies on its own session limits and on administrators to cut off access.
 
+---
 ## Interaction 5: Directory Federation (LDAP/Active Directory User Federation)
 
 **Interaction description:**
@@ -291,11 +294,7 @@ The most useful part of the assignment was the back-and-forth misuse case proces
 
 ## Part 2 — OSS documentation review
 
-This part is **not** split into five cases. It's one deliverable: review Keycloak's **security-related configuration and installation documentation** and summarize what's missing or could be improved. The instructor's angle: docs contributions are an easy on-ramp to the open-source community.
-
-Suggested split if we want everyone touching it — each person reviews one doc area for their claimed interaction's feature (e.g., #1 reviews authentication/OTP config docs, #3 reviews client/OIDC setup docs, #5 reviews LDAP federation docs), then one person merges observations.
-
-**What to produce:**
+We reviewed Keycloak's security-related configuration documentation to identify areas that could be improved or where additional security guidance may be useful.
 
 | Doc area reviewed | Reviewer | Observations (missing / unclear / could improve) |
 |---|---|---|
