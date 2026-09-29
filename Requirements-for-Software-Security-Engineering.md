@@ -41,16 +41,12 @@ The misuse case analysis generally aligns with security capabilities available i
 ---
 # Interaction 2: Realm admin manages credentials and password policy: Ayden Riddle
 
-I scoped the earlier four use cases and four misuse cases to this interaction. The use cases and misuse cases MU3 and MU3a are the diagram's own. MU-3 and MU-4 are new, because credential storage and password policy weren't covered before.
-
 ## Interaction description
 
 The Realm admin sets or resets user credentials and configures the realm's password policy (length, composition, hashing, history, blacklist). Every account in the realm depends on this, so a mistake here weakens every login.
 
 ## Use/misuse case diagram
 ![Interaction 2 Use/Misuse Case Diagram](diagrams/interaction_2_misuse_case_diagram.png)
-`![Diagram](diagrams/interaction_2_use_case_diagram.png)`
-`![Diagram](diagrams/interaction_2_misuse_case_diagram.png)`
 
 **Use cases (4):**
 
@@ -74,24 +70,22 @@ The Realm admin sets or resets user credentials and configures the realm's passw
 
 | Misuser | Motive | Resources | Attack of choice | Access level |
 |---|---|---|---|---|
-| **Ransom Rick** (MU-1) | Extortion through control of all identities | High: breach lists, Shodan, exploit tooling | Brute force or default credentials on an exposed `/admin` console or bootstrap admin | External and unauthenticated, escalating to super-admin |
-| **Disgruntled Dana** (MU-2) | Retaliation and retained access after leaving | Medium: realm knowledge and Admin REST API scripting | Privilege abuse: sets a known "temporary" password, or disables lockout or policy rules | Authenticated `manage-users` admin, not super-admin |
-| **Stuffing Sam** (MU-3) | Resale of accounts and fraud | Medium: leaked password lists, botnet, proxy rotation | Credential stuffing and password spraying against the login endpoint | External and unauthenticated |
-| **Dumper Dev** (MU-4) | Reusing cracked passwords on other sites | Medium to high: GPU rig, hashcat, a database backup or SQL injection foothold | Offline dictionary attack on stolen credential hashes | Read-only access to the Keycloak database or backups |
+| **Ransom Hacker** (MU-1) | Extortion through control of all identities | High: breach lists, Shodan, exploit tooling | Brute force or default credentials on an exposed `/admin` console or bootstrap admin | External and unauthenticated, escalating to super-admin |
+| **Disgruntled Employee** (MU-2) | Retaliation and retained access after leaving | Medium: realm knowledge and Admin REST API scripting | Privilege abuse: sets a known "temporary" password, or disables lockout or policy rules | Authenticated `manage-users` admin, not super-admin |
+| **Stuffing Hacker** (MU-3) | Resale of accounts and fraud | Medium: leaked password lists, botnet, proxy rotation | Credential stuffing and password spraying against the login endpoint | External and unauthenticated |
+| **Exploit Hacker** (MU-4) | Reusing cracked passwords on other sites | Medium to high: GPU rig, hashcat, a database backup or SQL injection foothold | Offline dictionary attack on stolen credential hashes | Read-only access to the Keycloak database or backups |
 
 ## Iteration narrative
 
-1. **MU-1 (Rick).** He reaches the exposed admin console, tries the bootstrap admin, and resets a privileged user's password. The countermeasure is to restrict the console to an internal network and replace the bootstrap admin with a named admin.
-2. **MU-1 residual.** Rick phishes a real admin and logs in with the stolen password. The countermeasure is mandatory MFA (WebAuthn) for admin roles, plus brute-force lockout.
-3. **MU-2 (Dana).** With legitimate `manage-users` rights she sets a known permanent password, or weakens the policy so she can pick a trivial one. The countermeasures are fine-grained admin permissions (no policy editing for user managers), forced "temporary" passwords, and admin event auditing.
-4. **MU-2 residual.** She tampers with the audit trail, or collaborates with a second admin. The countermeasures are shipping admin events to an external append-only log and requiring two-person approval for privileged changes.
-5. **MU-3 (Sam).** Users reuse leaked passwords, and a lax policy accepts them. The countermeasures are a password blacklist, minimum length, brute-force detection, and MFA.
-6. **MU-4 (Dev).** He gets a database dump and cracks the hashes offline. The countermeasures are a memory-hard hash (Argon2) or high PBKDF2 iterations, database encryption and backup protection, and forcing a rehash and rotation after a suspected breach.
+1. **MU-1 (Hacker).** Hacker reaches the exposed admin console, tries the bootstrap admin, and resets a privileged user's password. The countermeasure is to restrict the console to an internal network and replace the bootstrap admin with a named admin.
+2. **MU-1 residual.** Hacker phishes a real admin and logs in with the stolen password. The countermeasure is mandatory MFA (WebAuthn) for admin roles, plus brute-force lockout.
+3. **MU-2 (Disgruntled Employee).** With legitimate `manage-users` rights the Disgruntled Employee sets a known permanent password, or weakens the policy so she can pick a trivial one. The countermeasures are fine-grained admin permissions (no policy editing for user managers), forced "temporary" passwords, and admin event auditing.
+4. **MU-2 residual.** The Disgruntled Employee tampers with the audit trail, or collaborates with a second admin. The countermeasures are shipping admin events to an external append-only log and requiring two-person approval for privileged changes.
+5. **MU-3 (Hacker).** Users reuse leaked passwords, and a lax policy accepts them. The countermeasures are a password blacklist, minimum length, brute-force detection, and MFA.
+6. **MU-4 (Hacker).** Hacker gets a database dump and cracks the hashes offline. The countermeasures are a memory-hard hash (Argon2) or high PBKDF2 iterations, database encryption and backup protection, and forcing a rehash and rotation after a suspected breach.
 7. **MU-4 residual.** Weak passwords still fall to a dictionary attack. The countermeasure is to combine the blacklist and length policy with passkeys or WebAuthn, so there is no password to crack.
 
 ## Derived security requirements
-
-"Implemented?" is my reading of the docs. Links are to the official Keycloak docs, and the section anchors and source paths should be checked against your Keycloak version.
 
 | ID | Requirement | Addresses misuse case | Implemented in Keycloak? (doc/code link) |
 |---|---|---|---|
