@@ -233,7 +233,7 @@ Active Directory supplies employee identities, group memberships, and password v
 
 
 **Misuser profile:**
-**misuser:** Rogue IT insider with AD group-write rights seeking Keycloak admin access
+ Rogue IT insider with AD group-write rights seeking Keycloak admin access
 
 - **Motive:** Gain administrative access to enterprise applications through Keycloak without authorization.
 - **Resources:** Delegated write permissions on Active Directory groups, a workstation on the internal network, and packet-capture tools.
@@ -255,7 +255,7 @@ Active Directory supplies employee identities, group memberships, and password v
 | ID | Requirement | Addresses misuse case | Implemented in Keycloak? (doc/code link) |
 |---|---|---|---|
 | SR-5.1 | Keycloak shall connect to LDAP federation providers over LDAPS or StartTLS and shall reject connections whose server certificate fails validation against the configured truststore. | Sniff Plaintext LDAP Bind Credentials | **Partially.** Keycloak supports LDAPS, StartTLS, and truststore validation, but plaintext ldap:// connections are still permitted if an administrator configures them. [Server Administration Guide](https://www.keycloak.org/docs/latest/server_admin/)  |
-| SR-5.2 | Keycloak shall support retrieving the LDAP bind credential from an external vault so that the secret is not stored in the Keycloak database. | Steal Stored LDAP Bind Credential | **Yes.** when configured. Keycloak supports using a vault expression for the LDAP User Federation Bind Credential, allowing the credential to be retrieved from a configured vault rather than entered directly as the credential value. [Server Administration Guide](https://www.keycloak.org/server/vault) |
+| SR-5.2 | Keycloak shall support retrieving the LDAP bind credential from an external vault so that the secret is not stored in the Keycloak database. | Steal Stored LDAP Bind Credential | **Yes,** when configured. Keycloak supports using a vault expression for the LDAP User Federation Bind Credential, allowing the credential to be retrieved from a configured vault rather than entered directly as the credential value. [Server Administration Guide](https://www.keycloak.org/server/vault) |
 | SR-5.3 | Keycloak shall import and map only LDAP groups whose distinguished name falls under the group mapper's configured LDAP Groups DN. | Inject Look-Alike Group to Gain Admin Role | **Yes.** The group mapper searches only under the configured Groups DN. [Server Administration Guide](https://www.keycloak.org/docs/latest/server_admin/) |
 | SR-5.4 | Keycloak shall record an audit event whenever an LDAP mapper grants or removes a role, including the user, the role, and the group DN that triggered the change. | Add Self to Legitimate Mapped Group | **No.** Our review did not identify a Keycloak capability that records an individual audit event whenever an LDAP mapper causes a role assignment during synchronization. Detecting unauthorized changes to the underlying LDAP/AD group membership therefore depends on auditing or security controls in the directory environment. |
 
