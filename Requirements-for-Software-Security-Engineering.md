@@ -250,11 +250,21 @@ Keycloak has the main controls needed here, including encrypted LDAP connections
 
 ## AI-Assisted Use/Misuse Case Diagram Review
 
+**Representative prompt and reflection gathered from the entire team.**
+
 **Prompt used:**  
-*(Representative prompt from the team issue)*
+
+You are an expert software security requirements engineer.
+Review a Keycloak end-user authentication use case in an enterprise environment. The employee authenticates to an application using a password and OTP.
+Identify relevant misuse cases for a credential-stuffing attacker using breached credentials. Introduce the misuse cases in stages using a back-and-forth analysis:
+misuse case → security countermeasure → next misuse case.
+For each misuse case, identify which use case it threatens and which security use case mitigates it. Prioritize security countermeasures implemented by Keycloak itself, and do not assume a security feature is implemented unless it can be verified in the Keycloak documentation.
 
 **Reflection on usefulness:**  
-*(Combined team reflection based on the comments)*
+
+Across the team, AI was most useful for structuring the back-and-forth analysis and for catching gaps in work we had already done. Asking for misuse cases in stages helped extend analyses step by step, such as from credential stuffing to OTP guessing and lockout abuse in Interaction 1. Feeding Keycloak's vault documentation into the prompt also produced a new misuse case and requirement candidate for Interaction 5: theft of the LDAP bind credential from realm configuration. Used as a review pass, it led to one diagram change in Interaction 4 (extending the mapper countermeasure from roles to roles and groups) and surfaced supporting points on offline tokens and shared-domain redirect URIs for Interaction 3, without changing that diagram.
+
+The main limitation was accuracy. AI was reliable on general security concepts and standards but unreliable on how Keycloak actually behaves, and some suggestions were generic, repetitive, or hard to trace to a source. Because of this, every suggestion was checked against Keycloak's documentation or source code before it went into a diagram or requirement, and several of the most important findings came from reading the code directly rather than from a prompt.
 
 ## Team Reflection (Part 1)
 
