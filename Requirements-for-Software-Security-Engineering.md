@@ -188,11 +188,11 @@ A partner organization's SAML 2.0 identity provider (IdP) authenticates contract
 
 **Misuser profile:**
 
--**Name:** Attacker who has compromised the partner IdP's administrator account, seeking finance and payroll access.
--**Motive:** Gain access to finance and HR/payroll systems through a login Keycloak already trusts.
--**Resources:** The partner IdP's administrator account, which lets them create users, change any user attribute, and start IdP-initiated logins.
--**Attack of Choice:** Sending signed or smuggled assertions that Keycloak may accept, such as ones carrying a victim employee's email or privileged group values.
--**Access:** Keycloak's public broker endpoint through the partner IdP, but no Keycloak administrator account or corporate network access.
+- **Name:** Attacker who has compromised the partner IdP's administrator account, seeking finance and payroll access.
+- **Motive:** Gain access to finance and HR/payroll systems through a login Keycloak already trusts.
+- **Resources:** The partner IdP's administrator account, which lets them create users, change any user attribute, and start IdP-initiated logins.
+- **Attack of Choice:** Sending signed or smuggled assertions that Keycloak may accept, such as ones carrying a victim employee's email or privileged group values.
+- **Access:** Keycloak's public broker endpoint through the partner IdP, but no Keycloak administrator account or corporate network access.
 
 **Iteration narrative:**
 
