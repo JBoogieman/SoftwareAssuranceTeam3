@@ -263,6 +263,13 @@ Active Directory supplies employee identities, group memberships, and password v
 **Alignment observations:**
 Keycloak has the main controls needed here, including encrypted LDAP connections, certificate validation, vault support, and Group DN scoping. However, some of these must be configured by the administrator, so plaintext LDAP or database-stored credentials are still possible. Keycloak also trusts Active Directory for group membership, so it may not detect when a legitimate group is abused. Detecting this type of insider activity depends on auditing in Active Directory.
 
+## GitHub Project Board
+
+Project tasks, assignments, reviews, and collaboration for this assignment were tracked using our team GitHub Project Board:
+
+[Software Assurance Team 3 — GitHub Project Board](https://github.com/users/JBoogieman/projects/1)
+
+---
 
 ## AI-Assisted Use/Misuse Case Diagram Review
 
