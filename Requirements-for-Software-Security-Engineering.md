@@ -263,11 +263,21 @@ Keycloak has the main controls needed here, including encrypted LDAP connections
 
 ## AI-Assisted Use/Misuse Case Diagram Review
 
+**Representative prompt and reflection gathered from the entire team.**
+
 **Prompt used:**  
-*(Representative prompt from the team issue)*
+
+You are an expert software security requirements engineer.
+Review a Keycloak end-user authentication use case in an enterprise environment. The employee authenticates to an application using a password and OTP.
+Identify relevant misuse cases for a credential-stuffing attacker using breached credentials. Introduce the misuse cases in stages using a back-and-forth analysis:
+misuse case → security countermeasure → next misuse case.
+For each misuse case, identify which use case it threatens and which security use case mitigates it. Prioritize security countermeasures implemented by Keycloak itself, and do not assume a security feature is implemented unless it can be verified in the Keycloak documentation.
 
 **Reflection on usefulness:**  
-*(Combined team reflection based on the comments)*
+
+Across the team, AI was most useful for structuring the back-and-forth analysis and for catching gaps in work we had already done. Asking for misuse cases in stages helped extend analyses step by step, such as from credential stuffing to OTP guessing and lockout abuse in Interaction 1. Feeding Keycloak's vault documentation into the prompt also produced a new misuse case and requirement candidate for Interaction 5: theft of the LDAP bind credential from realm configuration. Used as a review pass, it led to one diagram change in Interaction 4 (extending the mapper countermeasure from roles to roles and groups) and surfaced supporting points on offline tokens and shared-domain redirect URIs for Interaction 3, without changing that diagram.
+
+The main limitation was accuracy. AI was reliable on general security concepts and standards but unreliable on how Keycloak actually behaves, and some suggestions were generic, repetitive, or hard to trace to a source. Because of this, every suggestion was checked against Keycloak's documentation or source code before it went into a diagram or requirement, and several of the most important findings came from reading the code directly rather than from a prompt.
 
 ## Team Reflection (Part 1)
 
@@ -288,7 +298,7 @@ Suggested split if we want everyone touching it — each person reviews one doc 
 | Server installation & hardening guide | | |
 | Authentication / credential configuration |[@Sewhenu-Ayeni](https://github.com/Sewhenu-Ayeni) | The documentation provides detailed guidance for password policies, OTP policies, authentication flows, and brute-force protection. However, the security guidance is spread across multiple sections and could be improved by providing a consolidated secure authentication configuration example for production environments. A step-by-step example combining a strong password policy, required OTP/2FA, and brute-force protection would make it clearer which protections should be configured together rather than requiring administrators to identify them across separate sections.|
 | Client & token configuration | [@JBoogieman](https://github.com/JBoogieman) | The client and token documentation describes each security setting but rarely says which value is safe, so several risky defaults go unflagged. The PKCE method setting lists blank, `S256`, and `plain` as equal choices and notes that blank means PKCE "is not required," but it never recommends `S256`, warns that `plain` exposes the verifier, or says public clients should always require PKCE. The Valid Redirect URIs description says exact matching is used, then allows trailing wildcards; its only explicit warning is against the full `*` wildcard, it says nothing about localhost registrations left in production, and the `secure-redirect-uris-enforcer` that can block wildcards is described only in other chapters. Revoke Refresh Token gets two sentences with no advice on when to enable it, and Refresh Token Max Reuse is not documented anywhere in the Server Administration Guide. The "Compromised access and refresh tokens" section suggests mTLS-bound tokens but never mentions refresh token rotation or DPoP, even though both are documented elsewhere in the guide. The guide also says authorization codes should stay valid for under 10 seconds, yet the default Client login timeout is 60 seconds, and the timeouts table mentions neither number. A single secure-baseline page for OIDC clients (require PKCE with `S256`, exact redirect URIs, and rotation or DPoP for public-client refresh tokens) would close most of these gaps. |
-| Federation / brokering configuration | | |
+| Federation / brokering configuration | [@SeanAnderson0](https://github.com/SeanAnderson0) | The identity brokering docs do a good job explaining how to set up a provider, but outside of the first login flow warnings about account linking, they don't say much about which settings matter for security when the IdP is run by another organization. Validate Signature just says Keycloak "expects" signed messages, and there is no warning about what happens if it is turned off. Want Assertions Signed sounds like it protects you, but I found in the code that it only checks that a signature is there. The signature is only actually verified if Validate Signature is also on, and the docs don't explain this. The mapper section also doesn't list the mapper types or warn that role and group mappers can give users any role or group, including admin roles, based on what the IdP sends. Overall, a short checklist for setting up an external IdP securely (Validate Signature on, Identity Provider Entity ID set, and mappers reviewed) would make these risks a lot clearer. |
 | Other: | | |
 
 **Authentication / credential configuration sources reviewed:**
@@ -306,6 +316,13 @@ Suggested split if we want everyone touching it — each person reviews one doc 
 - [Keycloak Client Policies documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/clients/client-policies.adoc)
 - [Keycloak default realm timeouts (Constants.java)](https://github.com/keycloak/keycloak/blob/main/server-spi-private/src/main/java/org/keycloak/models/Constants.java)
 
+**Federation / brokering configuration sources reviewed:**
+- [Keycloak SAML v2.0 Identity Providers documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/saml.adoc)
+- [Keycloak Identity Provider Mappers documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/mappers.adoc)
+- [Keycloak First Login Flow documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/first-login-flow.adoc)
+- [Keycloak SAML signature checks (SAMLEndpoint.java)](https://github.com/keycloak/keycloak/blob/6688a3d63f59e0c4a9131bfdd556c4312799f04e/services/src/main/java/org/keycloak/broker/saml/SAMLEndpoint.java#L603-L606)
+- [Keycloak Identity Provider General Configuration documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/configuration.adoc)
+  
 **Summary of observations:** *(what could be improved or is missing, overall)*
 
 *(Optional stretch: note whether any finding is worth an actual docs issue/PR to the Keycloak project.)*
