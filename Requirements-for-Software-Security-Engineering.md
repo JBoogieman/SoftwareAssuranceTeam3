@@ -331,6 +331,10 @@ Suggested split if we want everyone touching it — each person reviews one doc 
 - [Keycloak Server Administration Guide, LDAP and Active Directory section](https://www.keycloak.org/docs/latest/server_admin/#_ldap)
 - [Keycloak Configuring trust certificates guide](https://www.keycloak.org/server/keycloak-truststore)
 - [Keycloak using a vault](https://www.keycloak.org/server/vault)
+
+**Realm administration / password policy configuration sources reviewed:**
+- [Keycloak Password Policies documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/authentication/password-policies.adoc)
+- [Keycloak Admin Threat documentation](https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/threat/admin.adoc)
   
 **Summary of observations:** *(what could be improved or is missing, overall)*
 
