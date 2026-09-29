@@ -267,7 +267,7 @@ Keycloak has the main controls needed here, including encrypted LDAP connections
 
 Project tasks, assignments, reviews, and collaboration for this assignment were tracked using our team GitHub Project Board:
 
-[Software Assurance Team 3 — GitHub Project Board](https://github.com/users/JBoogieman/projects/1)
+[Software Assurance Team 3 — GitHub Project Board](https://github.com/users/JBoogieman/projects/1/views/2)
 
 ---
 
