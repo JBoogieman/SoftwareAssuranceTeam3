@@ -289,7 +289,7 @@ The most useful part of the assignment was the back-and-forth misuse case proces
 
 ---
 
-## Part 2 — OSS documentation review (20 pts, team-level)
+## Part 2 — OSS documentation review
 
 This part is **not** split into five cases. It's one deliverable: review Keycloak's **security-related configuration and installation documentation** and summarize what's missing or could be improved. The instructor's angle: docs contributions are an easy on-ramp to the open-source community.
 
