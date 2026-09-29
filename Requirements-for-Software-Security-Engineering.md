@@ -1,6 +1,6 @@
 # Requirements for Software Security Engineering — Team 3 (Keycloak)
 
-### Interaction 1: End-User Authentication (Browser Login + OTP) — @Sewhenu-Ayeni
+### Interaction 1: End-User Authentication (Browser Login + OTP)
 
 **Interaction description:**  
 An employee uses Keycloak through a web browser to authenticate with a password and one-time password (OTP) before accessing an enterprise application. This interaction is essential because Keycloak provides the authentication service between the employee and the protected enterprise application.
@@ -39,7 +39,7 @@ An employee uses Keycloak through a web browser to authenticate with a password 
 The misuse case analysis generally aligns with security capabilities available in Keycloak. Keycloak provides configurable brute-force detection, OTP-based second-factor authentication, and protection against repeated secondary authentication failures. However, some of these protections require administrator configuration and are not enabled by default. The account-lockout denial-of-service scenario also identifies a limitation in Keycloak's protection boundary: Keycloak can provide authentication-failure and client-IP information, but blocking the source of an attack may require an external intrusion-prevention or firewall mechanism.
 
 ---
-# Interaction 2: Realm admin manages credentials and password policy: Ayden Riddle
+# Interaction 2: Realm admin manages credentials and password policy
 
 ## Interaction description
 
@@ -109,7 +109,7 @@ The Realm admin sets or resets user credentials and configures the realm's passw
 - **Insider threat is the weak spot:** Keycloak has no two-person approval (SR-2.6) and no built-in alerting (SR-2.11), and fine-grained permissions are still evolving. MU-2's final residual risk is therefore only reducible with external tooling.
 - **Admin MFA is configuration, not a guarantee:** SR-2.2 depends on the operator building the right flow. The bootstrap admin is safer in Keycloak 26 but still needs manual replacement.
 ---
-### Interaction 3: Relying Client Application — Token Acquisition via the OIDC Authorization Code Flow — [@JBoogieman](https://github.com/JBoogieman)
+### Interaction 3: Relying Client Application — Token Acquisition via the OIDC Authorization Code Flow 
 
 #### Description
 
@@ -219,7 +219,7 @@ A partner organization's SAML 2.0 identity provider (IdP) authenticates contract
 **Alignment observations:**
 Keycloak's features are mostly sufficient for what this analysis expects, but not fully. Of the five requirements, two are fully met, account-link verification and consistent checks on IdP-initiated logins, two are only partially met, and one is not met. The partial ones depend on configuration or have exceptions: signature validation runs only when an administrator enables it for each identity provider, and offline tokens are not ended by Keycloak's session timeouts or when the user signs out. The requirement Keycloak does not meet is limiting which roles an identity provider mapper can grant, so a mapper created by a lower-privileged administrator could give brokered users admin access. Keycloak also cannot tell when the partner IdP has been compromised or has disabled an account, so it relies on its own session limits and on administrators to cut off access.
 
-### Interaction 5: Directory Federation (LDAP/Active Directory User Federation) — @isaiahjames11
+### Interaction 5: Directory Federation (LDAP/Active Directory User Federation)
 
 **Interaction description:**
 Active Directory supplies employee identities, group memberships, and password verification to Keycloak through its LDAP User Federation feature, which Keycloak uses to authenticate employees and map their AD groups to the realm roles that govern access to every connected business application. This interaction is essential because it is the "User federation" link to the Protected Data zone in our systems engineering view, and every workforce identity and role assignment passes through it.
