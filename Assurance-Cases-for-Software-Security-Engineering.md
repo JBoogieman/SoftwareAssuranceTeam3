@@ -27,7 +27,7 @@ TEAM NOTE (doesn't render on GitHub, only visible while editing):
 
 ![Claim 2 Assurance Case](diagrams/assurance-case-claim-2.png)
 
-### Claim 3: Keycloak minimizes unauthorized use of the tokens it issues to client applications — [@JBoogieman](https://github.com/JBoogieman)
+### Claim 3: Keycloak minimizes unauthorized use of the tokens it issues to client applications
 
 The argument follows the attack chain from Interaction 3. Each rebuttal is a way someone other than the issuing client could use a token, and each sub-claim removes that doubt. The four branches cover the authorization code (R3.1), where it is delivered (R3.3), the refresh token (R3.6), and the access token (R3.8).
 
