@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="keycloak-uc" name="Keycloak use cases">
+    <mxGraphModel dx="1374" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="700" pageHeight="640" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="boundary" parent="1" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666666;verticalAlign=top;align=left;spacingLeft=20;spacingTop=8;fontStyle=1;fontSize=14;" value="Keycloak server" vertex="1">
+          <mxGeometry height="530" width="430" x="125" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_user" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=13;" value="End user" vertex="1">
+          <mxGeometry height="60" width="30" x="47" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontStyle=1;fontSize=13;" value="Realm admin" vertex="1">
+          <mxGeometry height="60" width="30" x="47" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_register" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontStyle=1;fontSize=13;" value="Register account" vertex="1">
+          <mxGeometry height="44" width="170" x="145" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_login" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontStyle=1;fontSize=13;" value="Log in (SSO)" vertex="1">
+          <mxGeometry height="44" width="170" x="145" y="148" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_reset" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontStyle=1;fontSize=13;" value="Reset password" vertex="1">
+          <mxGeometry height="44" width="170" x="145" y="208" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_account" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontStyle=1;fontSize=13;" value="Manage account" vertex="1">
+          <mxGeometry height="44" width="170" x="145" y="268" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_users" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontColor=#3C3489;fontStyle=1;fontSize=13;" value="Manage users" vertex="1">
+          <mxGeometry height="44" width="170" x="145" y="328" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_clients" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontColor=#3C3489;fontStyle=1;fontSize=13;" value="Manage clients" vertex="1">
+          <mxGeometry height="44" width="170" x="145" y="388" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_flows" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontColor=#3C3489;fontStyle=1;fontSize=13;" value="Configure flows" vertex="1">
+          <mxGeometry height="44" width="170" x="145" y="448" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_audit" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontColor=#3C3489;fontStyle=1;fontSize=13;" value="View audit events" vertex="1">
+          <mxGeometry height="44" width="170" x="145" y="508" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_stepup" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontColor=#444441;fontStyle=1;fontSize=13;" value="Step-up MFA" vertex="1">
+          <mxGeometry height="44" width="170" x="365" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_tokens" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontColor=#444441;fontStyle=1;fontSize=13;" value="Issue tokens" vertex="1">
+          <mxGeometry height="44" width="170" x="365" y="148" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_broker" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontColor=#444441;fontStyle=1;fontSize=13;" value="Broker IdP login" vertex="1">
+          <mxGeometry height="44" width="170" x="365" y="208" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_federate" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontColor=#444441;fontStyle=1;fontSize=13;" value="Federate LDAP/AD" vertex="1">
+          <mxGeometry height="44" width="170" x="365" y="268" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" edge="1" parent="1" source="actor_user" style="endArrow=none;html=1;rounded=0;" target="uc_register">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" edge="1" parent="1" source="actor_user" style="endArrow=none;html=1;rounded=0;" target="uc_login">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" edge="1" parent="1" source="actor_user" style="endArrow=none;html=1;rounded=0;" target="uc_reset">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" edge="1" parent="1" source="actor_user" style="endArrow=none;html=1;rounded=0;" target="uc_account">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_users">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_clients">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a7" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_flows">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a8" edge="1" parent="1" source="actor_admin" style="endArrow=none;html=1;rounded=0;" target="uc_audit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a9" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" target="uc_tokens">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="603" y="170" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a10" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="uc_broker">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="603" y="282" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a11" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;" target="uc_federate">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="603" y="280.8928571428571" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r_include" edge="1" parent="1" source="uc_login" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=default;" target="uc_tokens" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_extend1" edge="1" parent="1" source="uc_stepup" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=default;" target="uc_login" value="«extend»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r_extend2" edge="1" parent="1" source="uc_broker" style="endArrow=open;endFill=0;dashed=1;html=1;rounded=0;fontSize=11;labelBackgroundColor=default;" target="uc_login" value="«extend»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lg1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontSize=11;" value="End-user use cases" vertex="1">
+          <mxGeometry height="24" width="130" x="125" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="lg2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEEDFE;strokeColor=#534AB7;fontColor=#3C3489;fontSize=11;" value="Admin use cases" vertex="1">
+          <mxGeometry height="24" width="130" x="270" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="lg3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontColor=#444441;fontSize=11;" value="Protocol / integration" vertex="1">
+          <mxGeometry height="24" width="140" x="415" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="2nrgisUYVh2v3bguWAAp-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontColor=#444441;fontSize=11;" value="IdP/LDAP&lt;br&gt;(external)" vertex="1">
+          <mxGeometry height="60" width="140" x="603" y="252" as="geometry" />
+        </mxCell>
+        <mxCell id="HEEC8NYigxWhw7Vk51HG-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EFE8;strokeColor=#5F5E5A;fontColor=#444441;fontSize=11;" value="Client App" vertex="1">
+          <mxGeometry height="60" width="140" x="603" y="140" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
