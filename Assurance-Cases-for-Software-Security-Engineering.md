@@ -35,7 +35,7 @@ The argument follows the attack chain from Interaction 3. Each rebuttal is a way
 
 *Source: [`diagrams/assurance-case-claim-3.drawio`](diagrams/assurance-case-claim-3.drawio). Grey circles mark where a branch ends in evidence. The dashed E3.10 is the same evidence that supports C3.6, repeated under C3.8 to keep the diagram readable.*
 
-### Claim 4: Keycloak minimizes unauthorized access through logins brokered from the partner identity provider — [@JBoogieman](https://github.com/JBoogieman)
+### Claim 4: Keycloak minimizes unauthorized access through logins brokered from the partner identity provider
 
 ![Claim 4 Assurance Case](diagrams/assurance-case-claim-4.png)
 
