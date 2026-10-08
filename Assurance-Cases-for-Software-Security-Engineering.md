@@ -31,7 +31,7 @@ TEAM NOTE (doesn't render on GitHub, only visible while editing):
 
 ![Claim 3 Assurance Case](diagrams/assurance-case-claim-3.png)
 
-### Claim 4: `<top-level claim>` — [@SeanAnderson0](https://github.com/SeanAnderson0)
+### Claim 4: `<top-level claim>` — [@JBoogieman](https://github.com/JBoogieman)
 
 ![Claim 4 Assurance Case](diagrams/assurance-case-claim-4.png)
 
