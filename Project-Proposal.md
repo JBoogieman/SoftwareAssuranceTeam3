@@ -1,4 +1,4 @@
-v1. **Project and Operational Environment**
+1. **Project and Operational Environment**
    - GitHub Link: https://github.com/JBoogieman/CYBR8420-SoftwareAssuranceTeam3
    - Team Project Board: https://github.com/users/JBoogieman/projects/1
    - Chosen Software: Keycloak
