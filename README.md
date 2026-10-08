@@ -23,11 +23,13 @@ Diagram sources and exports are in [`diagrams/`](diagrams).
 [Project Board](https://github.com/users/JBoogieman/projects/1)
 
 ## Upstream contributions
-
+ 
+Fixes we've submitted back to Keycloak. For a walkthrough of how each bug was found, traced in the source, and fixed, see [Upstream Contributions](Upstream-Contributions.md).
+ 
 | Issue | Fix | Status |
 |---|---|---|
-| [#20008](https://github.com/keycloak/keycloak/issues/20008) Creating a UMA policy via the Protection API wasn't recorded in the admin audit log | Protection API now records the CREATE admin event, matching update/delete, with an integration test ([PR #53316](https://github.com/keycloak/keycloak/pull/53316)) | Approved, pending merge |
-| [#53249](https://github.com/keycloak/keycloak/issues/53249) Brute-force failure count isn't reset after a successful IdP login | Reproduced with a failing test and traced to a side effect of [#49996](https://github.com/keycloak/keycloak/pull/49996); fix approach under discussion with maintainers | Awaiting maintainers |
+| [#20008](https://github.com/keycloak/keycloak/issues/20008) Creating a UMA policy via the Protection API wasn't recorded in the admin audit log | Protection API now records the CREATE admin event, matching update/delete, with an integration test ([PR #53316](https://github.com/keycloak/keycloak/pull/53316)) | Approved, all CI checks passing, waiting on code-owner review |
+| [#53249](https://github.com/keycloak/keycloak/issues/53249) Brute-force failure count isn't reset after a successful IdP login | Opt-in per identity provider setting that lets successful provider logins reset the count without letting cookie SSO reset it (avoids reopening [#49960](https://github.com/keycloak/keycloak/issues/49960)), with integration tests for SAML, OIDC, and OAuth2 ([PR #53724](https://github.com/keycloak/keycloak/pull/53724)) | PR open, waiting on maintainer review |
 
 ## Team
 
