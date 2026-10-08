@@ -24,7 +24,7 @@ Diagram sources and exports are in [`diagrams/`](diagrams).
 
 ## Upstream contributions
  
-Fixes we've submitted back to Keycloak. For a walkthrough of how each bug was found, traced in the source, and fixed, see [Upstream Contributions](Upstream-Contributions.md).
+Fixes we've submitted back to Keycloak. For a walkthrough of how each bug was found, traced in the source, and fixed, see [Upstream Contributions](https://github.com/JBoogieman/SoftwareAssuranceTeam3/blob/main/UpstreamContributions.md).
  
 | Issue | Fix | Status |
 |---|---|---|
