@@ -37,9 +37,8 @@ Fixes we've submitted back to Keycloak. For a walkthrough of how each bug was fo
 |---|---|---|
 | Sewhenu Ayeni | Team Lead | [@Sewhenu-Ayeni](https://github.com/Sewhenu-Ayeni) |
 | Ayden Riddle | Project Manager | [@AyRidd03](https://github.com/AyRidd03) |
-| Justin Brueggemann | Technical Lead | [@JBoogieman](https://github.com/JBoogieman) |
+| Justin Brueggemann | Technical Lead, Documentation | [@JBoogieman](https://github.com/JBoogieman) |
 | Isaiah James | Reviewer / QA | [@isaiahjames11](https://github.com/isaiahjames11) |
-| Sean Anderson | Documentation | [@SeanAnderson0](https://github.com/SeanAnderson0) |
 
 ## Communication and Meetings
 
