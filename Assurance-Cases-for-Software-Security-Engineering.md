@@ -29,7 +29,7 @@ TEAM NOTE (doesn't render on GitHub, only visible while editing):
 
 ### Claim 3: Keycloak minimizes unauthorized use of the tokens it issues to client applications
 
-The argument follows the attack chain from Interaction 3. Each rebuttal is a way someone other than the issuing client could use a token, and each sub-claim removes that doubt. The four branches cover the authorization code (R3.1), where it is delivered (R3.3), the refresh token (R3.6), and the access token (R3.8).
+The argument follows the attack chain from Interaction 3. Each rebuttal is a way someone other than the issuing client could use a token, and each sub-claim removes that doubt. The four branches cover the authorization code (R3.1), where it is delivered (R3.3), the refresh token (R3.6), and the access token (R3.8). Under R3.7, C3.9 and C3.10 are alternatives, and either one removes the doubt. Keycloak supports only C3.9 today, so C3.10 is shown as a gap (E3.16).
 
 ![Claim 3 Assurance Case](diagrams/assurance-case-claim-3.png)
 
