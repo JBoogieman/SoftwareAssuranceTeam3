@@ -1,0 +1,241 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="assurance-case-claim-4" name="Claim 4">
+    <mxGraphModel dx="1794" dy="1439" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1794" pageHeight="1439" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c4-1" value="&lt;b&gt;Top-Claim C4:&lt;/b&gt;&lt;br&gt;Keycloak minimizes unauthorized access through logins brokered from the partner identity provider" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="734" y="76" width="220" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-2" value="&lt;b&gt;Rebuttal R4.1:&lt;/b&gt; Unless Keycloak accepts an assertion the partner IdP did not sign" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1">
+          <mxGeometry x="172" y="229" width="180" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-3" value="&lt;b&gt;Sub-Claim C4.1:&lt;/b&gt;&lt;br&gt;Keycloak rejects any assertion whose signature does not verify against the partner&#x27;s signing certificate" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="172" y="352" width="180" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-4" value="&lt;b&gt;Evidence E4.1:&lt;/b&gt;&lt;br&gt;SAML broker signature tampering test results" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="505" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-5" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="89" y="651" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-6" value="&lt;b&gt;Rebuttal R4.2:&lt;/b&gt; Unless signature validation is turned off for the partner IdP" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1">
+          <mxGeometry x="252" y="505" width="180" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-7" value="&lt;b&gt;Sub-Claim C4.2:&lt;/b&gt;&lt;br&gt;Validate Signature is enabled for the partner identity provider" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="252" y="628" width="180" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-8" value="&lt;b&gt;Evidence E4.2:&lt;/b&gt;&lt;br&gt;Partner identity provider configuration export" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="781" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-9" value="&lt;b&gt;Undermine UM4.1:&lt;/b&gt; Unless Want Assertions Signed is mistaken for signature validation" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#A9C4EB;" vertex="1" parent="1">
+          <mxGeometry x="252" y="951" width="180" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-10" value="&lt;b&gt;Sub-Claim C4.3:&lt;/b&gt;&lt;br&gt;Every review of the partner IdP checks Validate Signature itself" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="252" y="1074" width="180" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-11" value="&lt;b&gt;Evidence E4.3:&lt;/b&gt;&lt;br&gt;Identity provider configuration audit report" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="1227" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-12" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="249" y="1373" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-13" value="&lt;b&gt;Evidence E4.4:&lt;/b&gt;&lt;br&gt;Secure identity provider setup checklist" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="360" y="1227" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-14" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="409" y="1373" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-15" value="&lt;b&gt;Rebuttal R4.3:&lt;/b&gt; Unless an IdP-initiated login skips the realm&#x27;s broker restrictions" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1">
+          <mxGeometry x="726" y="229" width="180" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-16" value="&lt;b&gt;Sub-Claim C4.4:&lt;/b&gt;&lt;br&gt;Account Linking Only and disabled-client checks apply to every brokered login, including IdP-initiated ones" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="726" y="352" width="180" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-17" value="&lt;b&gt;Evidence E4.5:&lt;/b&gt;&lt;br&gt;IdP-initiated SSO test results" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="674" y="505" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-18" value="&lt;b&gt;Undermine UM4.2:&lt;/b&gt; Unless the deployed release predates the CVE-2026-16442 fix" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#A9C4EB;" vertex="1" parent="1">
+          <mxGeometry x="646" y="675" width="180" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-19" value="&lt;b&gt;Sub-Claim C4.5:&lt;/b&gt;&lt;br&gt;The deployed Keycloak release includes the CVE-2026-16442 fix" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="646" y="798" width="180" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-20" value="&lt;b&gt;Evidence E4.7:&lt;/b&gt;&lt;br&gt;CVE-2026-16442 security advisory" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="594" y="951" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-21" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="643" y="1097" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-22" value="&lt;b&gt;Evidence E4.8:&lt;/b&gt;&lt;br&gt;Deployed Keycloak version record" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="754" y="951" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-23" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="803" y="1097" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-24" value="&lt;b&gt;Evidence E4.6:&lt;/b&gt;&lt;br&gt;Broker login path code review record" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="914" y="505" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-25" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="963" y="651" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-26" value="&lt;b&gt;Rebuttal R4.4:&lt;/b&gt; Unless access continues after the partner disables the account" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1">
+          <mxGeometry x="1308" y="229" width="180" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-27" value="&lt;b&gt;Sub-Claim C4.6:&lt;/b&gt;&lt;br&gt;Brokered sessions end on Keycloak&#x27;s own timeouts and on administrator revocation" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1308" y="352" width="180" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-28" value="&lt;b&gt;Evidence E4.9:&lt;/b&gt;&lt;br&gt;Realm session timeout settings" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1148" y="505" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-29" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="1197" y="651" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-30" value="&lt;b&gt;Evidence E4.10:&lt;/b&gt;&lt;br&gt;Partner offboarding notification procedure" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1308" y="505" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-31" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="1357" y="651" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-32" value="&lt;b&gt;Rebuttal R4.5:&lt;/b&gt; Unless an offline token outlives those timeouts" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1">
+          <mxGeometry x="1468" y="505" width="180" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-33" value="&lt;b&gt;Sub-Claim C4.7:&lt;/b&gt;&lt;br&gt;Partner users cannot obtain offline tokens" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1468" y="628" width="180" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-34" value="&lt;b&gt;Evidence E4.11:&lt;/b&gt;&lt;br&gt;Client scope configuration export" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1496" y="781" width="124" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-35" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="1545" y="927" width="26" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-36" value="&lt;b&gt;Context CT4.1:&lt;/b&gt;&lt;br&gt;The partner identity provider is the partner organization&#x27;s SAML 2.0 IdP, configured as an identity broker in our realm" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="1004" y="76" width="230" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-37" value="&lt;b&gt;Context CT4.2:&lt;/b&gt;&lt;br&gt;A brokered login starts at one of our applications, or at the partner&#x27;s portal as an IdP-initiated login" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="1264" y="76" width="230" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-38" value="&lt;b&gt;Context CT4.3:&lt;/b&gt;&lt;br&gt;Unauthorized access is a session or token from an assertion the partner did not sign, an entry point the realm restricts, or an account the partner disabled" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" vertex="1" parent="1">
+          <mxGeometry x="1524" y="76" width="230" height="107" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-39" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-4" target="c4-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-40" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-3" target="c4-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-41" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-11" target="c4-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-42" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-10" target="c4-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-43" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-13" target="c4-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-44" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-10" target="c4-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-45" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-9" target="c4-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-46" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-8" target="c4-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-47" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-7" target="c4-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-48" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-6" target="c4-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-49" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-3" target="c4-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-50" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-2" target="c4-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-51" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-1" target="c4-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-52" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-20" target="c4-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-53" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-19" target="c4-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-54" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-22" target="c4-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-55" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-19" target="c4-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-56" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-18" target="c4-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-57" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-17" target="c4-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-58" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-16" target="c4-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-59" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-24" target="c4-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-60" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-16" target="c4-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-61" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-15" target="c4-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-62" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-1" target="c4-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-63" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-28" target="c4-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-64" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-27" target="c4-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-65" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-30" target="c4-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-66" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-27" target="c4-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-67" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-34" target="c4-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-68" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-33" target="c4-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-69" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-32" target="c4-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-70" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-27" target="c4-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-71" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-26" target="c4-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-72" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c4-1" target="c4-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4-73" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c4-1" target="c4-36">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="910" y="40" /><mxPoint x="1119" y="40" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c4-74" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c4-1" target="c4-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="910" y="40" /><mxPoint x="1379" y="40" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c4-75" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c4-1" target="c4-38">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="910" y="40" /><mxPoint x="1639" y="40" /></Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
