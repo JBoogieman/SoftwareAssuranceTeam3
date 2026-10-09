@@ -1,126 +1,375 @@
-<mxfile host="app.diagrams.net" type="device">
+<mxfile host="Electron">
   <diagram id="assurance-case-claim-3" name="Claim 3">
-    <mxGraphModel dx="2506" dy="2000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="2506" pageHeight="2000" background="#FFFFFF" math="0" shadow="0">
+    <mxGraphModel dx="709" dy="669" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="2506" pageHeight="2000" background="#FFFFFF" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="c3-1" value="&lt;b&gt;Top-Claim C3:&lt;/b&gt;&lt;br&gt;Keycloak minimizes unauthorized use of the tokens it issues to client applications" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="1211" y="76" width="220" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-2" value="&lt;b&gt;Rebuttal R3.1:&lt;/b&gt; Unless an intercepted authorization code can be redeemed" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1"><mxGeometry x="176" y="229" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-3" value="&lt;b&gt;Sub-Claim C3.1:&lt;/b&gt;&lt;br&gt;Only the client that started the flow can redeem its authorization code" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="176" y="352" width="180" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-4" value="&lt;b&gt;Evidence E3.1:&lt;/b&gt;&lt;br&gt;PKCE verification test results" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="40" y="505" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-5" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="89" y="651" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-6" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-4" target="c3-5"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-3" target="c3-4"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-8" value="&lt;b&gt;Rebuttal R3.2:&lt;/b&gt; Unless the client omits or downgrades PKCE" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1"><mxGeometry x="341" y="505" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-9" value="&lt;b&gt;Sub-Claim C3.2:&lt;/b&gt;&lt;br&gt;Every authorization code Keycloak issues is bound to a secret held only by the requesting client" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="341" y="628" width="180" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-10" value="&lt;b&gt;Evidence E3.2:&lt;/b&gt;&lt;br&gt;PKCE enforcer client policy" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="259" y="781" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-11" value="&lt;b&gt;Undermine UM3.1:&lt;/b&gt; Unless newly registered clients fall outside the policy" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#A9C4EB;" vertex="1" parent="1"><mxGeometry x="231" y="951" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-12" value="&lt;b&gt;Sub-Claim C3.3:&lt;/b&gt;&lt;br&gt;The PKCE enforcer policy applies to every current and future client" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="231" y="1074" width="180" height="92" as="geometry"/></mxCell>
-        <mxCell id="c3-13" value="&lt;b&gt;Evidence E3.4:&lt;/b&gt;&lt;br&gt;Any-client policy condition" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="186" y="1212" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-14" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="235" y="1358" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-15" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-13" target="c3-14"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-16" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-12" target="c3-13"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-17" value="&lt;b&gt;Evidence E3.5:&lt;/b&gt;&lt;br&gt;Client configuration audit report" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="332" y="1212" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-18" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="381" y="1358" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-19" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-17" target="c3-18"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-20" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-12" target="c3-17"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-21" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-11" target="c3-12"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-22" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-10" target="c3-11"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-23" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-9" target="c3-10"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-24" value="&lt;b&gt;Evidence E3.3:&lt;/b&gt;&lt;br&gt;PKCE enforcement test results" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="478" y="781" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-25" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="527" y="927" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-26" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-24" target="c3-25"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-27" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-9" target="c3-24"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-28" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-8" target="c3-9"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-29" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-3" target="c3-8"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-30" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-2" target="c3-3"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-31" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-1" target="c3-2"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-32" value="&lt;b&gt;Rebuttal R3.3:&lt;/b&gt; Unless the code is sent to an attacker's redirect URI" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1"><mxGeometry x="852" y="229" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-33" value="&lt;b&gt;Sub-Claim C3.4:&lt;/b&gt;&lt;br&gt;Authorization codes are delivered only to the requesting client's registered redirect URIs" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="852" y="352" width="180" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-34" value="&lt;b&gt;Evidence E3.6:&lt;/b&gt;&lt;br&gt;Redirect URI validation test results" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="624" y="505" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-35" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="673" y="651" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-36" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-34" target="c3-35"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-37" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-33" target="c3-34"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-38" value="&lt;b&gt;Rebuttal R3.4:&lt;/b&gt; Unless a wildcard or loopback redirect URI is registered" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1"><mxGeometry x="815" y="505" width="180" height="92" as="geometry"/></mxCell>
-        <mxCell id="c3-39" value="&lt;b&gt;Sub-Claim C3.5:&lt;/b&gt;&lt;br&gt;No production client registers a wildcard or loopback redirect URI" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="815" y="643" width="180" height="92" as="geometry"/></mxCell>
-        <mxCell id="c3-40" value="&lt;b&gt;Evidence E3.7:&lt;/b&gt;&lt;br&gt;Secure redirect URI enforcer client policy" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="770" y="781" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-41" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="819" y="927" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-42" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-40" target="c3-41"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-43" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-39" target="c3-40"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-44" value="&lt;b&gt;Evidence E3.8:&lt;/b&gt;&lt;br&gt;Client redirect URI inventory" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="916" y="781" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-45" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="965" y="927" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-46" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-44" target="c3-45"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-47" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-39" target="c3-44"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-48" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-38" target="c3-39"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-49" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-33" target="c3-38"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-50" value="&lt;b&gt;Rebuttal R3.5:&lt;/b&gt; Unless redirect validation has a known bypass" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1"><mxGeometry x="1107" y="505" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-51" value="&lt;b&gt;Sub-Claim C3.6:&lt;/b&gt;&lt;br&gt;The deployed Keycloak release includes every published redirect validation fix" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="1107" y="628" width="180" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-52" value="&lt;b&gt;Evidence E3.9:&lt;/b&gt;&lt;br&gt;Keycloak security advisories for redirect CVEs" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="1062" y="781" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-53" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="1111" y="927" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-54" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-52" target="c3-53"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-55" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-51" target="c3-52"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-56" value="&lt;b&gt;Evidence E3.10:&lt;/b&gt;&lt;br&gt;Deployed Keycloak version record" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="1208" y="781" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-57" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="1257" y="927" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-58" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-56" target="c3-57"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-59" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-51" target="c3-56"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-60" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-50" target="c3-51"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-61" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-33" target="c3-50"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-62" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-32" target="c3-33"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-63" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-1" target="c3-32"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-64" value="&lt;b&gt;Rebuttal R3.6:&lt;/b&gt; Unless a stolen refresh token can be replayed" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1"><mxGeometry x="1643" y="229" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-65" value="&lt;b&gt;Sub-Claim C3.7:&lt;/b&gt;&lt;br&gt;Each refresh token is accepted only once" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="1643" y="352" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-66" value="&lt;b&gt;Evidence E3.11:&lt;/b&gt;&lt;br&gt;Refresh token rotation realm settings" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="1354" y="475" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-67" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="1403" y="621" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-68" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-66" target="c3-67"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-69" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-65" target="c3-66"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-70" value="&lt;b&gt;Evidence E3.12:&lt;/b&gt;&lt;br&gt;Refresh token reuse test results" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="1573" y="475" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-71" value="&lt;b&gt;Undermine UM3.2:&lt;/b&gt; Unless spent tokens become valid again after a server restart" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#A9C4EB;" vertex="1" parent="1"><mxGeometry x="1545" y="645" width="180" height="92" as="geometry"/></mxCell>
-        <mxCell id="c3-72" value="&lt;b&gt;Sub-Claim C3.8:&lt;/b&gt;&lt;br&gt;The deployed Keycloak release includes the CVE-2026-9802 fix" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="1545" y="783" width="180" height="92" as="geometry"/></mxCell>
-        <mxCell id="c3-73" value="&lt;b&gt;Evidence E3.13:&lt;/b&gt;&lt;br&gt;CVE-2026-9802 security advisory" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="1500" y="921" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-74" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="1549" y="1067" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-75" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-73" target="c3-74"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-76" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-72" target="c3-73"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-77" value="&lt;b&gt;Evidence E3.10:&lt;/b&gt;&lt;br&gt;Deployed Keycloak version record" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;dashed=1;" vertex="1" parent="1"><mxGeometry x="1646" y="921" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-78" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="1695" y="1067" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-79" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-77" target="c3-78"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-80" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-72" target="c3-77"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-81" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-71" target="c3-72"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-82" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-70" target="c3-71"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-83" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-65" target="c3-70"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-84" value="&lt;b&gt;Rebuttal R3.7:&lt;/b&gt; Unless the thief refreshes before the legitimate client" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1"><mxGeometry x="1961" y="475" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-85" value="&lt;b&gt;Sub-Claim C3.9:&lt;/b&gt;&lt;br&gt;A copied refresh token is unusable without the legitimate client's private key" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="1837" y="598" width="180" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-86" value="&lt;b&gt;Evidence E3.14:&lt;/b&gt;&lt;br&gt;DPoP binding client policy" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="1792" y="751" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-87" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="1841" y="897" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-88" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-86" target="c3-87"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-89" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-85" target="c3-86"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-90" value="&lt;b&gt;Evidence E3.15:&lt;/b&gt;&lt;br&gt;DPoP refresh test results" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="1938" y="751" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-91" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="1987" y="897" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-92" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-90" target="c3-91"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-93" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-85" target="c3-90"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-94" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-84" target="c3-85"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-95" value="&lt;b&gt;Sub-Claim C3.10:&lt;/b&gt;&lt;br&gt;Detected refresh token reuse revokes all tokens in the affected session" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="2084" y="598" width="180" height="92" as="geometry"/></mxCell>
-        <mxCell id="c3-96" value="&lt;b&gt;Evidence E3.16:&lt;/b&gt;&lt;br&gt;Reuse-triggered session revocation test results" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="2112" y="736" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-97" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="2161" y="882" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-98" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-96" target="c3-97"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-99" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-95" target="c3-96"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-100" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-84" target="c3-95"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-101" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-65" target="c3-84"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-102" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-64" target="c3-65"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-103" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-1" target="c3-64"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-104" value="&lt;b&gt;Rebuttal R3.8:&lt;/b&gt; Unless a stolen access token is replayed" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" vertex="1" parent="1"><mxGeometry x="2286" y="229" width="180" height="77" as="geometry"/></mxCell>
-        <mxCell id="c3-105" value="&lt;b&gt;Sub-Claim C3.11:&lt;/b&gt;&lt;br&gt;A stolen access token remains usable for only a few minutes" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="2286" y="352" width="180" height="92" as="geometry"/></mxCell>
-        <mxCell id="c3-106" value="&lt;b&gt;Evidence E3.17:&lt;/b&gt;&lt;br&gt;Access token lifespan settings" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" vertex="1" parent="1"><mxGeometry x="2314" y="490" width="124" height="124" as="geometry"/></mxCell>
-        <mxCell id="c3-107" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" vertex="1" parent="1"><mxGeometry x="2363" y="636" width="26" height="26" as="geometry"/></mxCell>
-        <mxCell id="c3-108" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-106" target="c3-107"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-109" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-105" target="c3-106"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-110" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-104" target="c3-105"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-111" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" edge="1" parent="1" source="c3-1" target="c3-104"><mxGeometry relative="1" as="geometry"/></mxCell>
-        <mxCell id="c3-112" value="&lt;b&gt;Context CT3.1:&lt;/b&gt;&lt;br&gt;Tokens are authorization codes and the access, refresh, and ID tokens issued for them through the OIDC authorization code flow" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" vertex="1" parent="1"><mxGeometry x="1481" y="76" width="230" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-113" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c3-1" target="c3-112"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1387" y="40"/><mxPoint x="1596" y="40"/></Array></mxGeometry></mxCell>
-        <mxCell id="c3-114" value="&lt;b&gt;Context CT3.2:&lt;/b&gt;&lt;br&gt;Client applications are the HR and payroll, IT service desk, and finance applications, registered as confidential or public clients" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" vertex="1" parent="1"><mxGeometry x="1741" y="76" width="230" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-115" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c3-1" target="c3-114"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1387" y="40"/><mxPoint x="1856" y="40"/></Array></mxGeometry></mxCell>
-        <mxCell id="c3-116" value="&lt;b&gt;Context CT3.3:&lt;/b&gt;&lt;br&gt;Unauthorized use is a token redeemed or presented by any party other than the client it was issued to" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" vertex="1" parent="1"><mxGeometry x="2001" y="76" width="230" height="107" as="geometry"/></mxCell>
-        <mxCell id="c3-117" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c3-1" target="c3-116"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1387" y="40"/><mxPoint x="2116" y="40"/></Array></mxGeometry></mxCell>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c3-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Top-Claim C3:&lt;/b&gt;&lt;br&gt;Keycloak minimizes unauthorized use of the tokens it issues to client applications" vertex="1">
+          <mxGeometry height="107" width="220" x="1211" y="76" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-2" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3.1:&lt;/b&gt; Unless an intercepted authorization code can be redeemed" vertex="1">
+          <mxGeometry height="77" width="180" x="176" y="229" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.1:&lt;/b&gt;&lt;br&gt;Only the client that started the flow can redeem its authorization code" vertex="1">
+          <mxGeometry height="107" width="180" x="176" y="352" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-4" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.1:&lt;/b&gt;&lt;br&gt;PKCE verification test results" vertex="1">
+          <mxGeometry height="124" width="124" x="40" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="89" y="651" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-6" edge="1" parent="1" source="c3-4" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-7" edge="1" parent="1" source="c3-3" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-8" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3.2:&lt;/b&gt; Unless the client omits or downgrades PKCE" vertex="1">
+          <mxGeometry height="77" width="180" x="341" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.2:&lt;/b&gt;&lt;br&gt;Every authorization code Keycloak issues is bound to a secret held only by the requesting client" vertex="1">
+          <mxGeometry height="107" width="180" x="341" y="628" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-10" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.2:&lt;/b&gt;&lt;br&gt;PKCE enforcer client policy" vertex="1">
+          <mxGeometry height="124" width="124" x="259" y="781" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-11" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#A9C4EB;" value="&lt;b&gt;Undermine UM3.1:&lt;/b&gt; Unless newly registered clients fall outside the policy" vertex="1">
+          <mxGeometry height="77" width="180" x="231" y="951" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.3:&lt;/b&gt;&lt;br&gt;The PKCE enforcer policy applies to every current and future client" vertex="1">
+          <mxGeometry height="92" width="180" x="231" y="1074" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-13" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.4:&lt;/b&gt;&lt;br&gt;Any-client policy condition" vertex="1">
+          <mxGeometry height="124" width="124" x="186" y="1212" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-14" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="235" y="1358" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-15" edge="1" parent="1" source="c3-13" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-16" edge="1" parent="1" source="c3-12" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.5:&lt;/b&gt;&lt;br&gt;Client configuration audit report" vertex="1">
+          <mxGeometry height="124" width="124" x="332" y="1212" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-18" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="381" y="1358" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-19" edge="1" parent="1" source="c3-17" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-20" edge="1" parent="1" source="c3-12" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-21" edge="1" parent="1" source="c3-11" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-22" edge="1" parent="1" source="c3-10" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-23" edge="1" parent="1" source="c3-9" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-24" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.3:&lt;/b&gt;&lt;br&gt;PKCE enforcement test results" vertex="1">
+          <mxGeometry height="124" width="124" x="478" y="781" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-25" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="527" y="927" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-26" edge="1" parent="1" source="c3-24" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-27" edge="1" parent="1" source="c3-9" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-28" edge="1" parent="1" source="c3-8" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-29" edge="1" parent="1" source="c3-3" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-30" edge="1" parent="1" source="c3-2" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-31" edge="1" parent="1" source="c3-1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-32" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3.3:&lt;/b&gt; Unless the code is sent to an attacker&#39;s redirect URI" vertex="1">
+          <mxGeometry height="77" width="180" x="852" y="229" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-33" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.4:&lt;/b&gt;&lt;br&gt;Authorization codes are delivered only to redirect URIs the requesting client controls" vertex="1">
+          <mxGeometry height="107" width="180" x="852" y="352" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-34" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.6:&lt;/b&gt;&lt;br&gt;Redirect URI validation test results" vertex="1">
+          <mxGeometry height="124" width="124" x="624" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-35" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="673" y="651" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-36" edge="1" parent="1" source="c3-34" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-37" edge="1" parent="1" source="c3-33" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-38" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3.4:&lt;/b&gt; Unless a wildcard or loopback redirect URI is registered" vertex="1">
+          <mxGeometry height="92" width="180" x="815" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-39" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.5:&lt;/b&gt;&lt;br&gt;No production client registers a wildcard or loopback redirect URI" vertex="1">
+          <mxGeometry height="92" width="180" x="815" y="643" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-40" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.7:&lt;/b&gt;&lt;br&gt;Secure redirect URI enforcer client policy" vertex="1">
+          <mxGeometry height="124" width="124" x="770" y="781" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-41" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="819" y="927" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-42" edge="1" parent="1" source="c3-40" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-43" edge="1" parent="1" source="c3-39" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-40">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-44" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.8:&lt;/b&gt;&lt;br&gt;Client redirect URI inventory" vertex="1">
+          <mxGeometry height="124" width="124" x="916" y="781" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-45" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="965" y="927" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-46" edge="1" parent="1" source="c3-44" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-47" edge="1" parent="1" source="c3-39" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-48" edge="1" parent="1" source="c3-38" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-49" edge="1" parent="1" source="c3-33" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-50" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3.5:&lt;/b&gt; Unless redirect validation has a known bypass" vertex="1">
+          <mxGeometry height="77" width="180" x="1107" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-51" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.6:&lt;/b&gt;&lt;br&gt;The deployed Keycloak release includes every published redirect validation fix" vertex="1">
+          <mxGeometry height="107" width="180" x="1107" y="628" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-52" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.9:&lt;/b&gt;&lt;br&gt;Keycloak security advisories for redirect CVEs" vertex="1">
+          <mxGeometry height="124" width="124" x="1062" y="781" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-53" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="1111" y="927" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-54" edge="1" parent="1" source="c3-52" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-55" edge="1" parent="1" source="c3-51" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-56" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.10:&lt;/b&gt;&lt;br&gt;Deployed Keycloak version record" vertex="1">
+          <mxGeometry height="124" width="124" x="1208" y="781" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-57" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="1257" y="927" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-58" edge="1" parent="1" source="c3-56" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-59" edge="1" parent="1" source="c3-51" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-60" edge="1" parent="1" source="c3-50" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-61" edge="1" parent="1" source="c3-33" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-62" edge="1" parent="1" source="c3-32" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-63" edge="1" parent="1" source="c3-1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-64" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3.6:&lt;/b&gt; Unless a stolen refresh token can be replayed" vertex="1">
+          <mxGeometry height="77" width="180" x="1643" y="229" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-65" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.7:&lt;/b&gt;&lt;br&gt;Each refresh token is accepted only once" vertex="1">
+          <mxGeometry height="77" width="180" x="1643" y="352" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-66" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.11:&lt;/b&gt;&lt;br&gt;Refresh token rotation realm settings" vertex="1">
+          <mxGeometry height="124" width="124" x="1354" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-67" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="1403" y="621" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-68" edge="1" parent="1" source="c3-66" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-67">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-69" edge="1" parent="1" source="c3-65" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-70" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.12:&lt;/b&gt;&lt;br&gt;Refresh token reuse test results" vertex="1">
+          <mxGeometry height="124" width="124" x="1573" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-71" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#A9C4EB;" value="&lt;b&gt;Undermine UM3.2:&lt;/b&gt; Unless spent tokens become valid again after a server restart" vertex="1">
+          <mxGeometry height="92" width="180" x="1545" y="645" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-72" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.8:&lt;/b&gt;&lt;br&gt;The deployed Keycloak release includes the CVE-2026-9802 fix" vertex="1">
+          <mxGeometry height="92" width="180" x="1545" y="783" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-73" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.13:&lt;/b&gt;&lt;br&gt;CVE-2026-9802 security advisory" vertex="1">
+          <mxGeometry height="124" width="124" x="1500" y="921" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-74" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="1549" y="1067" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-75" edge="1" parent="1" source="c3-73" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-74">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-76" edge="1" parent="1" source="c3-72" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-73">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-77" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;dashed=1;" value="&lt;b&gt;Evidence E3.10:&lt;/b&gt;&lt;br&gt;Deployed Keycloak version record" vertex="1">
+          <mxGeometry height="124" width="124" x="1646" y="921" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-78" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="1695" y="1067" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-79" edge="1" parent="1" source="c3-77" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-78">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-80" edge="1" parent="1" source="c3-72" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-77">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-81" edge="1" parent="1" source="c3-71" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-72">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-82" edge="1" parent="1" source="c3-70" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-71">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-83" edge="1" parent="1" source="c3-65" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-70">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-84" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3.7:&lt;/b&gt; Unless the thief refreshes before the legitimate client" vertex="1">
+          <mxGeometry height="77" width="180" x="1961" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-85" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.9:&lt;/b&gt;&lt;br&gt;A copied refresh token is unusable without a credential only the legitimate client holds" vertex="1">
+          <mxGeometry height="107" width="180" x="1837" y="598" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-86" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.14:&lt;/b&gt;&lt;br&gt;DPoP binding client policy" vertex="1">
+          <mxGeometry height="124" width="124" x="1792" y="751" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-87" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="1841" y="897" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-88" edge="1" parent="1" source="c3-86" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-87">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-89" edge="1" parent="1" source="c3-85" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-86">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-90" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.15:&lt;/b&gt;&lt;br&gt;DPoP refresh test results" vertex="1">
+          <mxGeometry height="124" width="124" x="1938" y="751" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-91" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="1987" y="897" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-92" edge="1" parent="1" source="c3-90" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-91">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-93" edge="1" parent="1" source="c3-85" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-90">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-94" edge="1" parent="1" source="c3-84" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-85">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-95" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.10:&lt;/b&gt;&lt;br&gt;Detected refresh token reuse revokes all tokens in the affected session" vertex="1">
+          <mxGeometry height="92" width="180" x="2084" y="598" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-96" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.16:&lt;/b&gt;&lt;br&gt;Reuse-triggered session revocation test results" vertex="1">
+          <mxGeometry height="124" width="124" x="2112" y="736" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-97" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="2161" y="882" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-98" edge="1" parent="1" source="c3-96" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-97">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-99" edge="1" parent="1" source="c3-95" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-96">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-100" edge="1" parent="1" source="c3-84" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-95">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-101" edge="1" parent="1" source="c3-65" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-84">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-102" edge="1" parent="1" source="c3-64" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-65">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-103" edge="1" parent="1" source="c3-1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-64">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-104" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3.8:&lt;/b&gt; Unless a stolen access token is replayed" vertex="1">
+          <mxGeometry height="77" width="180" x="2286" y="229" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-105" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C3.11:&lt;/b&gt;&lt;br&gt;A stolen access token remains usable for only a few minutes" vertex="1">
+          <mxGeometry height="92" width="180" x="2286" y="352" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-106" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.17:&lt;/b&gt;&lt;br&gt;Access token lifespan settings" vertex="1">
+          <mxGeometry height="124" width="124" x="2314" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-107" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="26" width="26" x="2363" y="636" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-108" edge="1" parent="1" source="c3-106" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-107">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-109" edge="1" parent="1" source="c3-105" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-106">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-110" edge="1" parent="1" source="c3-104" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-105">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-111" edge="1" parent="1" source="c3-1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="c3-104">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-112" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" value="&lt;b&gt;Context CT3.1:&lt;/b&gt;&lt;br&gt;Tokens are authorization codes and the access and refresh tokens issued for them through the OIDC authorization code flow" vertex="1">
+          <mxGeometry height="107" width="230" x="1481" y="76" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-113" edge="1" parent="1" source="c3-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="c3-112">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1387" y="40" />
+              <mxPoint x="1596" y="40" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3-114" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" value="&lt;b&gt;Context CT3.2:&lt;/b&gt;&lt;br&gt;Client applications are the HR and payroll, IT service desk, and finance applications, registered as confidential or public clients" vertex="1">
+          <mxGeometry height="107" width="230" x="1741" y="76" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-115" edge="1" parent="1" source="c3-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="c3-114">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1387" y="40" />
+              <mxPoint x="1856" y="40" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c3-116" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" value="&lt;b&gt;Context CT3.3:&lt;/b&gt;&lt;br&gt;Unauthorized use is a token redeemed or presented by any party other than the client it was issued to" vertex="1">
+          <mxGeometry height="107" width="230" x="2001" y="76" as="geometry" />
+        </mxCell>
+        <mxCell id="c3-117" edge="1" parent="1" source="c3-1" style="rounded=0;html=1;endArrow=block;endFill=1;exitX=0.8;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="c3-116">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1387" y="40" />
+              <mxPoint x="2116" y="40" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
