@@ -43,7 +43,9 @@ The argument follows the misuse chain from [Interaction 4](Requirements-for-Soft
 
 *Source: [`diagrams/assurance-case-claim-4.drawio`](diagrams/assurance-case-claim-4.drawio). Grey circles mark where a branch ends in evidence.*
 
-### Claim 5: `<top-level claim>` — [@isaiahjames11](https://github.com/isaiahjames11)
+### Claim 5: Keycloak grants federated Active Directory users only the realm roles their legitimate directory group memberships authorize — [@isaiahjames11](https://github.com/isaiahjames11)
+
+The argument follows the trust boundary from the Part 1 interaction: the federation link through which every employee identity and group membership enters Keycloak from Active Directory. Each rebuttal is a way a federated user could end up holding a realm role that no permitted AD group grants, and each sub-claim removes that doubt. The five branches cover the federation channel (R5.1), the group-to-role mapping (R5.3), the account-linking flow (R5.5), malformed directory data (R5.7), and detection of an unauthorized assignment (R5.8). Context CT5.1 sets the boundary of the claim: a change made by a legitimate AD administrator is authorized from Keycloak's point of view, so insider misuse of AD itself is out of scope. Two branches have no supporting feature in Keycloak today and are shown as gaps: attribute value limits (E5.12) and per-mapping audit events (E5.13).
 
 ![Claim 5 Assurance Case](diagrams/assurance-case-claim-5.png)
 
