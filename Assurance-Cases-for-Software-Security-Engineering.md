@@ -15,7 +15,7 @@ TEAM NOTE (doesn't render on GitHub, only visible while editing):
 2. 
 3. Keycloak minimizes unauthorized use of the tokens it issues to client applications.
 4. Keycloak minimizes unauthorized access through logins brokered from the partner identity provider.
-5. 
+5. Keycloak grants federated Active Directory users only the realm roles their legitimate directory group memberships authorize. 
 
 ---
 
@@ -49,7 +49,7 @@ The argument follows the trust boundary from the Part 1 interaction: the federat
 
 ![Claim 5 Assurance Case](diagrams/AssuranceClaim5.drawio.png)
 
-*Source: diagrams/AssuranceClaim5.drawio. Grey circles mark where a branch ends in evidence.
+*Source: [`diagrams/AssuranceClaim5.drawio`](diagrams/AssuranceClaim5.drawio). Grey circles mark where a branch ends in evidence.*
 ---
 
 ### AI-assisted improvement
