@@ -49,6 +49,7 @@ The argument follows the trust boundary from the Part 1 interaction: the federat
 
 ![Claim 5 Assurance Case](diagrams/AssuranceClaim5.drawio.png)
 
+*Source: diagrams/AssuranceClaim5.drawio. Grey circles mark where a branch ends in evidence.
 ---
 
 ### AI-assisted improvement
