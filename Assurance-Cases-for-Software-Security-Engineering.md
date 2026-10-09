@@ -157,7 +157,7 @@ The argument follows the trust boundary from the Part 1 interaction: the federat
 
 | ID | Evidence | Alignment | Source / where it would come from | Gap |
 |---|---|---|---|---|
-| E5.1 | | | | |
+| E5.1 | Federation provider TLS configuration scan results | Can be made available | Each provider's Connection URL (ldap:// vs ldaps://) and startTls setting, readable from the Admin REST API or a realm export | Keycloak accepts plaintext ldap:// with StartTLS off; nothing in the realm prevents it. The scan has to be written and run by us. |
 
 ### Summary of gaps
 
