@@ -1,0 +1,213 @@
+<mxfile host="Electron" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15">
+  <diagram id="2RAkf9iS2bYrb-5zrusB" name="Page-1">
+    <mxGraphModel dx="725" dy="1459" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-4" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="EpLoNu7SxfJ4iQwhgqlz-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-6" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;curved=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="EpLoNu7SxfJ4iQwhgqlz-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Top-Claim C1:&lt;/b&gt;&lt;div&gt;Keycloak minimizes unauthorized access to enterprise applications through employee password and OTP authentication.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="155" x="330" y="15" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;" value="&lt;b&gt;Context: CT1&lt;/b&gt;&lt;br&gt;Employees authenticate using a configured Keycloak password and required OTP flow (e.g., TOTP or WebAuthn)." vertex="1">
+          <mxGeometry height="120" width="180" x="610" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-23" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="EpLoNu7SxfJ4iQwhgqlz-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-5" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R1&lt;br&gt;&lt;/b&gt;Unless an attaacker repeatedly guesses employee passwords." vertex="1">
+          <mxGeometry height="100" width="140" x="65" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-20" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-14" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="EpLoNu7SxfJ4iQwhgqlz-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-21" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-14" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="EpLoNu7SxfJ4iQwhgqlz-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-41" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="XFhxBsyichHM7BomDNy7-40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C1.1&lt;br&gt;&lt;/b&gt;Repeated failed password attempts are restricted by confirguired Keycloack brute-force protection and account lockout controls." vertex="1">
+          <mxGeometry height="120" width="170" x="50" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-23" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-18" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="EpLoNu7SxfJ4iQwhgqlz-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-18" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E1.1&lt;/b&gt;&lt;br&gt;Keycloak brute-force detection and lockout configuration export (realm settings)." vertex="1">
+          <mxGeometry height="120" width="120" x="10" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-19" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E1.2&lt;/b&gt;&lt;br&gt;Test results showing account lockout after configured number of failed password attempts." vertex="1">
+          <mxGeometry height="130" width="130" x="140" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-22" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="55" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-24" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="190" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-24" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="XFhxBsyichHM7BomDNy7-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EpLoNu7SxfJ4iQwhgqlz-38" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#F19C99;" value="&lt;b&gt;Rebuttal R2&lt;br&gt;&lt;/b&gt;Unless an attacker uses a valid stolen password(e.g., from phishing, breached credentials)." vertex="1">
+          <mxGeometry height="100" width="155" x="455" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-1" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-3" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-2" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-3" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C1.2&lt;br&gt;&lt;/b&gt;A valid password alone is insufficient to complete authenication becuase Keycloack requires a configured OTP (second-factor) for employee logins." vertex="1">
+          <mxGeometry height="120" width="170" x="447.5" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-4" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-5" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E2.1&lt;br&gt;&lt;/b&gt;Keycloak authentication flow configuration showing OTP requirement for employee realm.&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="140" x="440" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-6" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E2.2&lt;/b&gt;&lt;br&gt;Test results showing login with password only is rejected (OTP required)." vertex="1">
+          <mxGeometry height="120" width="120" x="605" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="495" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-9" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="650" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-10" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-12" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-11" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-12" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-48" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="XFhxBsyichHM7BomDNy7-45" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C1.3&lt;br&gt;&lt;/b&gt;Repeated incorrect OTP attempts are restricted by Keycloak secondary authentication lockout controls and rate limiting." vertex="1">
+          <mxGeometry height="120" width="190" x="830" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-13" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-14" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-14" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.1&lt;/b&gt;&lt;br&gt;Keycloak OTP/ required action failure handling and lockout configuration export." vertex="1">
+          <mxGeometry height="130" width="130" x="800" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-15" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-16" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-16" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E3.2&lt;/b&gt;&lt;br&gt;Test results showing temporary or permanent lockout after configured number of invalid OTP attempts." vertex="1">
+          <mxGeometry height="140" width="140" x="960" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="850" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-18" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1015" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-25" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="XFhxBsyichHM7BomDNy7-12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-19" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R3&lt;/b&gt;&lt;br&gt;Unless an attacker repeatedlu guesses employee OTPs." vertex="1">
+          <mxGeometry height="100" width="140" x="855" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-21" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;curved=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="EpLoNu7SxfJ4iQwhgqlz-38" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="663" y="170" as="sourcePoint" />
+            <mxPoint x="550" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-22" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;curved=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="XFhxBsyichHM7BomDNy7-19" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="673" y="150" as="sourcePoint" />
+            <mxPoint x="560" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-26" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="EpLoNu7SxfJ4iQwhgqlz-24">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="204.5" y="725" as="sourcePoint" />
+            <mxPoint x="204.5" y="785" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-28" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-30" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-29" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-30" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-30" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Sub-Claim C1.4&lt;br&gt;&lt;/b&gt;Authentication failures are monitored to identify repeated login failures and their originating client addresses." vertex="1">
+          <mxGeometry height="120" width="190" x="1230" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-31" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-32" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-32" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E4.1&lt;/b&gt;&lt;br&gt;Authentication failure event log with client IP addresses (keycloak events)." vertex="1">
+          <mxGeometry height="130" width="130" x="1200" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-33" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-34" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=block;endFill=1;" target="XFhxBsyichHM7BomDNy7-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-34" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;" value="&lt;b&gt;Evidence E4.2&lt;/b&gt;&lt;br&gt;Authentication Failure monituring test report (e.g, SIEM detection rule and alert)." vertex="1">
+          <mxGeometry height="140" width="140" x="1360" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-35" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1250" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-36" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1415" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-37" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="XFhxBsyichHM7BomDNy7-30" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-38" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;" value="&lt;b&gt;Rebuttal R4&lt;/b&gt;&lt;br&gt;Unless an attacker deliberately triggers account lockouts to deny legitimate employees access." vertex="1">
+          <mxGeometry height="100" width="140" x="1255" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-39" edge="1" parent="1" source="EpLoNu7SxfJ4iQwhgqlz-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;curved=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="XFhxBsyichHM7BomDNy7-38" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="970" y="150" as="sourcePoint" />
+            <mxPoint x="1417" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-40" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" value="&lt;b&gt;Undercut UC1&lt;br&gt;&lt;/b&gt;Unless brute-force protection is disabled or misconfigured in the deployed keycloak realm." vertex="1">
+          <mxGeometry height="100" width="155" x="265" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-43" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" value="&lt;b&gt;Undermine UM1&lt;br&gt;&lt;/b&gt;Unless the authentication flow configuration export is outdated and does not reflect the deployed realm." vertex="1">
+          <mxGeometry height="100" width="155" x="660" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-44" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="XFhxBsyichHM7BomDNy7-43" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="620" y="480" as="sourcePoint" />
+            <mxPoint x="675" y="481" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-45" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" value="&lt;b&gt;Undercut UC2&lt;br&gt;&lt;/b&gt;Unless secondary authentication lockout is disabled or improperly configured for OTP failures." vertex="1">
+          <mxGeometry height="100" width="155" x="1060" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-46" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="XFhxBsyichHM7BomDNy7-45" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1020" y="510" as="sourcePoint" />
+            <mxPoint x="1060" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-47" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#0050ef;fontColor=#ffffff;strokeColor=#001DBC;" value="&lt;b&gt;Undermine UM2&lt;br&gt;&lt;/b&gt;Unless log monitoring is not enabled or configured to capture authentication failure events with client IP addresses." vertex="1">
+          <mxGeometry height="100" width="155" x="1460" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="XFhxBsyichHM7BomDNy7-49" edge="1" parent="1" source="XFhxBsyichHM7BomDNy7-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="XFhxBsyichHM7BomDNy7-47" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1450" y="500" as="sourcePoint" />
+            <mxPoint x="1490" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
