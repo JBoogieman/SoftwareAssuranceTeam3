@@ -270,19 +270,5 @@ Two other nodes carry gaps the docs themselves flag:
 ## Team Reflection
 
 
-### What did we learn from this assignment?
 
-This assignment helped our team understand that software assurance is not simply about identifying the security features a system provides, but about developing arguments and gathering evidence to support security claims. We learned how to use claims, rebuttals, subclaims, and evidence to examine whether Keycloak's security controls adequately address potential threats.
-
-One important lesson was that documented security capabilities do not necessarily guarantee protection in a deployed environment. Controls such as brute-force protection, OTP authentication, and LDAP security depend on proper configuration and supporting evidence. Developing rebuttals, undercuts, and undermines helped us challenge our own assumptions and identify gaps in our arguments. We also learned that some security claims needed to be revised when the available evidence did not fully support them.
-
-Beyond the technical work, we learned the importance of teamwork and adapting to unexpected changes. Losing a team member required us to redistribute responsibilities, communicate clearly, and continue working toward the assignment deadline while maintaining the quality of our work.
-
-### What did we find most useful?
-
-The most useful part of this assignment was connecting our previous misuse-case analysis to the assurance cases. This helped us move from identifying potential threats to evaluating whether Keycloak's security controls could address them and what evidence would be needed to support those conclusions.
-
-We also found the evidence-alignment assessment particularly valuable. Reviewing Keycloak's documentation, source code, and available tests helped us distinguish between what the system supports, what depends on configuration, and what still requires additional verification. Building the diagrams also helped us visualize where our arguments were strong and where gaps remained.
-
-AI assistance was useful for brainstorming potential rebuttals and identifying attack scenarios we might have overlooked. However, we learned that its suggestions still needed to be checked against reliable technical sources. Overall, the assignment strengthened our understanding of how to critically evaluate security claims, recognize limitations, and build confidence through evidence rather than assumptions.
 <!-- Compiled from individual reflections in the issue: What did you learn? What did you find most useful? -->
