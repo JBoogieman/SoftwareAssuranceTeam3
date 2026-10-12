@@ -60,12 +60,29 @@ The argument follows the trust boundary from the Part 1 interaction: the federat
 
 **Prompt used:**
 
-```text
+```
+
+> I am developing Claim 1 for our Software Assurance assignment, focusing on employee authentication and credential security in Keycloak. Our top-level claim is: "Keycloak minimizes unauthorized access to enterprise applications through employee password and OTP authentication."
+>
+> Using the eliminative argumentation approach discussed in class, the faculty's assurance-case example, and our previous requirements and misuse-case analysis, review my assurance argument and help me strengthen its structure.
+>
+> Specifically:
+>
+> 1. Evaluate whether my top-level claim describes a meaningful security property rather than simply stating that Keycloak provides certain features.
+> 2. Examine the four threats identified in our misuse-case analysis: credential stuffing, stolen passwords, repeated OTP guessing, and account-lockout denial of service.
+> 3. Identify appropriate rebuttals using "Unless..." statements and determine whether the supporting subclaims adequately address each rebuttal.
+> 4. Identify undercuts or undermines that could challenge the reasoning or reliability of the supporting evidence, particularly where Keycloak security controls depend on configuration.
+> 5. Ensure that every argument branch terminates in tangible, measurable evidence expressed as a noun phrase, consistent with the faculty's assurance-case example.
+> 6. Recommend improvements to the diagram's structure and notation so I can recreate it accurately in draw.io.
+> 7. Distinguish between security capabilities documented by Keycloak and protections that require deployment-specific configuration or testing. Do not assume that controls are enabled or that evidence has been collected.
+>
+> Explain any weaknesses or unresolved rebuttals rather than treating the assurance argument as fully supported.
 
 ```
 
 **Reflection on usefulness:**
 
+AI's ability to structure information grants us the capability of generating the starting structure or validating overlapping information. Though, the one thing all of us agreed on is that it requires human review to check the logic and validate the evidence provided. While AI can structure information swiftly, it does not always assemble it correctly and can lead to logical holes in arguments. This is especially a sensitive matter regarding Software Assurance as having a lack of proper detail could lead to unaddressed or improperly addressed vulnerabilities.
 ---
 
 ## Part 2 — Evidence Alignment Observations
@@ -95,7 +112,56 @@ The argument follows the trust boundary from the Part 1 interaction: the federat
 
 | ID | Evidence | Alignment | Source / where it would come from | Gap |
 |---|---|---|---|---|
-| E2.1 | | | | |
+| E2.1 | Registration flow with reCAPTCHA; user-profile validators (supports C3) | Available (docs); Can be made available (our settings) | [*Allowing users to self-register* → *Enabling reCAPTCHA*][e1-selfreg] and [*Managing user attributes* → *Validating Attributes*][e1-profile]. Our registration flow and user-profile JSON from a realm export or the Admin REST API. | The docs show the features exist, not that they are enabled for our realm. The claim says "verified", but neither node covers *Verifying a user's email address*. Neither limits registrations by volume (R2). |
+| E2.2 | Mitigating security threats, Brute force attacks (supports C4) | Available (docs); Can be made available (our settings) | [*Mitigating security threats* → *Brute force attacks*][e2-brute] (upstream section: [Admin Guide][kc-admin]). The realm's *Security defenses → Brute force detection* settings from a realm export. | Brute force detection is **disabled by default** in the Red Hat build of Keycloak docs, so the docs alone don't support C4. The mode and thresholds in use have to be recorded. The same page warns the feature makes the server open to lockout-based denial of service. |
+| E2.3 | Enabling forgot password; Reset Credentials flow (supports C5) | Available (docs); Can be made available (lifespan setting) | [*Enabling forgot password*][e3-forgot] and the Reset Credentials flow under [*Authentication flows*][e3-flows]. The *Realm settings → Tokens* tab, *User-Initiated Action Lifespan* ([Red Hat sessions and tokens page][e3-lifespan]; [forum: default 5 minutes][e3-forum]). | The docs give the flow and a time limit. I found no statement that links are single-use. A [forum thread][e3-invalidate] asks how to invalidate an older reset link when a second is requested, which suggests it isn't covered. "Bound to the owner" depends on email delivery. |
+| E2.4 | User-profile permissions; UPDATE_EMAIL re-auth (supports C6) | Available (docs); Can be made available (our settings) | [*Managing Attributes* (Permission)][e4-profile] and [*Update Email Workflow (UpdateEmail)*][e4-updateemail]. User-profile JSON export. | Covers attribute and email changes only. Password change, session management, and the Account Console API aren't cited. UPDATE_EMAIL has to be enabled, and its default re-authentication age is 5 minutes. No test shows a user can't edit another user's account. |
+| E2.5 | Managing access to realm resources (supports C8) | Available (docs); Requires additional effort (assignments) | [*Managing access to realm resources*][e5-access] (master-realm access control, realm roles, fine-grained admin permissions). The list of admin role mappings from the Admin REST API. | The guide shows how to configure least privilege, not that we do. We'd need an export of who holds admin roles, and a review of it. We also need to say whether fine-grained admin permissions V1 or the newer model applies. |
+| E2.6 | Unspecific redirect URIs; Client Policies (supports C9) | Available (docs); Can be made available (client exports) | [*Unspecific redirect URIs*][e6-redirect] and [*Client Policies*][e6-policies] (Securing Client URIs, Client Secret Rotation). Each client's redirect URIs, scopes, and policies from a realm export. | Client Policies are opt-in, so they only count if configured. The claim also covers secrets and scopes, which this node only partly covers. Nothing shows a policy was tested against a bad redirect URI. |
+| E2.7 | Authentication flows; Required actions (supports C10) | Available (docs); Requires additional effort (flow tests) | [*Authentication flows*][e7-flows] and [*Defining actions required at login*][e7-required]. Flow definitions from a realm export. | This is the weakest branch. UM1 says only default flows were tested and C11 is still undeveloped. Nothing in the docs stops an admin from removing a required step. We'd need tests of our custom flows, or a scheduled comparison against an approved baseline. |
+| E2.8 | Configuring auditing, user and admin events (supports C12) | Available (docs); Can be made available (event settings) | [*Configuring auditing to track events*][e8-audit] (*Auditing user events*, *Auditing admin events*). *Realm settings → Events* configuration from a realm export. | Event logging is a setting to turn on, so "complete" isn't guaranteed. Retention, tamper-resistance, and who can read the events aren't covered. |
+| E2.9 | ACR to LoA mapping; step-up flow (supports C14) | Available (docs); Requires additional effort (test) | [*ACR to Level of Authentication (LoA) Mapping*][e9-acr] and [*Creating a browser login flow with step-up mechanism*][e9-stepup]. The realm's mapping and flow from a realm export. | Configuration evidence only. No test shows a client can't skip the step-up by omitting `acr_values`. The docs say SAML step-up needs a separate feature enabled. |
+| E2.10 | Integrating identity providers (supports C15) | Available (docs); Can be made available (IdP config) | [*Integrating identity providers*][e10-idp] and the [SAML identity provider source docs][e10-saml]. Each IdP's configuration from the Admin REST API, with the signature settings in particular. | The chapter explains the options but doesn't show that signature validation is on for each provider. The first-login options (automatic account linking) can allow account takeover if the IdP's email isn't trustworthy. |
+| E2.11 | LDAP over SSL; password hashing (supports C16) | Available (docs); Can be made available (LDAP config) | [*Connecting to LDAP over SSL*][e11-ldaps] and [*Password hashing*][e11-hash], plus the *Configuring a Truststore* guide ([Guides][kc-guides]). LDAP provider settings (URL scheme, truststore) from a realm export. | The guide itself says Keycloak sends passwords to LDAP in plain text and relies on the LDAP server to hash them. Some servers (OpenLDAP) store plain text unless the Password Modify Extended Operation is enabled. Encryption only applies when an `ldaps://` URL is configured. |
+| E2.12 | Realm isolation; per-realm keystores; vault references (supports C17) | Available (docs); Requires additional effort ("in transit" and "in logs") | [*The master realm*][e12-realm], [*Loading keys from a Java Keystore*][e12-keystore], and [*Using a vault to obtain secrets*][e12-vault]. The Server Installation and Configuration guides ([Guides][kc-guides]). | Supports isolation and secret storage only. "In transit" depends on TLS configuration, "in logs" on log settings, and "at rest" on the database. This node also attaches through UC1 and IR1, so a weak E12 weakens the top claim. |
+
+*Gaps across the case.* Keycloak's docs can support most of these nodes (E2.2, E2.3, E2.4, E2.5, E2.6, E2.8, E2.9), but the case needs more than doc references. Each branch needs a snapshot of **our realm configuration**, which can be pulled from the Admin REST API or a realm export. 
+Three nodes need more than a configuration snapshot:
+- **E2.7:** the graph already marks this branch as undeveloped (UM1 and C11). It needs tests of the custom authentication flows.
+- **E2.9:** step-up MFA needs a test showing it can't be skipped.
+- **E2.12:** "in transit" and "in logs" have no cited evidence yet.
+
+Two other nodes carry gaps the docs themselves flag:
+- **E2.2:** brute force detection is off by default.
+- **E2.11:** LDAP passwords go to the server in plain text unless `ldaps://` is configured.
+  
+[kc-admin]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[kc-guides]: https://www.keycloak.org/guides
+[e1-selfreg]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e1-profile]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e2-brute]: https://docs.redhat.com/en/documentation/red_hat_build_of_keycloak/26.0/html/server_administration_guide/mitigating_security_threats
+[e3-forgot]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e3-flows]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e3-lifespan]: https://docs.redhat.com/en/documentation/red_hat_build_of_keycloak/22.0/html/server_administration_guide/managing_user_sessions
+[e3-forum]: https://forum.keycloak.org/t/reset-password-token-duration/10253
+[e3-invalidate]: https://forum.keycloak.org/t/keycloak-reset-credentials-invalidate-old-tokens/29277
+[e4-profile]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e4-updateemail]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e5-access]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e6-redirect]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e6-policies]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e7-flows]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e7-required]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e8-audit]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e9-acr]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e9-stepup]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e10-idp]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e10-saml]: https://github.com/keycloak/keycloak/blob/main/docs/documentation/server_admin/topics/identity-broker/saml.adoc
+[e11-ldaps]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e11-hash]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e12-realm]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e12-keystore]: https://www.keycloak.org/docs/latest/server_admin/index.html
+[e12-vault]: https://www.keycloak.org/docs/latest/server_admin/index.html
 
 ### Claim 3
 

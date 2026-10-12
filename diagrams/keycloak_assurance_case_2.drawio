@@ -1,0 +1,417 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="ac" name="Keycloak assurance case">
+    <mxGraphModel dx="1318" dy="783" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3400" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="NEa3nKhdWmUcdE9ewPFY-15" edge="1" parent="1" source="C1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="IR1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Top-Claim C1:&lt;br&gt;&lt;/b&gt;Keycloak securely authenticates and authorises End users, Realm admins, Client apps and external IdP/LDAP interactions" vertex="1">
+          <mxGeometry height="100" width="200" x="1010" as="geometry" />
+        </mxCell>
+        <mxCell id="CT1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;fontSize=10;" value="Context: CT1&lt;br&gt;Scope is the Keycloak server boundary and actors in the use-case diagram" vertex="1">
+          <mxGeometry height="80" width="200" x="460" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CT2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;fontSize=10;" value="Context: CT2&lt;br&gt;Login includes Issue tokens; Step-up MFA and Broker IdP login extend Login" vertex="1">
+          <mxGeometry height="80" width="200" x="620" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="CT3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;fontSize=10;" value="Context: CT3&lt;br&gt;Assumes TLS, hardened patched host and protected database" vertex="1">
+          <mxGeometry height="70" width="200" x="760" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C1_CT1" edge="1" parent="1" source="C1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="CT1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C1_CT2" edge="1" parent="1" source="C1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="CT2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C1_CT3" edge="1" parent="1" source="C1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="CT3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R1" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R1: Unless attackers can take over or bypass end-user accounts" vertex="1">
+          <mxGeometry height="80" width="160" x="270" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C1_R1" edge="1" parent="1" source="C1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C2:&lt;br&gt;&lt;/b&gt;End-user use cases are secure (register, log in, reset password, manage account)" vertex="1">
+          <mxGeometry height="90" width="180" x="260" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R1_C2" edge="1" parent="1" source="R1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="C2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="345" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R2" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R2: Unless attackers can register fake or bulk accounts" vertex="1">
+          <mxGeometry height="80" width="160" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C2_R2" edge="1" parent="1" source="C2" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C3:&lt;br&gt;&lt;/b&gt;Registration is limited to verified, legitimate users" vertex="1">
+          <mxGeometry height="80" width="160" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R2_C3" edge="1" parent="1" source="R2" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E1:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: registration flow with reCAPTCHA; user-profile validators&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="20" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C3_E1" edge="1" parent="1" source="C3" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="65" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E1_OK1" edge="1" parent="1" source="E1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R3" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R3: Unless credentials can be guessed without detection" vertex="1">
+          <mxGeometry height="80" width="160" x="180" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C2_R3" edge="1" parent="1" source="C2" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C4:&lt;br&gt;&lt;/b&gt;Login detects and throttles brute-force attempts" vertex="1">
+          <mxGeometry height="80" width="160" x="180" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R3_C4" edge="1" parent="1" source="R3" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E2" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E2:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: Mitigating security threats, Brute force attacks&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="200" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C4_E2" edge="1" parent="1" source="C4" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK2" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="245" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E2_OK2" edge="1" parent="1" source="E2" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R4" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R4: Unless someone other than the owner can reset a password" vertex="1">
+          <mxGeometry height="80" width="160" x="360" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C2_R4" edge="1" parent="1" source="C2" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C5:&lt;br&gt;&lt;/b&gt;Reset links are single-use, time-limited and bound to the owner" vertex="1">
+          <mxGeometry height="80" width="160" x="360" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R4_C5" edge="1" parent="1" source="R4" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E3" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E3:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: Enabling forgot password; Reset Credentials flow&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="380" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C5_E3" edge="1" parent="1" source="C5" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK3" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="425" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E3_OK3" edge="1" parent="1" source="E3" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R5" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R5: Unless a user can change another user&#39;s account" vertex="1">
+          <mxGeometry height="80" width="160" x="540" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C2_R5" edge="1" parent="1" source="C2" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C6:&lt;br&gt;&lt;/b&gt;Users can access only their own account data" vertex="1">
+          <mxGeometry height="80" width="160" x="540" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R5_C6" edge="1" parent="1" source="R5" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E4" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E4:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: user-profile permissions; UPDATE_EMAIL re-auth&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="560" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C6_E4" edge="1" parent="1" source="C6" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK4" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="605" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E4_OK4" edge="1" parent="1" source="E4" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R6" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R6: Unless admin functions can be abused or go unaccounted" vertex="1">
+          <mxGeometry height="80" width="160" x="1030" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C1_R6" edge="1" parent="1" source="C1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C7:&lt;br&gt;&lt;/b&gt;Realm-admin use cases are secure (manage users, clients, flows, audit)" vertex="1">
+          <mxGeometry height="90" width="180" x="1020" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R6_C7" edge="1" parent="1" source="R6" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R7" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R7: Unless a non-admin can change users or roles" vertex="1">
+          <mxGeometry height="80" width="160" x="760" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C7_R7" edge="1" parent="1" source="C7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C8:&lt;br&gt;&lt;/b&gt;Only authorised admins manage users, under least privilege" vertex="1">
+          <mxGeometry height="80" width="160" x="760" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R7_C8" edge="1" parent="1" source="R7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E5:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: Managing access to realm resources&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="780" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C8_E5" edge="1" parent="1" source="C8" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="825" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E5_OK5" edge="1" parent="1" source="E5" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R8" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R8: Unless a client can be set up to obtain unintended tokens" vertex="1">
+          <mxGeometry height="80" width="160" x="940" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C7_R8" edge="1" parent="1" source="C7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C9:&lt;br&gt;&lt;/b&gt;Client settings (redirect URIs, secrets, scopes) are validated" vertex="1">
+          <mxGeometry height="80" width="160" x="940" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R8_C9" edge="1" parent="1" source="R8" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E6" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E6:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: Unspecific redirect URIs; Client Policies&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="960" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C9_E6" edge="1" parent="1" source="C9" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK6" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1005" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E6_OK6" edge="1" parent="1" source="E6" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R9" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R9: Unless a flow change silently removes a required security step" vertex="1">
+          <mxGeometry height="80" width="160" x="1120" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C7_R9" edge="1" parent="1" source="C7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C10:&lt;br&gt;&lt;/b&gt;Flow changes preserve required MFA and policy steps" vertex="1">
+          <mxGeometry height="80" width="160" x="1120" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R9_C10" edge="1" parent="1" source="R9" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E7" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E7:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: Authentication flows; Required actions&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="1140" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C10_E7" edge="1" parent="1" source="C10" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UM1" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#A9C4EB;fontSize=10;" value="Undermine UM1: Unless only default flows were tested" vertex="1">
+          <mxGeometry height="80" width="160" x="1120" y="915" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E7_UM1" edge="1" parent="1" source="E7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="UM1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NEa3nKhdWmUcdE9ewPFY-6" edge="1" parent="1" source="C11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NEa3nKhdWmUcdE9ewPFY-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C11:&lt;br&gt;&lt;/b&gt;Custom and modified flows are also tested" vertex="1">
+          <mxGeometry height="80" width="160" x="1120" y="1035" as="geometry" />
+        </mxCell>
+        <mxCell id="e_UM1_C11" edge="1" parent="1" source="UM1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R10" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R10: Unless admin actions can occur without a record" vertex="1">
+          <mxGeometry height="80" width="160" x="1300" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C7_R10" edge="1" parent="1" source="C7" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C12:&lt;br&gt;&lt;/b&gt;Security events are logged completely and visible only to admins" vertex="1">
+          <mxGeometry height="80" width="160" x="1300" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R10_C12" edge="1" parent="1" source="R10" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E9" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E8:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: Configuring auditing (user and admin events)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="1320" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C12_E9" edge="1" parent="1" source="C12" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK8" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1365" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E9_OK8" edge="1" parent="1" source="E9" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R11" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R11: Unless tokens or integrations can be forged or abused" vertex="1">
+          <mxGeometry height="80" width="160" x="1590" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C1_R11" edge="1" parent="1" source="C1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C13:&lt;br&gt;&lt;/b&gt;Protocol and integration use cases are secure (tokens, MFA, IdP, LDAP/AD)" vertex="1">
+          <mxGeometry height="90" width="180" x="1580" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R11_C13" edge="1" parent="1" source="R11" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R13" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R12: Unless step-up MFA can be skipped" vertex="1">
+          <mxGeometry height="80" width="160" x="1500" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C13_R13" edge="1" parent="1" source="C13" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C14:&lt;br&gt;&lt;/b&gt;Step-up MFA is enforced when higher assurance is requested" vertex="1">
+          <mxGeometry height="80" width="160" x="1500" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R13_C16" edge="1" parent="1" source="R13" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E12" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E9:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: ACR to LoA mapping; step-up flow&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="1520" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C16_E12" edge="1" parent="1" source="C16" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK10" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1565" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E12_OK10" edge="1" parent="1" source="E12" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R14" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R13: Unless a forged IdP assertion is accepted" vertex="1">
+          <mxGeometry height="80" width="160" x="1680" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C13_R14" edge="1" parent="1" source="C13" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C15:&lt;br&gt;&lt;/b&gt;Brokered assertions are validated and mapped to the right account" vertex="1">
+          <mxGeometry height="80" width="160" x="1680" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R14_C17" edge="1" parent="1" source="R14" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E13" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E10:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: Integrating identity providers&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="1700" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C17_E13" edge="1" parent="1" source="C17" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK11" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1745" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E13_OK11" edge="1" parent="1" source="E13" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R15" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal R14: Unless LDAP/AD credentials can be exposed" vertex="1">
+          <mxGeometry height="80" width="160" x="1860" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C13_R15" edge="1" parent="1" source="C13" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="R15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C16:&lt;br&gt;&lt;/b&gt;LDAP/AD links are encrypted and credentials are not exposed" vertex="1">
+          <mxGeometry height="80" width="160" x="1860" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="e_R15_C18" edge="1" parent="1" source="R15" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E14" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E11:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: LDAP over SSL; password hashing&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="1880" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C18_E14" edge="1" parent="1" source="C18" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="E14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OK12" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1925" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="e_E14_OK12" edge="1" parent="1" source="E14" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="OK12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IR1" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#A9C4EB;size=0.05555555555555555;fontSize=10;" value="&lt;b&gt;Inference Rule IR1:&lt;/b&gt; If end-user, admin and protocol/integration use cases are all secure, then Keycloak is secure overall" vertex="1">
+          <mxGeometry height="100" width="200" x="2060" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="UC1" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#F19C99;fontSize=10;" value="Undercut UC1: Unless cross-cutting weaknesses (realm isolation, secret leakage) defeat the use-case-level controls" vertex="1">
+          <mxGeometry height="90" width="170" x="2075" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_IR1_UC1" edge="1" parent="1" source="IR1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="UC1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="C19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="&lt;b&gt;Sub-Claim C17:&lt;br&gt;&lt;/b&gt;Realms are isolated and secrets are protected in transit, at rest and in logs" vertex="1">
+          <mxGeometry height="80" width="160" x="2080" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="e_UC1_C19" edge="1" parent="1" source="UC1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" target="C19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_C19_U1" edge="1" parent="1" source="C19" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NEa3nKhdWmUcdE9ewPFY-11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="2161.0000000000005" y="730" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1&gt;Assurance Case: Keycloak&lt;/h1&gt;" vertex="1">
+          <mxGeometry height="190" width="230" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;" value="Claim" vertex="1">
+          <mxGeometry height="50" width="100" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="lg1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=30;fontSize=10;" value="Context" vertex="1">
+          <mxGeometry height="50" width="100" x="130" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="lg2" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#FFF2CC;fontSize=10;" value="Rebuttal" vertex="1">
+          <mxGeometry height="50" width="100" x="260" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="lg3" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#A9C4EB;fontSize=10;" value="Undermine" vertex="1">
+          <mxGeometry height="50" width="100" x="390" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="lg4" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=17;fillColor=#F19C99;fontSize=10;" value="Undercut" vertex="1">
+          <mxGeometry height="50" width="100" x="520" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="lg5" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#A9C4EB;size=0.05555555555555555;fontSize=10;" value="Inference rule" vertex="1">
+          <mxGeometry height="50" width="110" x="650" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="lg6" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="Evidence" vertex="1">
+          <mxGeometry height="70" width="70" x="790" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="lgg" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="890" y="1360" as="geometry" />
+        </mxCell>
+        <mxCell id="lggt" parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=10;" value="Evidence accepted, no further doubt" vertex="1">
+          <mxGeometry height="40" width="110" x="925" y="1355" as="geometry" />
+        </mxCell>
+        <mxCell id="lgd" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1060" y="1360" as="geometry" />
+        </mxCell>
+        <mxCell id="lgdt" parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;fontSize=10;" value="Undeveloped (evidence still needed)" vertex="1">
+          <mxGeometry height="40" width="110" x="1095" y="1355" as="geometry" />
+        </mxCell>
+        <mxCell id="NEa3nKhdWmUcdE9ewPFY-3" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="1185" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="NEa3nKhdWmUcdE9ewPFY-11" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;rounded=0;fontSize=9;" value="&lt;b style=&quot;font-size: 8px;&quot;&gt;Evidence E12:&lt;/b&gt;&lt;br style=&quot;font-size: 8px;&quot;&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;Admin Guide: realm isolation; per-realm keystores; vault refs&lt;/span&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="2100" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="NEa3nKhdWmUcdE9ewPFY-13" edge="1" parent="1" source="NEa3nKhdWmUcdE9ewPFY-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="NEa3nKhdWmUcdE9ewPFY-12" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2160" y="840" as="sourcePoint" />
+            <mxPoint x="2159.9999999999995" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NEa3nKhdWmUcdE9ewPFY-12" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCCCCC;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="2145" y="835" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
