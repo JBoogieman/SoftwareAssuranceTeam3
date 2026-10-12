@@ -83,6 +83,7 @@ The argument follows the trust boundary from the Part 1 interaction: the federat
 **Reflection on usefulness:**
 
 AI's ability to structure information grants us the capability of generating the starting structure or validating overlapping information. Though, the one thing all of us agreed on is that it requires human review to check the logic and validate the evidence provided. While AI can structure information swiftly, it does not always assemble it correctly and can lead to logical holes in arguments. This is especially a sensitive matter regarding Software Assurance as having a lack of proper detail could lead to unaddressed or improperly addressed vulnerabilities.
+
 ---
 
 ## Part 2 — Evidence Alignment Observations
