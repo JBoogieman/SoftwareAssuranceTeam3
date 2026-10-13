@@ -262,14 +262,46 @@ Two other nodes carry gaps the docs themselves flag:
 
 ### Summary of gaps
 
+Our evidence-alignment assessment across the five assurance cases shows that Keycloak provides documentation, source code, and existing tests that support several of the security controls identified in our diagrams. However, not all the evidence is currently available, and some evidence would require additional configuration, testing, or monitoring to collect.
+
+**Claim 1 — Employee Authentication and Credential Security:** Keycloak documents brute-force protection, OTP authentication, and authentication-event logging. Configuration exports could be collected to verify these controls in a deployed realm. However, password and OTP lockout test results, authentication-flow verification, and monitoring validation require additional effort. Account-lockout denial of service remains a gap because monitoring suspicious login attempts does not prevent an attacker from triggering account lockouts.
+
+**Claim 2 — Realm Administration and Credential Security:** Keycloak documentation supports several administrative security controls, including authentication flows, access permissions, auditing, and credential management. However, deployment-specific configuration exports and additional tests are needed to confirm that these protections are enforced. The remaining gaps include custom authentication-flow testing, step-up authentication verification, and evidence supporting protections for data in transit and logs. The documentation also identifies limitations involving brute-force protection being disabled by default and LDAP connections that may transmit passwords in plain text if not securely configured.
+
+**Claim 3 — Token Security:** Existing Keycloak source code and tests provide evidence for several token security mechanisms, including PKCE verification, redirect URI validation, refresh token handling, and DPoP. However, some protections depend on client policies or realm settings that must be verified through configuration exports. Additional effort is required to collect client configuration audit reports and validate deployment-specific settings. A significant gap remains in detecting token reuse and revoking the affected session, which the reviewed Keycloak implementation does not currently support as claimed in the assurance case.
+
+**Claim 4 — Identity Brokering:** Existing Keycloak tests and security advisories support several identity-brokering protections, including SAML signature validation and broker login behavior. However, identity provider configuration exports, recurring configuration audits, and additional validation are needed to establish that these protections are correctly applied. A remaining gap is partner account offboarding because Keycloak does not automatically receive notification when a partner disables an account. Additional procedures and controls are therefore required to address this limitation.
+
+**Claim 5 — Active Directory Federation:** Keycloak documentation, source code, tests, and security advisories provide evidence for LDAP federation and group-mapping behavior. However, configuration exports, certificate-interception tests, directory group-mapping tests, and audit records require additional effort to collect. Important gaps remain in verifying trusted LDAP connections, preventing unauthorized role assignments through directory mapping, and recording which Active Directory group caused a role assignment. Some of these limitations cannot be resolved through configuration evidence alone.
+
+**Overall Assessment:** The main gaps across our five assurance cases involve deployment-specific configuration evidence, additional security testing, monitoring and auditing, and security behaviors that Keycloak does not currently support. Existing documentation and tests provide evidence of Keycloak's capabilities, but they do not automatically demonstrate that those protections are enabled or effective in our proposed enterprise environment. Therefore, some evidence can be made available through configuration exports and testing, while other gaps require additional implementation, external controls, or changes to the assurance argument.
+
+This assessment helped us distinguish between security controls supported by existing evidence, controls that require further verification, and limitations that remain unresolved. These gaps must be acknowledged when evaluating how much confidence the available evidence provides in our security claims.
+
+
 ---
 
 ## Project Board
 
 [Assurance Cases Milestones](https://github.com/JBoogieman/SoftwareAssuranceTeam3/milestone/3)
 
+---
 ## Team Reflection
 
+### What did we learn from this assignment?
 
+This assignment helped our team understand that software assurance is not simply about identifying the security features a system provides, but about developing arguments and gathering evidence to support security claims. We learned how to use claims, rebuttals, subclaims, and evidence to examine whether Keycloak's security controls adequately address potential threats.
+
+One important lesson was that documented security capabilities do not necessarily guarantee protection in a deployed environment. Controls such as brute-force protection, OTP authentication, and LDAP security depend on proper configuration and supporting evidence. Developing rebuttals, undercuts, and undermines helped us challenge our own assumptions and identify gaps in our arguments. We also learned that some security claims needed to be revised when the available evidence did not fully support them.
+
+Beyond the technical work, we learned the importance of teamwork and adapting to unexpected changes. Losing a team member required us to redistribute responsibilities, communicate clearly, and continue working toward the assignment deadline while maintaining the quality of our work.
+
+### What did we find most useful?
+
+The most useful part of this assignment was connecting our previous misuse-case analysis to the assurance cases. This helped us move from identifying potential threats to evaluating whether Keycloak's security controls could address them and what evidence would be needed to support those conclusions.
+
+We also found the evidence-alignment assessment particularly valuable. Reviewing Keycloak's documentation, source code, and available tests helped us distinguish between what the system supports, what depends on configuration, and what still requires additional verification. Building the diagrams also helped us visualize where our arguments were strong and where gaps remained.
+
+AI assistance was useful for brainstorming potential rebuttals and identifying attack scenarios we might have overlooked. However, we learned that its suggestions still needed to be checked against reliable technical sources. Overall, the assignment strengthened our understanding of how to critically evaluate security claims, recognize limitations, and build confidence through evidence rather than assumptions.
 
 <!-- Compiled from individual reflections in the issue: What did you learn? What did you find most useful? -->
