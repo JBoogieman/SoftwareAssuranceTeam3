@@ -97,23 +97,26 @@ AI's ability to structure information grants us the capability of generating the
 
 <!-- For each evidence node in your diagram: Available / Can be made available / Requires additional effort. Link the Keycloak doc or code where it exists. -->
 
+
 ### Claim 1
 
 | ID | Evidence | Alignment | Source / where it would come from | Gap |
 |---|---|---|---|---|
-| E1.1 | Keycloak brute-force detection and lockout configuration export (realm settings) | Can be made available | Realm brute-force detection settings in the [Keycloak Server Administration Guide][c1-admin-docs], verified through a realm export. | Brute-force protection must be enabled and configured. No deployment-specific export has been collected; this also relates to UC1. |
+| E1.1 | Keycloak brute-force detection and lockout configuration export (realm settings) | Can be made available | Realm brute-force detection settings in the [Keycloak Server Administration Guide][c1-brute-force], verified through a realm export. | Brute-force protection must be enabled and configured. No deployment-specific export has been collected; this also relates to UC1. |
 | E1.2 | Test results showing account lockout after configured failed password attempts | Requires additional effort | Controlled repeated failed-password attempts against a configured Keycloak test realm. | No deployment-specific lockout test results have been collected. |
-| E2.1 | Keycloak authentication-flow configuration showing required OTP for the employee realm | Can be made available | Authentication-flow settings and required OTP execution in the [Keycloak administration documentation][c1-admin-docs]. | No current configuration export has been collected. UM1 also questions whether the export accurately reflects the deployed realm. |
+| E2.1 | Keycloak authentication-flow configuration showing required OTP for the employee realm | Can be made available | Authentication-flow settings and required OTP execution in the [Keycloak administration documentation][c1-auth-flows]. | No current configuration export has been collected. UM1 also questions whether the export accurately reflects the deployed realm. |
 | E2.2 | Test results showing password-only login is rejected (OTP required) | Requires additional effort | Login tests using a valid password without completing the required OTP challenge. | No password-only rejection test results have been collected. |
-| E3.1 | Keycloak OTP/required-action failure handling and lockout configuration export | Can be made available | Secondary authentication failure and lockout settings described in the [Keycloak administration documentation][c1-admin-docs]. | The deployed threshold and protection settings have not been verified; this relates to UC2. |
+| E3.1 | Keycloak OTP/required-action failure handling and lockout configuration export | Can be made available | Secondary authentication failure and lockout settings described in the [Keycloak administration documentation][c1-secondary-auth]. | The deployed threshold and protection settings have not been verified; this relates to UC2. |
 | E3.2 | Test results showing temporary or permanent lockout after configured invalid OTP attempts | Requires additional effort | Controlled repeated invalid-OTP attempts against a configured test realm. | No OTP failure lockout test results have been collected. |
-| E4.1 | Authentication failure event log with client IP addresses (Keycloak events) | Can be made available | Keycloak login-error events and [event logging configuration][c1-admin-docs]. | Event logging must be configured and retained. No actual records have been collected; this relates to UM2. |
+| E4.1 | Authentication failure event log with client IP addresses (Keycloak events) | Can be made available | Keycloak login-error events and [event logging configuration][c1-auditing]. | Event logging must be configured and retained. No actual records have been collected; this relates to UM2. |
 | E4.2 | Authentication failure monitoring test report (e.g., SIEM detection rule and alert) | Requires additional effort | Keycloak authentication events and an integrated monitoring or SIEM system. | No alert-validation test has been collected. Monitoring alone cannot prevent account-lockout denial of service. |
 
 **Claim 1 gaps.** Keycloak documents the authentication protections needed for password and OTP security, but their effectiveness depends on deployment configuration. The largest evidence gaps are the absence of current realm exports, password and OTP lockout tests, and authentication-monitoring validation. UC1 and UC2 identify configuration-dependent protections, while UM1 and UM2 challenge whether the available evidence accurately represents the deployed environment. Account-lockout denial of service remains a residual availability risk because monitoring suspicious authentication failures does not itself stop an attacker from triggering lockouts.
 
-[c1-admin-docs]: https://www.keycloak.org/docs/latest/server_admin/
-
+[c1-brute-force]: https://www.keycloak.org/docs/latest/server_admin/index.html#brute-force-attacks
+[c1-auth-flows]: https://www.keycloak.org/docs/latest/server_admin/index.html#authentication-flows
+[c1-secondary-auth]: https://www.keycloak.org/docs/latest/server_admin/index.html#secondary-authentication-failures-lockout
+[c1-auditing]: https://www.keycloak.org/docs/latest/server_admin/index.html#configuring-auditing-to-track-events
 
 ### Claim 2
 
