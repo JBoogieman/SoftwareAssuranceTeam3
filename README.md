@@ -13,7 +13,7 @@ is scoped to its authorization and credential subsystem.
 |---|---|---|
 | 1 | [Project Proposal](Project-Proposal.md) | Complete |
 | 2 | [Requirements for Software Security Engineering](Requirements-for-Software-Security-Engineering.md) | Complete |
-| 3 | [Assurance Cases Software Security Engineering](https://github.com/JBoogieman/SoftwareAssuranceTeam3/blob/main/Assurance-Cases-for-Software-Security-Engineering.md) | In-Progress |
+| 3 | [Assurance Cases Software Security Engineering](https://github.com/JBoogieman/SoftwareAssuranceTeam3/blob/main/Assurance-Cases-for-Software-Security-Engineering.md) | Complete |
 | 4 | Designing for Software Security Engineering | Not started |
 | 5 | Code analysis for Software Security Engineering | Not started |
 | 6 | Recorded Presentation | Not started |
