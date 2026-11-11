@@ -24,7 +24,8 @@ Starting element list (draft, change it as needed):
 - External entities: End user (browser), Realm administrator, Client application, Partner identity provider, Active Directory
 - Processes: Authenticate user, Manage realm configuration, Issue tokens, Broker external login, Synchronize federated users
 - Data stores: Keycloak database (realms, users, credentials, clients, role mappings), Session store, Event store
-- Trust boundaries: Internet, Partner network, Corporate directory, Keycloak data tier
+- Trust boundaries: Internet, Partner network, Corporate directory
+- No boundary around the data stores: they sit inside Keycloak's trust zone. A "Keycloak data tier" box made every database and cache flow cross a boundary, which added 58 generic crash, sniffing and spoofing threats for Interactions 3 and 4 alone (134 down to 76 without it).
 
 Files:
 - threat-model/keycloak-threat-model.tm7 (TMT source)
@@ -92,11 +93,11 @@ The client application sits outside Keycloak in the Internet zone, since public 
 | F3.2 | Authorization response (code, `state`) | Authenticate user → End user (browser) | Keycloak → Internet |
 | F3.3 | Token request (code and `code_verifier`, or refresh token; client credentials) | Client application → Issue tokens | Internet → Keycloak |
 | F3.4 | Token response (ID, access, and refresh tokens) | Issue tokens → Client application | Keycloak → Internet |
-| F3.5 | Authorization code record (PKCE challenge, redirect URI, user session) | Authenticate user → Session store | Keycloak data tier |
-| F3.6 | Code record and client session | Session store → Issue tokens | Keycloak data tier |
-| F3.7 | Client registration and signing keys | Keycloak database → Issue tokens | Keycloak data tier |
-| F3.8 | Token events | Issue tokens → Event store | Keycloak data tier |
-| F3.9 | Client session update (latest refresh token, reuse count) | Issue tokens → Session store | Keycloak data tier |
+| F3.5 | Authorization code record (PKCE challenge, redirect URI, user session) | Authenticate user → Session store | None (inside Keycloak) |
+| F3.6 | Code record and client session | Session store → Issue tokens | None (inside Keycloak) |
+| F3.7 | Client registration and signing keys | Keycloak database → Issue tokens | None (inside Keycloak) |
+| F3.8 | Token events | Issue tokens → Event store | None (inside Keycloak) |
+| F3.9 | Client session update (latest refresh token, reuse count) | Issue tokens → Session store | None (inside Keycloak) |
 
 Redirect URI validation at F3.1 also reads the client's registration from the Keycloak database. That read shares the Keycloak database → Authenticate user flow with Interaction 1.
 
@@ -111,7 +112,6 @@ Redirect URI validation at F3.1 also reads the client's registration from the Ke
 | TBD | **Repudiation.** A client or user denies a code redemption or refresh, and Keycloak has no record to show otherwise. | F3.8 | Turn on *Save events* for `CODE_TO_TOKEN`, `REFRESH_TOKEN`, and their error types, and forward them to the SIEM. By default only error events are logged. *Quick win.* |
 | TBD | **Denial of service.** The token endpoint is flooded with token requests. | F3.3 | Set `http-max-queued-requests` so Keycloak sheds load instead of queuing without limit. *Quick win.* Rate-limit by client and source IP at the reverse proxy. *Structural.* |
 | TBD | **Information disclosure.** Anyone who can read the Keycloak database gets client secrets and the realm's signing keys, which is enough to forge tokens. | F3.7 | Store client secrets as vault references, and load signing keys through the `java-keystore` key provider instead of the default generated keys that live in the database. Restrict and audit database access. *Structural.* |
-| TBD | **Tampering.** The stored code record or refresh-token reuse count is altered to get around PKCE or reuse detection. | F3.5, F3.6, F3.9 | Keep the cache and database on an isolated network segment, reachable only from Keycloak nodes. Cluster traffic between nodes is already TLS-encrypted by default. |
 
 #### Interaction 4 — Identity brokering
 
@@ -126,10 +126,10 @@ With SAML's redirect and POST bindings, F4.2 and F4.3 travel through the user's 
 | F4.1 | Broker login request | End user (browser) → Broker external login | Internet → Keycloak |
 | F4.2 | SAML authentication request | Broker external login → Partner identity provider | Keycloak → Partner network |
 | F4.3 | SAML response (signed assertion) | Partner identity provider → Broker external login | Partner network → Keycloak |
-| F4.4 | Identity provider configuration and mappers | Keycloak database → Broker external login | Keycloak data tier |
-| F4.5 | Brokered user, identity link, and mapped roles | Broker external login → Keycloak database | Keycloak data tier |
+| F4.4 | Identity provider configuration and mappers | Keycloak database → Broker external login | None (inside Keycloak) |
+| F4.5 | Brokered user, identity link, and mapped roles | Broker external login → Keycloak database | None (inside Keycloak) |
 | F4.6 | Brokered identity context | Broker external login → Authenticate user | None (inside Keycloak) |
-| F4.7 | Broker login events | Broker external login → Event store | Keycloak data tier |
+| F4.7 | Broker login events | Broker external login → Event store | None (inside Keycloak) |
 
 Identity provider mappers are created over Interaction 2's Realm administrator → Manage realm configuration flow. The mapper threat is listed here because it only matters for brokered logins.
 
