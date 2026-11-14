@@ -4,6 +4,7 @@
 |---|---|---|---|
 | [#20008](https://github.com/keycloak/keycloak/issues/20008) UMA policy creation missing from the admin audit log | [#53316](https://github.com/keycloak/keycloak/pull/53316) | [CWE-778](https://cwe.mitre.org/data/definitions/778.html) Insufficient Logging | Merged |
 | [#53249](https://github.com/keycloak/keycloak/issues/53249) Brute force failure count never reset by identity provider logins | [#53724](https://github.com/keycloak/keycloak/pull/53724) | [CWE-645](https://cwe.mitre.org/data/definitions/645.html) Overly Restrictive Account Lockout Mechanism | PR open, waiting on maintainer review |
+| [#53325](https://github.com/keycloak/keycloak/issues/53325) AuthZen caller can impersonate another client towards client policies | [#55186](https://github.com/keycloak/keycloak/pull/55186) | [CWE-807](https://cwe.mitre.org/data/definitions/807.html) Reliance on Untrusted Inputs in a Security Decision | PR open, waiting on maintainer review |
 
 ---
 
@@ -64,7 +65,7 @@ When two operations on the same object behave differently, compare their code pa
 
 ## #53249: Brute force failure count never reset by identity provider logins
 
-**Status:** [PR #53724](https://github.com/keycloak/keycloak/pull/53724) is open, and Copilot's review has been addressed. It's waiting on a maintainer to approve the CI runs and review it.
+**Status:** [PR #53724](https://github.com/keycloak/keycloak/pull/53724) is open and waiting on a maintainer review. On November 14, 2026 it was rebased onto current `main` and squashed to one commit (the only conflict was an admin console message file), so CI now runs on it. Both of Copilot's review points are handled: the first led to the third test below, and its suggestion to move the tests to the new test framework was answered on the PR, since Keycloak's rules for the deprecated testsuite allow adding test cases to an existing test as part of a bug fix.
 
 ### The issue
 
@@ -119,3 +120,68 @@ The third test came from Copilot's automated review, which pointed out that the 
 ### Takeaway
 
 Security fixes have side effects. #49996 closed one hole and created this bug, and the obvious fix for this bug would have reopened the first hole. Before changing security-relevant code, look up *why* it's written the way it is (git history and linked issues), and add a test for the case you're trying not to break.
+
+---
+
+## #53325: AuthZen caller can impersonate another client towards client policies
+
+**Status:** [PR #55186](https://github.com/keycloak/keycloak/pull/55186) is open and waiting on a maintainer review. The maintainer who assigned us the issue agreed on the approach on the issue before we wrote the fix, and said he'll review the PR.
+
+### The issue
+
+AuthZen is a standard API that Keycloak supports as a technology preview: an application asks Keycloak whether a subject can perform an action on a resource, and Keycloak answers yes or no using its authorization policies. A request can include a `context` map and `resource.properties`, extra attributes that policies can use. Keycloak copied both maps into the policy evaluation context as-is, including keys in the `kc.` namespace, which Keycloak uses for values it sets itself and policies trust. A client policy decides by checking `kc.client.id`, the client that made the request. So a caller could send `"kc.client.id": "other-client"` and be treated as that client: a decision that should have been `false` flipped to `true`.
+
+**Why it matters for assurance:** this is [CWE-807: Reliance on Untrusted Inputs in a Security Decision](https://cwe.mitre.org/data/definitions/807.html). The policy engine trusted a value the caller controlled, so any caller could impersonate any client towards client-based policies. It's also inside our scoped subsystem (authorization).
+
+### Where it lives in the source
+
+| File | Method | What it does |
+|---|---|---|
+| [`authzen/services/.../authzen/AuthZenResource.java`](https://github.com/keycloak/keycloak/blob/main/authzen/services/src/main/java/org/keycloak/authorization/authzen/AuthZenResource.java) | `evaluateSingle()` | Converts the request's `resource.properties` and `context` into claims for policy evaluation |
+| [`services/.../common/DefaultEvaluationContext.java`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/authorization/common/DefaultEvaluationContext.java) | `getBaseAttributes()` | Starts from those claims, then overwrites the `kc.*` values the server owns (time, network, realm). **Only sets `kc.client.id` for a `KeycloakIdentity`** |
+| [`authz/policy/common/.../client/ClientPolicyProvider.java`](https://github.com/keycloak/keycloak/blob/main/authz/policy/common/src/main/java/org/keycloak/authorization/policy/provider/client/ClientPolicyProvider.java) | `evaluate()` | Grants when `kc.client.id` matches one of the policy's clients |
+
+### Thought process
+
+1. **Reproduce it.** The issue came with a reproduction: a client policy that requires another client denies the real caller, but grants once the request adds `kc.client.id` for that other client, through either `context` or `resource.properties`.
+2. **Follow the request.** `evaluateSingle()` copies both maps into the claims. `getBaseAttributes()` starts from those claims and overwrites some `kc.*` keys, but it only sets `kc.client.id` when the identity is a `KeycloakIdentity`, which is the normal token flow. AuthZen builds a `UserModelIdentity` or `ClientModelIdentity` instead, so the caller's value was never overwritten.
+3. **Strip and set, not strip-only.** Dropping `kc.*` keys from the request alone would leave `kc.client.id` empty, so client policies would never match, even for the real caller. So the fix also sets `kc.client.id` from the token's `azp`, the client that actually authenticated. We proposed this on the issue, and the maintainer agreed before any code was written.
+4. **Reserve the whole prefix.** Filtering every `kc.` key, not just `kc.client.id`, also closes `kc.client.user_agent` (the server only sets it when the request has a `User-Agent` header) and covers any `kc.*` attribute added later.
+5. **Leave `subject.properties` alone.** Those feed the subject's identity attributes, not the evaluation context, and are meant to carry caller-supplied values.
+
+### The fix
+
+In `evaluateSingle()`, filter both maps before they become claims, then set the client id from the caller's token:
+
+```java
+Map<String, List<String>> claims = new HashMap<>();
+if (request.resource().properties() != null) {
+    convertContext(withoutReservedAttributes(request.resource().properties()), claims);
+}
+if (request.context() != null) {
+    convertContext(withoutReservedAttributes(request.context()), claims);
+}
+claims.put(EvaluationContext.CLIENT_ID_ATTRIBUTE, List.of(token.getIssuedFor()));
+```
+
+`withoutReservedAttributes()` copies the map and drops every key starting with `kc.`. It works on a copy because the batch endpoint shares one context map across all its items. The AuthZen guide now also notes that `kc.*` keys are reserved.
+
+### How we proved it
+
+Seven integration tests in `AuthZenEvaluationTest`:
+
+| Test | What it checks |
+|---|---|
+| `testClientPolicyDeniesOtherClient` | Baseline: a policy for another client denies the real caller |
+| `testContextCannotOverrideClientId` | Spoofing `kc.client.id` through `context` is still denied |
+| `testResourcePropertiesCannotOverrideClientId` | Spoofing it through `resource.properties` is still denied |
+| `testEvaluationsContextCannotOverrideClientId` | The batch endpoint, with the spoof in the shared default context |
+| `testClientPolicyMatchesAuthenticatedClient` | A policy for the real caller now matches (before the fix it never did, because `kc.client.id` was never set) |
+| `testContextCannotSupplyReservedAttribute` | A reserved key the server never sets, `kc.test.reserved`, sent through `context`, is ignored |
+| `testResourcePropertiesCannotSupplyReservedAttribute` | The same key through `resource.properties` is ignored |
+
+With the whole fix removed, four of the first five fail (all but the baseline). Copilot's automated review then pointed out a gap: because the server sets `kc.client.id` after filtering, those tests would still pass if the filter were deleted. The last two tests close it. They send `kc.test.reserved` and use a small test-only policy, `ReservedAttributePolicyProvider`, that grants only if it sees that key. With only the filter disabled, exactly those two fail. All 123 AuthZen tests pass with the fix.
+
+### Takeaway
+
+A fix with two layers needs a test for each layer. Our first tests went through the server-side overwrite, so they would have passed with the filter deleted. The way to prove each part is to remove it on its own and check that the right tests fail. And values in a reserved namespace should come from the server, never from the caller.
