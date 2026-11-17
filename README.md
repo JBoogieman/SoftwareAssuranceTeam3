@@ -9,15 +9,14 @@ is scoped to its authorization and credential subsystem.
 
 ## Deliverables
 
-| # | Deliverable | Status |
-|---|---|---|
-| 1 | [Project Proposal](Project-Proposal.md) | Complete |
-| 2 | [Requirements for Software Security Engineering](Requirements-for-Software-Security-Engineering.md) | Complete |
-| 3 | [Assurance Cases Software Security Engineering](https://github.com/JBoogieman/SoftwareAssuranceTeam3/blob/main/Assurance-Cases-for-Software-Security-Engineering.md) | Complete |
-| 4 | [Designing for Software Security Engineering](Designing-for-Software-Security-Engineering.md) | In progress |
-| 5 | Code analysis for Software Security Engineering | Not started |
-| 6 | Recorded Presentation | Not started |
-
+| # | Deliverable | Due | Status |
+|---|---|---|---|
+| 1 | [Project Proposal](Project-Proposal.md) | Sep 15, 2026 | Complete |
+| 2 | [Requirements for Software Security Engineering](Requirements-for-Software-Security-Engineering.md) | Sep 29, 2026 | Complete |
+| 3 | [Assurance Cases for Software Security Engineering](Assurance-Cases-for-Software-Security-Engineering.md) | Oct 13, 2026 | Complete |
+| 4 | [Designing for Software Security Engineering](Designing-for-Software-Security-Engineering.md) | Nov 20, 2026 | In progress |
+| 5 | [Code Analysis for Software Security Engineering](Code-Analysis-for-Software-Security-Engineering.md) | Dec 7, 2026 | Not started |
+| 6 | Recorded Presentation | _TBD_ | Not started |
 Diagram sources and exports are in [`diagrams/`](diagrams).
 
 [Project Board](https://github.com/users/JBoogieman/projects/1)
