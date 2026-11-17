@@ -88,9 +88,25 @@ Only the threats we found relevant and logical. Start with threats on flows that
 
 #### Interaction 5 — Directory federation
 
+Employee accounts and groups live in Active Directory on the corporate network, which Keycloak doesn't control. Synchronize federated users checks an employee's password by binding to AD as that user (F5.2, F5.3). It also periodically searches AD with a service account (F5.4, F5.5), imports the results, and maps AD groups to Keycloak roles (F5.6). Every workforce identity and role crosses the Corporate directory boundary, so most of this interaction's risk sits on F5.2–F5.5. Authenticate user then uses the result to create the session along the Interaction 1 and 3 flows (F5.9).
+
+
 | TMT ID | Threat (STRIDE) | Flow | Mitigation strategy |
 |---|---|---|---|
-| TBD | TBD | TBD | TBD |
+| Flow | Data | From → To | Crosses |
+| F5.1 | Credential validation request (username, password) | Authenticate user → Synchronize federated users | None (inside Keycloak) |
+| F5.2 | LDAP bind request (user DN, password) | Synchronize federated users → Active Directory | Keycloak → Corporate directory |
+| F5.3 | Bind result | Active Directory → Synchronize federated users | Corporate directory → Keycloak |
+| F5.4 | Directory search request (service account bind, search filter) | Synchronize federated users → Active Directory | Keycloak → Corporate directory |
+| F5.5 | User entries and group memberships | Active Directory → Synchronize federated users | Corporate directory → Keycloak |
+| F5.6 | Imported users and role mappings | Synchronize federated users → Keycloak database | None (inside Keycloak) |
+| F5.7 | Federation configuration and mappers (bind credential, Users DN, Groups DN) | Keycloak database → Synchronize federated users | None (inside Keycloak) |
+| F5.8 | Federation events | Synchronize federated users → Event store | None (inside Keycloak) |
+| F5.9 | Validated user and federated roles | Synchronize federated users → Authenticate user | None (inside Keycloak) |
+
+The LDAP provider and its mappers are configured over Interaction 2's Realm administrator → Manage realm configuration flow. The mapper threat is listed here because it only matters for federated users.
+
+
 
 ---
 
@@ -128,7 +144,14 @@ For each high-priority threat from Part 1, check whether Keycloak actually imple
 
 | TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
 |---|---|---|---|---|
-| TBD | TBD | Yes / Partial / Config-dependent / No | TBD | TBD |
+| TBD | **Information disclosure.** Employees' passwords and the service account's password are sniffed during LDAP binds, because Keycloak accepts a plaintext `ldap://` connection URL. | F5.2, F5.4 | Use an `ldaps://` connection URL or turn on *Enable StartTLS*. *Quick win.* Add a realm setting that refuses plaintext federation providers. *Structural.* |
+| TBD | **Spoofing.** A rogue LDAP server impersonates AD and collects every password sent to it in bind requests. | F5.2, F5.3 | Load AD's CA certificate into Keycloak's truststore and set *Use Truststore SPI* so the server certificate and hostname are checked. *Quick win.* |
+| TBD | **Elevation of privilege.** Someone with group-write access in AD creates a group with the same name in another OU, and it gets mapped to a privileged role. | F5.5, F5.6 | Point the group mapper's *LDAP Groups DN* at a dedicated OU, and never map AD groups to `realm-admin` or composite admin roles. *Quick win.* Stay on releases with the DN-based group comparison fix (CVE-2026-19608). *Structural.* |
+| TBD | **Spoofing.** A stolen service account password gives read access to the whole directory. | F5.4, F5.7 | Use a read-only, least-privileged bind account and set *Edit Mode* to `READ_ONLY`. *Quick win.* Store the bind credential in a vault (`${vault.<key>}`) instead of the database, and rotate it. *Structural.* |
+| TBD | **Spoofing.** Password spraying through Keycloak's login page reaches AD and locks out employee accounts. | F5.1, F5.2 | Turn on *Brute Force Detection* with a lockout threshold below AD's, so Keycloak stops attempts before AD locks the account. *Quick win.* |
+| TBD | **Denial of service.** Repeated syncs, or crafted entries with huge multi-valued attributes, exhaust Keycloak's memory and the database. | F5.4, F5.5, F5.6 | Turn on *Pagination*, set a sensible *Batch size*, and narrow the *Users DN* and LDAP filter. *Quick win.* Add a sync throttle and a cap on values per attribute. *Structural.* |
+| TBD | **Denial of service.** An AD outage blocks every employee login. | F5.2, F5.3 | List more than one domain controller in the connection URL and set *Connection timeout* and *Read timeout*. *Quick win.* |
+| TBD | **Repudiation.** No one can tell why a user received a role, or who triggered a sync. | F5.8 | Turn on admin events with *Include Representation* and forward events to the SIEM. *Quick win.* Record which group DN granted which role at each mapping. *Structural.* |
 
 ### Summary of gaps
 
