@@ -17,6 +17,7 @@ is scoped to its authorization and credential subsystem.
 | 4 | [Designing for Software Security Engineering](Designing-for-Software-Security-Engineering.md) | Nov 20, 2026 | In progress |
 | 5 | [Code Analysis for Software Security Engineering](Code-Analysis-for-Software-Security-Engineering.md) | Dec 7, 2026 | Not started |
 | 6 | Recorded Presentation | _TBD_ | Not started |
+
 Diagram sources and exports are in [`diagrams/`](diagrams).
 
 [Project Board](https://github.com/users/JBoogieman/projects/1)
