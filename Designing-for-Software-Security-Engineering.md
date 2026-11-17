@@ -325,12 +325,6 @@ Code links are pinned to the same `main` commit as Interaction 3.
 
 | TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
 |---|---|---|---|---|
-### Interaction 5 — Directory federation
-
-Code links are pinned to the same `main` commit as Interactions 3 and 4.
-
-| TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
-|---|---|---|---|---|
 | TBD | TLS required for every LDAP connection | Config-dependent | [`LDAPStorageProviderFactory`][d5-url]; [LDAP over SSL docs][d5-tls-doc] | Configuration validation accepts both `ldap://` and `ldaps://`, and *Enable StartTLS* is off unless set. Nothing refuses or warns about a plaintext URL, so user binds and the service account password cross the network in clear text unless an administrator chooses TLS. |
 | TBD | AD's certificate and hostname verified | Yes (when TLS is on) | [`LDAPUtil.shouldUseTruststoreSpi`][d5-truststore]; [Truststore guide][d5-hostname] | With `ldaps://` or StartTLS, Keycloak uses its configured truststore by default, and LDAP connections always use strict hostname checking. This depends on the row above: a plaintext URL has no certificate to check. An administrator can still set the deprecated *Use Truststore SPI* option to Never. |
 | TBD | Same-name AD groups can't reach privileged roles | Partial | [`GroupLDAPStorageMapper`][d5-groupsdn]; [`RoleLDAPStorageMapper`][d5-rolemap]; [26.8.0 upgrade notes][d5-19608] | The group mapper only searches under its *LDAP Groups DN*. The role mapper matches AD group names to Keycloak role names, creates the role if it doesn't exist, and has no admin-role check like the one 26.8.0 added for identity provider mappers. Anyone who can create a correctly named group under the Roles DN gets that role. CVE-2026-19608 is related but narrower: it stopped Authorization Services group policies from matching a bare group name against a same-name group at a different path. |
