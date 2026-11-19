@@ -57,7 +57,7 @@ The diagram has one Keycloak trust zone with six processes (Authenticate user, I
 
 ### TMT threat report
 
-Full HTML report: [Keycloak threat model report](https://htmlpreview.github.io/?https://github.com/JBoogieman/SoftwareAssuranceTeam3/blob/main/threat-model/keycloak-threat-model-report.htm)
+Full HTML report: [view in browser](https://htmlpreview.github.io/?https://github.com/JBoogieman/SoftwareAssuranceTeam3/blob/main/threat-model/keycloak-threat-model-report.htm) or [download](threat-model/keycloak-threat-model-report.htm) (*Download raw file*, then open it locally).
 
 TMT generated 193 threats for the final diagram. Each one was reviewed in TMT and given a state: 148 mitigated, 12 not applicable, 33 needs investigation.
 
