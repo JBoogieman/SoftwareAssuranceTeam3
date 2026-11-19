@@ -125,10 +125,10 @@ TBD: one or two sentences on which critical security functions this covers and w
 
 | Tool | Version | Rules | Raw output |
 |---|---|---|---|
-| Semgrep Community Edition | TBD | `p/java`, `p/findsecbugs` | [SARIF](code-analysis/semgrep.sarif) · [text](code-analysis/semgrep.txt) |
-| CodeQL | TBD | `codeql/java-queries`, `java-security-extended` suite | [SARIF](code-analysis/codeql.sarif) · [CSV](code-analysis/codeql.csv) |
+| Semgrep Community Edition | 1.186.0 | `p/java`, `p/findsecbugs` | [SARIF](code-analysis/semgrep.sarif) · [text](code-analysis/semgrep.txt) |
+| CodeQL | 2.27.4 | `codeql/java-queries`, `java-security-extended` suite | [SARIF](code-analysis/codeql.sarif) · [CSV](code-analysis/codeql.csv) |
 
-Semgrep scanned the main (non-test) Java source of the nine Keycloak modules in our scope at `d052236`. CodeQL built its database from the whole repository at the same commit so it could follow data between modules, and we triaged only the findings in our modules. TBD: total findings per tool, how many fell in our scope, and how they were triaged.
+Semgrep scanned the main (non-test) Java source of the nine Keycloak modules in our scope at `d052236`. CodeQL built its database from the whole repository at the same commit so it could follow data between modules, and we triaged only the findings in our modules. Semgrep reported 1,148 findings and CodeQL 586, 434 of them in our modules. 183 Semgrep and 148 CodeQL findings fall in the code behind our five interactions, and the tables below list the ones that matter. TBD: triage counts once every interaction is done.
 
 <!--
 List the findings that matter in our in-scope code, under the interaction whose code they're in, not every hit. If an interaction has none worth listing, replace its table with one line saying so.
