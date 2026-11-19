@@ -99,7 +99,7 @@ The end user's browser is outside Keycloak's trust boundary. The browser sends a
 
 ### Interaction 2 — Realm admin manages credentials and password policy
  
- | TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
+| TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
 |---|---|---|---|---|
 | TBD | MFA required for realm admins | Config-dependent | [`DefaultAuthenticationFlows`][d2-flows]; [bootstrap admin docs][d2-bootstrap] | Master-realm logins use the default browser flow, where the "Browser - Conditional 2FA" subflow runs only for users who have already set up OTP. Nothing makes an admin enroll. The bootstrap admin created at first start uses only a password, and the console simply flags it as temporary. |
 | TBD | Lockout after repeated failed admin logins | No (by default) | [`RealmManager`][d2-bruteforce] | Every new realm, including `master`, is created with brute-force detection off. The code comment says "default settings off for now todo set it on". Admin passwords can be guessed without limit unless someone turns it on. |
