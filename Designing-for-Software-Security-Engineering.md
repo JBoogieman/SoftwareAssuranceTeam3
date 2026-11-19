@@ -97,7 +97,7 @@ The end user's browser is outside Keycloak's trust boundary. The browser sends a
 | 70, 67 | **Information disclosure / Spoofing.** Unauthorized access to stored password hashes, OTP secrets, or a substituted credentials database compromises authentication. | User credentials and client registration | Restrict database access, use a dedicated database account, require JDBC TLS certificate validation, and audit privileged access. |
 | 48, 47 | **Denial of service / Spoofing.** Authentication-session records consume excessive resources or are written to an untrusted session store. | Authorization code record | Enforce session and code expiration, bound authentication-session counts, cache sizing, and authenticated TLS-protected cluster communication. |
 
-### Interaction 2 — Realm admin manages credentials and password policy
+#### Interaction 2 — Realm admin manages credentials and password policy
  
 | TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
 |---|---|---|---|---|
