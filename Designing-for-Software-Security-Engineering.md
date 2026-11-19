@@ -98,11 +98,51 @@ The end user's browser is outside Keycloak's trust boundary. The browser sends a
 | 48, 47 | **Denial of service / Spoofing.** Authentication-session records consume excessive resources or are written to an untrusted session store. | Authorization code record | Enforce session and code expiration, bound authentication-session counts, cache sizing, and authenticated TLS-protected cluster communication. |
 
 #### Interaction 2 — Realm admin manages credentials and password policy
-
-| TMT ID | Threat (STRIDE) | Flow | Mitigation strategy |
-|---|---|---|---|
-| TBD | TBD | TBD | TBD |
-
+ 
+| TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
+|---|---|---|---|---|
+| TBD | MFA required for realm admins | Config-dependent | [`DefaultAuthenticationFlows`][d2-flows]; [bootstrap admin docs][d2-bootstrap] | Master-realm logins use the default browser flow, where the "Browser - Conditional 2FA" subflow runs only for users who have already set up OTP. Nothing makes an admin enroll. The bootstrap admin created at first start uses only a password, and the console simply flags it as temporary. |
+| TBD | Lockout after repeated failed admin logins | No (by default) | [`RealmManager`][d2-bruteforce] | Every new realm, including `master`, is created with brute-force detection off. The code comment says "default settings off for now todo set it on". Admin passwords can be guessed without limit unless someone turns it on. |
+| TBD | Admin console and Admin REST API reachable only from the admin network | Config-dependent | [Reverse proxy docs][d2-proxy] | The docs recommend exposing `/admin/` "Only internally". By default Keycloak serves it on the same hostname and port as the login pages. Restricting it is up to the reverse proxy or a separate admin hostname. |
+| TBD | TLS on admin traffic | Partial | [Production mode docs][d2-prod]; [`RealmManager`][d2-sslreq] | Production mode won't start without HTTPS. The realm's default *Require SSL* setting exempts private IP addresses, so it adds no protection between the admin network and Keycloak on our corporate LAN. |
+| TBD | Only authorized admins can reset a user's password | Partial | [`UserPermissionEvaluator`][d2-reseteval]; [`UserPermissions.canManage`][d2-canmanage] | Reset rights fall back to *manage* on the target user, so the `manage-users` role can reset any password in the realm, including passwords of users who hold `realm-admin`. Impersonation checks whether the target has higher privileges than the caller, but password reset doesn't. A `manage-users` admin can reset a realm admin's password, delete their OTP credential and sign in as them. |
+| TBD | Every password-setting path checks the reset-password permission | Yes on `main`; fixed in 26.8.1 | [`UserResource.updateUser`][d2-updateuser]; [`UserResource.resetPassword`][d2-resetpw]; [26.8.1 release notes][d2-2681] | Before 26.8.1, an admin who had *manage* on users but was denied *reset-password* could still set a password inside an ordinary user update ([CVE-2026-97177][d2-cve97177]) or delete one through the credentials endpoint ([CVE-2026-94001][d2-cve94001]). On `main` both paths now call `requireResetPassword`. This only matters for realms that use fine-grained admin permissions, but any deployment older than 26.8.1 is exposed. |
+| TBD | Admin-set passwords meet the password policy | Config-dependent | [`UserResource.resetPassword`][d2-policycatch]; [password policy docs][d2-policy-doc] | Admin resets go through the same credential update path, so a configured policy and password history are enforced. However, Keycloak creates new realms with no password policy, so a new realm accepts any non-blank password. A new policy doesn't apply to existing passwords, and a hashing-algorithm change applies only when each user next logs in. Argon2 is the default hash. |
+| TBD | Admin-set passwords must be changed at next login | Partial | [`ResetPasswordDialog`][d2-uidefault]; [`UserResource.resetPassword`][d2-temporary] | The admin console's *Temporary* switch is on by default, which adds the `UPDATE_PASSWORD` required action. Through the REST API, a request that leaves `temporary` out sets a permanent password and also removes any pending `UPDATE_PASSWORD` action. Scripts and integrations get the weaker behavior. |
+| TBD | Stored credentials never shown to admins or written to events | Yes | [`UserResource.credentials`][d2-secretdata]; [`StripSecretsUtils`][d2-strip]; [`UserResource.resetPassword`][d2-resetevent] | Listing a user's credentials blanks `secretData`. Admin-event representations drop user credentials and mask SMTP passwords, client secrets and IdP client secrets. The reset-password admin event has no representation at all. |
+| TBD | Durable record of credential resets and password-policy changes | No (by default) | [`AdminEventBuilder`][d2-adminstore]; [`AdminEventBuilder.send`][d2-adminsend]; [`JBossLoggingEventListenerProviderFactory`][d2-jboss]; [admin events docs][d2-admin-doc] | Admin events are stored only when *Save admin events* is on, and it is off for new realms. They still reach the `jboss-logging` listener, but successful events are logged at debug level. On a default realm, an admin resetting someone's password or weakening the password policy leaves no record. |
+| TBD | User notified when an admin changes their password | No | [`EmailEventListenerProvider`][d2-email] | The built-in email listener handles user events only, and its admin-event method is empty. Even for user events it is off by default and emails only verified addresses. An admin reset sends no notification. |
+| TBD | Admin-sent reset links are short-lived | Partial | [`UserResource.executeActionsEmail`][d2-execemail]; [`RealmAdapter`][d2-adminlifespan] | When the admin doesn't set a lifespan, links sent with *Send email* (for example *Update Password*) last for the realm's admin action-token lifespan, which defaults to 12 hours. Anyone who can read the email during that time can set the password. |
+ 
+[d2-commit]: https://github.com/keycloak/keycloak/commit/d052236442de082d459a404ce453713b36549594
+[d2-flows]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/server-spi-private/src/main/java/org/keycloak/models/utils/DefaultAuthenticationFlows.java#L353-L402
+[d2-bootstrap]: https://www.keycloak.org/server/bootstrap-admin-recovery
+[d2-bruteforce]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/managers/RealmManager.java#L307-L318
+[d2-proxy]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/guides/server/reverseproxy.adoc?plain=1
+[d2-prod]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/guides/server/configuration.adoc?plain=1#L242-L249
+[d2-sslreq]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/managers/RealmManager.java#L319
+[d2-reseteval]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/fgap/UserPermissionEvaluator.java#L61-L76
+[d2-canmanage]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/fgap/UserPermissions.java#L263-L266
+[d2-updateuser]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L199-L201
+[d2-resetpw]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L806-L807
+[d2-2681]: https://www.keycloak.org/2026/10/keycloak-2681-released
+[d2-cve97177]: https://bugzilla.redhat.com/show_bug.cgi?id=2539965
+[d2-cve94001]: https://bugzilla.redhat.com/show_bug.cgi?id=2537169
+[d2-policycatch]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L815-L824
+[d2-policy-doc]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/documentation/server_admin/topics/authentication/password-policies.adoc?plain=1
+[d2-uidefault]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/js/apps/admin-ui/src/user/user-credentials/ResetPasswordDialog.tsx#L38
+[d2-temporary]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L837-L842
+[d2-secretdata]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L857-L864
+[d2-strip]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/server-spi-private/src/main/java/org/keycloak/models/utils/StripSecretsUtils.java#L197-L247
+[d2-resetevent]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L844
+[d2-adminstore]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/AdminEventBuilder.java#L124
+[d2-adminsend]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/AdminEventBuilder.java#L296-L317
+[d2-jboss]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/events/log/JBossLoggingEventListenerProviderFactory.java#L56-L57
+[d2-admin-doc]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/documentation/server_admin/topics/events/admin.adoc?plain=1
+[d2-email]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/events/email/EmailEventListenerProvider.java#L107-L110
+[d2-execemail]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L1073-L1079
+[d2-adminlifespan]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/model/jpa/src/main/java/org/keycloak/models/jpa/RealmAdapter.java#L739-L742
+ 
 #### Interaction 3 — Client application token acquisition
 
 <!--
