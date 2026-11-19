@@ -42,7 +42,7 @@ Each scenario from our [Requirements](Requirements-for-Software-Security-Enginee
 | # | Scenario | External entity | Trust boundary crossed | Assurance claim |
 |---|---|---|---|---|
 | 1 | End-user authentication (browser login + OTP) | End user (browser) | Internet → Keycloak | Claim 1 |
-| 2 | Realm admin manages credentials and password policy | Realm administrator | Internet → Keycloak admin endpoints | Claim 2 |
+| 2 | Realm admin manages credentials and password policy | Realm admin (browser) | Admin network → Keycloak | Claim 2 |
 | 3 | Client application token acquisition (OIDC authorization code flow) | Client application | Internet → Keycloak | Claim 3 |
 | 4 | Identity brokering from an external identity provider | Partner identity provider | Partner network → Keycloak | Claim 4 |
 | 5 | Directory federation (LDAP / Active Directory) | Active Directory | Keycloak → corporate directory | Claim 5 |
@@ -53,13 +53,13 @@ Each scenario from our [Requirements](Requirements-for-Software-Security-Enginee
 
 *Source: [`threat-model/keycloak-threat-model.tm7`](threat-model/keycloak-threat-model.tm7).*
 
-TBD: two or three sentences walking through the diagram: the main processes and data stores, where the trust boundaries are, and which part of the diagram supports each scenario.
+The diagram has one Keycloak trust zone with six processes (Authenticate user, Issue tokens, Broker external login, Synchronize federated users, Manage user account, and Administer realm) and three data stores (the Keycloak database, the Session store and the Event store). Five trust boundaries separate it from the external entities: the Internet (End user browser and Client application), the Admin network (Realm admin), the Partner network (Partner identity provider), the Corporate directory (Active Directory) and the Email provider (Email service). Scenario 1 runs through Authenticate user, Scenario 2 through Administer realm and Manage user account, Scenario 3 through Issue tokens, Scenario 4 through Broker external login, and Scenario 5 through Synchronize federated users. All five share the data stores, which is why some data-store threats appear under more than one interaction.
 
 ### TMT threat report
 
 Full HTML report: [Keycloak threat model report](https://htmlpreview.github.io/?https://github.com/JBoogieman/SoftwareAssuranceTeam3/blob/main/threat-model/keycloak-threat-model-report.htm)
 
-TMT generated TBD threats for the final diagram. Each one was reviewed in TMT and given a state: TBD mitigated, TBD not applicable, TBD needs investigation.
+TMT generated 193 threats for the final diagram. Each one was reviewed in TMT and given a state: 148 mitigated, 12 not applicable, 33 needs investigation.
 
 ### Mitigations
 
@@ -98,51 +98,38 @@ The end user's browser is outside Keycloak's trust boundary. The browser sends a
 | 48, 47 | **Denial of service / Spoofing.** Authentication-session records consume excessive resources or are written to an untrusted session store. | Authorization code record | Enforce session and code expiration, bound authentication-session counts, cache sizing, and authenticated TLS-protected cluster communication. |
 
 #### Interaction 2 — Realm admin manages credentials and password policy
- 
-| TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
-|---|---|---|---|---|
-| TBD | MFA required for realm admins | Config-dependent | [`DefaultAuthenticationFlows`][d2-flows]; [bootstrap admin docs][d2-bootstrap] | Master-realm logins use the default browser flow, where the "Browser - Conditional 2FA" subflow runs only for users who have already set up OTP. Nothing makes an admin enroll. The bootstrap admin created at first start uses only a password, and the console simply flags it as temporary. |
-| TBD | Lockout after repeated failed admin logins | No (by default) | [`RealmManager`][d2-bruteforce] | Every new realm, including `master`, is created with brute-force detection off. The code comment says "default settings off for now todo set it on". Admin passwords can be guessed without limit unless someone turns it on. |
-| TBD | Admin console and Admin REST API reachable only from the admin network | Config-dependent | [Reverse proxy docs][d2-proxy] | The docs recommend exposing `/admin/` "Only internally". By default Keycloak serves it on the same hostname and port as the login pages. Restricting it is up to the reverse proxy or a separate admin hostname. |
-| TBD | TLS on admin traffic | Partial | [Production mode docs][d2-prod]; [`RealmManager`][d2-sslreq] | Production mode won't start without HTTPS. The realm's default *Require SSL* setting exempts private IP addresses, so it adds no protection between the admin network and Keycloak on our corporate LAN. |
-| TBD | Only authorized admins can reset a user's password | Partial | [`UserPermissionEvaluator`][d2-reseteval]; [`UserPermissions.canManage`][d2-canmanage] | Reset rights fall back to *manage* on the target user, so the `manage-users` role can reset any password in the realm, including passwords of users who hold `realm-admin`. Impersonation checks whether the target has higher privileges than the caller, but password reset doesn't. A `manage-users` admin can reset a realm admin's password, delete their OTP credential and sign in as them. |
-| TBD | Every password-setting path checks the reset-password permission | Yes on `main`; fixed in 26.8.1 | [`UserResource.updateUser`][d2-updateuser]; [`UserResource.resetPassword`][d2-resetpw]; [26.8.1 release notes][d2-2681] | Before 26.8.1, an admin who had *manage* on users but was denied *reset-password* could still set a password inside an ordinary user update ([CVE-2026-97177][d2-cve97177]) or delete one through the credentials endpoint ([CVE-2026-94001][d2-cve94001]). On `main` both paths now call `requireResetPassword`. This only matters for realms that use fine-grained admin permissions, but any deployment older than 26.8.1 is exposed. |
-| TBD | Admin-set passwords meet the password policy | Config-dependent | [`UserResource.resetPassword`][d2-policycatch]; [password policy docs][d2-policy-doc] | Admin resets go through the same credential update path, so a configured policy and password history are enforced. However, Keycloak creates new realms with no password policy, so a new realm accepts any non-blank password. A new policy doesn't apply to existing passwords, and a hashing-algorithm change applies only when each user next logs in. Argon2 is the default hash. |
-| TBD | Admin-set passwords must be changed at next login | Partial | [`ResetPasswordDialog`][d2-uidefault]; [`UserResource.resetPassword`][d2-temporary] | The admin console's *Temporary* switch is on by default, which adds the `UPDATE_PASSWORD` required action. Through the REST API, a request that leaves `temporary` out sets a permanent password and also removes any pending `UPDATE_PASSWORD` action. Scripts and integrations get the weaker behavior. |
-| TBD | Stored credentials never shown to admins or written to events | Yes | [`UserResource.credentials`][d2-secretdata]; [`StripSecretsUtils`][d2-strip]; [`UserResource.resetPassword`][d2-resetevent] | Listing a user's credentials blanks `secretData`. Admin-event representations drop user credentials and mask SMTP passwords, client secrets and IdP client secrets. The reset-password admin event has no representation at all. |
-| TBD | Durable record of credential resets and password-policy changes | No (by default) | [`AdminEventBuilder`][d2-adminstore]; [`AdminEventBuilder.send`][d2-adminsend]; [`JBossLoggingEventListenerProviderFactory`][d2-jboss]; [admin events docs][d2-admin-doc] | Admin events are stored only when *Save admin events* is on, and it is off for new realms. They still reach the `jboss-logging` listener, but successful events are logged at debug level. On a default realm, an admin resetting someone's password or weakening the password policy leaves no record. |
-| TBD | User notified when an admin changes their password | No | [`EmailEventListenerProvider`][d2-email] | The built-in email listener handles user events only, and its admin-event method is empty. Even for user events it is off by default and emails only verified addresses. An admin reset sends no notification. |
-| TBD | Admin-sent reset links are short-lived | Partial | [`UserResource.executeActionsEmail`][d2-execemail]; [`RealmAdapter`][d2-adminlifespan] | When the admin doesn't set a lifespan, links sent with *Send email* (for example *Update Password*) last for the realm's admin action-token lifespan, which defaults to 12 hours. Anyone who can read the email during that time can set the password. |
- 
-[d2-commit]: https://github.com/keycloak/keycloak/commit/d052236442de082d459a404ce453713b36549594
-[d2-flows]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/server-spi-private/src/main/java/org/keycloak/models/utils/DefaultAuthenticationFlows.java#L353-L402
-[d2-bootstrap]: https://www.keycloak.org/server/bootstrap-admin-recovery
-[d2-bruteforce]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/managers/RealmManager.java#L307-L318
-[d2-proxy]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/guides/server/reverseproxy.adoc?plain=1
-[d2-prod]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/guides/server/configuration.adoc?plain=1#L242-L249
-[d2-sslreq]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/managers/RealmManager.java#L319
-[d2-reseteval]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/fgap/UserPermissionEvaluator.java#L61-L76
-[d2-canmanage]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/fgap/UserPermissions.java#L263-L266
-[d2-updateuser]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L199-L201
-[d2-resetpw]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L806-L807
-[d2-2681]: https://www.keycloak.org/2026/10/keycloak-2681-released
-[d2-cve97177]: https://bugzilla.redhat.com/show_bug.cgi?id=2539965
-[d2-cve94001]: https://bugzilla.redhat.com/show_bug.cgi?id=2537169
-[d2-policycatch]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L815-L824
-[d2-policy-doc]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/documentation/server_admin/topics/authentication/password-policies.adoc?plain=1
-[d2-uidefault]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/js/apps/admin-ui/src/user/user-credentials/ResetPasswordDialog.tsx#L38
-[d2-temporary]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L837-L842
-[d2-secretdata]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L857-L864
-[d2-strip]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/server-spi-private/src/main/java/org/keycloak/models/utils/StripSecretsUtils.java#L197-L247
-[d2-resetevent]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L844
-[d2-adminstore]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/AdminEventBuilder.java#L124
-[d2-adminsend]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/AdminEventBuilder.java#L296-L317
-[d2-jboss]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/events/log/JBossLoggingEventListenerProviderFactory.java#L56-L57
-[d2-admin-doc]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/documentation/server_admin/topics/events/admin.adoc?plain=1
-[d2-email]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/events/email/EmailEventListenerProvider.java#L107-L110
-[d2-execemail]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L1073-L1079
-[d2-adminlifespan]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/model/jpa/src/main/java/org/keycloak/models/jpa/RealmAdapter.java#L739-L742
- 
+
+Realm administrators work from the admin network through the Admin Console, which calls the Admin REST API on Administer realm (F2.1, F2.2). Every credential reset, password-policy change and role grant is written to the Keycloak database (F2.4). The scenario also covers what users do for themselves through Manage user account: registration, *Forgot password* and profile updates (F2.6, F2.7), with verification and reset links sent through the Email service (F2.10). The highest risks sit on F2.1, where an admin account is the most valuable credential in the realm, and on F2.10, where a reset link stands in for the password.
+
+| Flow | Data | From → To | Crosses |
+|---|---|---|---|
+| F2.1 | Admin requests (credential resets, password policy, role and realm changes) | Realm admin (browser) → Administer realm | Admin network → Keycloak |
+| F2.2 | Admin responses | Administer realm → Realm admin (browser) | Keycloak → Admin network |
+| F2.3 | Admin permissions and realm configuration | Keycloak database → Administer realm | None (inside Keycloak) |
+| F2.4 | User, role, client and flow changes | Administer realm → Keycloak database | None (inside Keycloak) |
+| F2.5 | Admin events | Administer realm → Event store | None (inside Keycloak) |
+| F2.6 | Registration, password reset and account requests | End user (browser) → Manage user account | Internet → Keycloak |
+| F2.7 | Account pages and responses | Manage user account → End user (browser) | Keycloak → Internet |
+| F2.8 | User profile and policies | Keycloak database → Manage user account | None (inside Keycloak) |
+| F2.9 | User account changes | Manage user account → Keycloak database | None (inside Keycloak) |
+| F2.10 | Verification and reset emails | Manage user account → Email service | Keycloak → Email provider |
+| F2.11 | Account events | Manage user account → Event store | None (inside Keycloak) |
+
+| TMT ID | Threat (STRIDE) | Flow | Mitigation strategy |
+|---|---|---|---|
+| 289 | **Spoofing.** An attacker guesses or phishes a realm admin's password and signs in to the Admin Console. Nothing makes admins enroll in OTP, and brute-force detection is off for new realms. | F2.1 | Require OTP for every `master`-realm admin, turn on brute-force detection in every realm, and remove the bootstrap admin once a permanent admin exists. *Quick win.* Serve `/admin/` only on the admin network or a separate admin hostname at the reverse proxy. *Structural.* |
+| 294 | **Elevation of privilege.** An admin who holds only `manage-users` resets a realm admin's password, removes their OTP and signs in as them. Password reset doesn't check whether the target has more privileges than the caller. | F2.1 | Grant `manage-users` only to people trusted at the `realm-admin` level, or use fine-grained admin permissions to keep reset rights away from admin accounts. Review every reset through admin events. *Needs investigation.* |
+| 296 | **Elevation of privilege.** An admin denied *reset-password* still sets or deletes a password through the user-update or credential-delete endpoints (CVE-2026-97177, CVE-2026-94001). | F2.1 | Run Keycloak 26.8.1 or later, where both paths call `requireResetPassword`. *Quick win.* |
+| — | **Tampering.** An admin sets a weak password, or a script sets a permanent one, because new realms have no password policy and the REST API treats a missing `temporary` flag as permanent. | F2.1, F2.4 | Configure a password policy (length, history, not the username) in every realm before users are added, and send `temporary: true` from scripts and integrations. *Quick win.* |
+| 298 | **Information disclosure / Spoofing.** Admin traffic is read or redirected on the corporate LAN, which the default *Require SSL* setting exempts. | F2.1, F2.2 | Run in production mode, which requires HTTPS, and set *Require SSL* to all requests in the `master` realm. *Quick win.* |
+| 291, 299 | **Repudiation.** An admin resets a password or weakens the password policy and denies it; on a default realm nothing is saved. | F2.1, F2.5 | Turn on *Save admin events* and forward them to the SIEM. Alert on credential resets of admin accounts. *Quick win.* |
+| 304 | **Information disclosure.** An admin with read-only roles views client secrets, SMTP passwords or user credentials. | F2.3 | Keycloak masks these in Admin REST API responses, and since 26.8.0 `view-clients` no longer returns client secrets. Grant admin roles by need. |
+| 269, 283 | **Elevation of privilege.** Someone who can read a user's email uses a reset link. Links an admin sends with *Send email* last 12 hours by default, and an SMTP downgrade (CVE-2026-107121) could expose them in transit. | F2.6, F2.10 | Shorten the admin action-token lifespan, configure SMTP with SSL or StartTLS, and run 26.8.1 or later. *Quick win.* |
+| 297, 272 | **Elevation of privilege.** A cross-site request makes an admin's or user's browser submit a change. | F2.1, F2.6 | The Admin and Account REST APIs require a bearer token in the Authorization header, and login-action forms require `session_code` and `tab_id`, so a forged request carries no usable credentials. |
+| 292 | **Denial of service.** The admin endpoints are flooded with requests. | F2.1 | Keep `/admin/` off the public listener, set `http-max-queued-requests`, and rate-limit at the reverse proxy. |
+
+A dash means TMT generated no threat for this flow and category; we added the row from our own analysis.
+
 #### Interaction 3 — Client application token acquisition
 
 The client application sits outside Keycloak in the Internet zone, since public clients such as single-page and mobile apps run on users' devices. The authorization code reaches the client through the user's browser, a hop between two external entities that the DFD leaves out. Keycloak's side of the flow starts again when the client redeems the code at F3.3.
@@ -189,7 +176,7 @@ With SAML's redirect and POST bindings, F4.2 and F4.3 travel through the user's 
 | F4.6 | Brokered identity context | Broker external login → Authenticate user | None (inside Keycloak) |
 | F4.7 | Broker login events | Broker external login → Event store | None (inside Keycloak) |
 
-Identity provider mappers are created over Interaction 2's Realm administrator → Manage realm configuration flow. The mapper threat is listed here because it only matters for brokered logins.
+Identity provider mappers are created over Interaction 2's admin flow (F2.1). The mapper threat is listed here because it only matters for brokered logins.
 
 | TMT ID | Threat (STRIDE) | Flow | Mitigation strategy |
 |---|---|---|---|
@@ -198,7 +185,7 @@ Identity provider mappers are created over Interaction 2's Realm administrator �
 | 24, 113 | **Spoofing.** A captured SAML response is replayed. IdP-initiated responses have no `InResponseTo` value to tie them to a request. | F4.3 | Use SP-initiated login. Keycloak only accepts an IdP-initiated brokered login for a client that has an *IDP-Initiated SSO URL name*, so leave that unset on partner-facing clients. *Quick win.* Ask the partner for short assertion lifetimes and a `OneTimeUse` condition, which Keycloak enforces starting in 27.0. *Structural.* |
 | — | **Information disclosure.** Assertion attributes can be read in the user's browser as the response passes through. | F4.3 | Turn on *Want Assertions Encrypted*, and ask the partner to release only the attributes our mappers use. |
 | 27 | **Elevation of privilege.** The partner IdP asserts privileged group values that mappers turn into finance or payroll roles. | F4.3, F4.5 | Map partner claims only to a dedicated contractor role. Set *Sync Mode* to Force so mapped roles are re-checked at every login and removed when the partner drops the group. *Structural.* |
-| 27 | **Elevation of privilege.** An administrator who only holds `manage-identity-providers` creates a mapper that grants a privileged role. | Interaction 2 admin flow | Leave *Allow granting admin roles via mappers* off (the default from 26.8.0). Limit who holds `manage-identity-providers`, and review mapper changes through admin events, since Keycloak doesn't restrict mappers that grant non-admin roles. |
+| 27 | **Elevation of privilege.** An administrator who only holds `manage-identity-providers` creates a mapper that grants a privileged role. | F2.1 | Leave *Allow granting admin roles via mappers* off (the default from 26.8.0). Limit who holds `manage-identity-providers`, and review mapper changes through admin events, since Keycloak doesn't restrict mappers that grant non-admin roles. |
 | 37 | **Elevation of privilege.** The partner sets a contractor's email to an employee's address to take over that employee's account through linking. | F4.6 | Keep the default first broker login flow, which requires email verification or re-authentication before linking, and leave *Trust Email* off for the partner. |
 | 23, 113 | **Elevation of privilege.** IdP-initiated logins skip the *Account Linking Only* and disabled-client checks. | F4.3 | Run a release with the CVE-2026-16442 fix, which applies both checks on every brokered login. |
 | 109, 100 | **Repudiation.** No one can tell which assertion produced a login or a role grant. | F4.7 | Turn on *Save events* for `IDENTITY_PROVIDER_LOGIN`, `IDENTITY_PROVIDER_FIRST_LOGIN`, `FEDERATED_IDENTITY_LINK`, and their errors, plus admin events for mapper changes. *Store Tokens* keeps the original assertion, at some privacy cost. |
@@ -211,10 +198,8 @@ A dash means TMT generated no threat for this flow and category; we added the ro
 
 Employee accounts and groups live in Active Directory on the corporate network, which Keycloak doesn't control. Synchronize federated users checks an employee's password by binding to AD as that user (F5.2, F5.3). It also periodically searches AD with a service account (F5.4, F5.5), imports the results, and maps AD groups to Keycloak roles (F5.6). Every workforce identity and role crosses the Corporate directory boundary, so most of this interaction's risk sits on F5.2–F5.5. Authenticate user then uses the result to create the session along the Interaction 1 and 3 flows (F5.9).
 
-
-| TMT ID | Threat (STRIDE) | Flow | Mitigation strategy |
-|---|---|---|---|
 | Flow | Data | From → To | Crosses |
+|---|---|---|---|
 | F5.1 | Credential validation request (username, password) | Authenticate user → Synchronize federated users | None (inside Keycloak) |
 | F5.2 | LDAP bind request (user DN, password) | Synchronize federated users → Active Directory | Keycloak → Corporate directory |
 | F5.3 | Bind result | Active Directory → Synchronize federated users | Corporate directory → Keycloak |
@@ -225,9 +210,20 @@ Employee accounts and groups live in Active Directory on the corporate network, 
 | F5.8 | Federation events | Synchronize federated users → Event store | None (inside Keycloak) |
 | F5.9 | Validated user and federated roles | Synchronize federated users → Authenticate user | None (inside Keycloak) |
 
-The LDAP provider and its mappers are configured over Interaction 2's Realm administrator → Manage realm configuration flow. The mapper threat is listed here because it only matters for federated users.
+The LDAP provider and its mappers are configured over Interaction 2's admin flow (F2.1). The role-mapping threat is listed here because it only matters for federated users.
 
+| TMT ID | Threat (STRIDE) | Flow | Mitigation strategy |
+|---|---|---|---|
+| 230, 245 | **Information disclosure.** User passwords, the service account password and group memberships are read on the network, because Keycloak accepts a plaintext `ldap://` URL without a warning. | F5.2–F5.5 | Use `ldaps://` or turn on *Enable StartTLS* for every LDAP provider. *Quick win.* |
+| 221, 226, 241 | **Spoofing.** A rogue server poses as a domain controller, accepts any bind and returns attacker-chosen groups. | F5.2–F5.5 | With TLS on, Keycloak checks AD's certificate against its truststore with strict hostname verification. Add the AD CA to the Keycloak truststore and leave *Use Truststore SPI* at its default. *Quick win.* |
+| 248, 263 | **Elevation of privilege.** Someone who can create an AD group named like a privileged Keycloak role gets that role, because the role mapper matches by name and creates missing roles. | F5.5, F5.6, F5.9 | Restrict who can create groups under the mapped Roles DN in AD, and map AD groups only to non-privileged roles. *Structural.* *Needs investigation.* |
+| 239, 257 | **Elevation of privilege / Information disclosure.** The federation service account has more rights than it needs, or its stored password leaks from the database. | F5.4, F5.7 | Keep *Edit Mode* at `READ_ONLY`, give the account read-only rights on the Users and Groups DNs, store the bind credential as a vault reference, and rotate it in AD. *Structural.* |
+| 220, 233 | **Denial of service.** Password spraying through Keycloak locks employees' AD accounts. | F5.1, F5.2 | Turn on brute-force detection with thresholds below AD's lockout policy, so Keycloak stops attempts before they reach AD. *Quick win.* |
+| 223, 231 | **Denial of service.** A domain controller accepts connections but stops answering, holding login requests open. | F5.2, F5.3 | Set *Read timeout*, which has no default, and list more than one domain controller for failover. *Quick win.* |
+| 246 | **Denial of service.** Back-to-back or very large syncs load AD and Keycloak. | F5.4, F5.5 | Keep pagination on, schedule syncs instead of running them from the Admin Console, and test with the largest groups. *Needs investigation.* |
+| 244 | **Repudiation.** No one can tell which sync or AD group granted a role. | F5.5, F5.8 | Turn on *Save admin events* so console-started syncs are recorded, and forward Keycloak logs to the SIEM. Mapper role grants still emit no event. *Needs investigation.* |
 
+A dash means TMT generated no threat for this flow and category; we added the row from our own analysis.
 
 ---
 
@@ -263,9 +259,51 @@ The observations below compare the expected mitigations with Keycloak's document
 
 ### Interaction 2 — Realm admin manages credentials and password policy
 
+Code links are pinned to Keycloak `main` at commit [`d052236`][d2-commit], the same commit as Interactions 3 and 4.
+
 | TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
 |---|---|---|---|---|
-| TBD | TBD | Yes / Partial / Config-dependent / No | TBD | TBD |
+| 289 | MFA required for realm admins | Config-dependent | [`DefaultAuthenticationFlows`][d2-flows]; [bootstrap admin docs][d2-bootstrap] | Master-realm logins use the default browser flow, where the "Browser - Conditional 2FA" subflow runs only for users who have already set up OTP. Nothing makes an admin enroll. The bootstrap admin created at first start uses only a password, and the console simply flags it as temporary. |
+| 289 | Lockout after repeated failed admin logins | No (by default) | [`RealmManager`][d2-bruteforce] | Every new realm, including `master`, is created with brute-force detection off. The code comment says "default settings off for now todo set it on". Admin passwords can be guessed without limit unless someone turns it on. |
+| 289, 292 | Admin console and Admin REST API reachable only from the admin network | Config-dependent | [Reverse proxy docs][d2-proxy] | The docs recommend exposing `/admin/` "Only internally". By default Keycloak serves it on the same hostname and port as the login pages. Restricting it is up to the reverse proxy or a separate admin hostname. |
+| 298 | TLS on admin traffic | Partial | [Production mode docs][d2-prod]; [`RealmManager`][d2-sslreq] | Production mode won't start without HTTPS. The realm's default *Require SSL* setting exempts private IP addresses, so it adds no protection between the admin network and Keycloak on our corporate LAN. |
+| 294 | Only authorized admins can reset a user's password | Partial | [`UserPermissionEvaluator`][d2-reseteval]; [`UserPermissions.canManage`][d2-canmanage] | Reset rights fall back to *manage* on the target user, so the `manage-users` role can reset any password in the realm, including passwords of users who hold `realm-admin`. Impersonation checks whether the target has higher privileges than the caller, but password reset doesn't. A `manage-users` admin can reset a realm admin's password, delete their OTP credential and sign in as them. |
+| 296 | Every password-setting path checks the reset-password permission | Yes on `main`; fixed in 26.8.1 | [`UserResource.updateUser`][d2-updateuser]; [`UserResource.resetPassword`][d2-resetpw]; [26.8.1 release notes][d2-2681] | Before 26.8.1, an admin who had *manage* on users but was denied *reset-password* could still set a password inside an ordinary user update ([CVE-2026-97177][d2-cve97177]) or delete one through the credentials endpoint ([CVE-2026-94001][d2-cve94001]). On `main` both paths now call `requireResetPassword`. This only matters for realms that use fine-grained admin permissions, but any deployment older than 26.8.1 is exposed. |
+| — | Admin-set passwords meet the password policy | Config-dependent | [`UserResource.resetPassword`][d2-policycatch]; [password policy docs][d2-policy-doc] | Admin resets go through the same credential update path, so a configured policy and password history are enforced. However, Keycloak creates new realms with no password policy, so a new realm accepts any non-blank password. A new policy doesn't apply to existing passwords, and a hashing-algorithm change applies only when each user next logs in. Argon2 is the default hash. |
+| — | Admin-set passwords must be changed at next login | Partial | [`ResetPasswordDialog`][d2-uidefault]; [`UserResource.resetPassword`][d2-temporary] | The admin console's *Temporary* switch is on by default, which adds the `UPDATE_PASSWORD` required action. Through the REST API, a request that leaves `temporary` out sets a permanent password and also removes any pending `UPDATE_PASSWORD` action. Scripts and integrations get the weaker behavior. |
+| 304 | Stored credentials never shown to admins or written to events | Yes | [`UserResource.credentials`][d2-secretdata]; [`StripSecretsUtils`][d2-strip]; [`UserResource.resetPassword`][d2-resetevent] | Listing a user's credentials blanks `secretData`. Admin-event representations drop user credentials and mask SMTP passwords, client secrets and IdP client secrets. The reset-password admin event has no representation at all. |
+| 291, 299 | Durable record of credential resets and password-policy changes | No (by default) | [`AdminEventBuilder`][d2-adminstore]; [`AdminEventBuilder.send`][d2-adminsend]; [`JBossLoggingEventListenerProviderFactory`][d2-jboss]; [admin events docs][d2-admin-doc] | Admin events are stored only when *Save admin events* is on, and it is off for new realms. They still reach the `jboss-logging` listener, but successful events are logged at debug level. On a default realm, an admin resetting someone's password or weakening the password policy leaves no record. |
+| — | User notified when an admin changes their password | No | [`EmailEventListenerProvider`][d2-email] | The built-in email listener handles user events only, and its admin-event method is empty. Even for user events it is off by default and emails only verified addresses. An admin reset sends no notification. |
+| 269 | Admin-sent reset links are short-lived | Partial | [`UserResource.executeActionsEmail`][d2-execemail]; [`RealmAdapter`][d2-adminlifespan] | When the admin doesn't set a lifespan, links sent with *Send email* (for example *Update Password*) last for the realm's admin action-token lifespan, which defaults to 12 hours. Anyone who can read the email during that time can set the password. |
+
+[d2-commit]: https://github.com/keycloak/keycloak/commit/d052236442de082d459a404ce453713b36549594
+[d2-flows]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/server-spi-private/src/main/java/org/keycloak/models/utils/DefaultAuthenticationFlows.java#L353-L402
+[d2-bootstrap]: https://www.keycloak.org/server/bootstrap-admin-recovery
+[d2-bruteforce]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/managers/RealmManager.java#L307-L318
+[d2-proxy]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/guides/server/reverseproxy.adoc?plain=1
+[d2-prod]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/guides/server/configuration.adoc?plain=1#L242-L249
+[d2-sslreq]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/managers/RealmManager.java#L319
+[d2-reseteval]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/fgap/UserPermissionEvaluator.java#L61-L76
+[d2-canmanage]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/fgap/UserPermissions.java#L263-L266
+[d2-updateuser]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L199-L201
+[d2-resetpw]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L806-L807
+[d2-2681]: https://www.keycloak.org/2026/10/keycloak-2681-released
+[d2-cve97177]: https://bugzilla.redhat.com/show_bug.cgi?id=2539965
+[d2-cve94001]: https://bugzilla.redhat.com/show_bug.cgi?id=2537169
+[d2-policycatch]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L815-L824
+[d2-policy-doc]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/documentation/server_admin/topics/authentication/password-policies.adoc?plain=1
+[d2-uidefault]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/js/apps/admin-ui/src/user/user-credentials/ResetPasswordDialog.tsx#L38
+[d2-temporary]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L837-L842
+[d2-secretdata]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L857-L864
+[d2-strip]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/server-spi-private/src/main/java/org/keycloak/models/utils/StripSecretsUtils.java#L197-L247
+[d2-resetevent]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L844
+[d2-adminstore]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/AdminEventBuilder.java#L124
+[d2-adminsend]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/AdminEventBuilder.java#L296-L317
+[d2-jboss]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/events/log/JBossLoggingEventListenerProviderFactory.java#L56-L57
+[d2-admin-doc]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/documentation/server_admin/topics/events/admin.adoc?plain=1
+[d2-email]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/events/email/EmailEventListenerProvider.java#L107-L110
+[d2-execemail]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/services/src/main/java/org/keycloak/services/resources/admin/UserResource.java#L1073-L1079
+[d2-adminlifespan]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/model/jpa/src/main/java/org/keycloak/models/jpa/RealmAdapter.java#L739-L742
 
 ### Interaction 3 — Client application token acquisition
 
@@ -361,14 +399,14 @@ Code links are pinned to the same `main` commit as Interaction 3.
 
 | TMT ID | Expected mitigation | In Keycloak? | Where we looked | Gap |
 |---|---|---|---|---|
-| TBD | TLS required for every LDAP connection | Config-dependent | [`LDAPStorageProviderFactory`][d5-url]; [LDAP over SSL docs][d5-tls-doc] | Configuration validation accepts both `ldap://` and `ldaps://`, and *Enable StartTLS* is off unless set. Nothing refuses or warns about a plaintext URL, so user binds and the service account password cross the network in clear text unless an administrator chooses TLS. |
-| TBD | AD's certificate and hostname verified | Yes (when TLS is on) | [`LDAPUtil.shouldUseTruststoreSpi`][d5-truststore]; [Truststore guide][d5-hostname] | With `ldaps://` or StartTLS, Keycloak uses its configured truststore by default, and LDAP connections always use strict hostname checking. This depends on the row above: a plaintext URL has no certificate to check. An administrator can still set the deprecated *Use Truststore SPI* option to Never. |
-| TBD | Same-name AD groups can't reach privileged roles | Partial | [`GroupLDAPStorageMapper`][d5-groupsdn]; [`RoleLDAPStorageMapper`][d5-rolemap]; [26.8.0 upgrade notes][d5-19608] | The group mapper only searches under its *LDAP Groups DN*. The role mapper matches AD group names to Keycloak role names, creates the role if it doesn't exist, and has no admin-role check like the one 26.8.0 added for identity provider mappers. Anyone who can create a correctly named group under the Roles DN gets that role. CVE-2026-19608 is related but narrower: it stopped Authorization Services group policies from matching a bare group name against a same-name group at a different path. |
-| TBD | Least-privileged, protected service account | Partial | [`LDAPConfig.getEditMode`][d5-editmode]; [`LDAPContextManager`][d5-vault] | *Edit Mode* defaults to `READ_ONLY`, and the bind credential can come from a vault, falling back to the stored value. The account's permissions live in AD, and Keycloak has no rotation support, so least privilege and rotation are up to the AD administrator. |
-| TBD | Keycloak stops password spraying before AD locks the account | Config-dependent | [`AbstractUsernameFormAuthenticator`][d5-bf-order]; [`RealmManager`][d5-bf-default] | The brute force check runs before password validation, so a locked-out user never reaches the LDAP bind. But brute force detection is off for new realms, and its thresholds aren't tied to AD's lockout policy. Administrators have to set them below AD's by hand. |
-| TBD | Sync bounded and throttled | Partial | [`LDAPStorageProviderFactory`][d5-pagination]; [`UserStorageSyncTask`][d5-sync-guard]; [`UserStoragePrivateUtil`][d5-manual-sync] | Pagination is on by default, in batches of 1,000, and a cluster lock stops two syncs of the same provider running at once. Syncs started from the Admin Console skip the minimum-interval check that scheduled syncs use, so they can run back to back. No cap on values per attribute was found in the LDAP provider. |
-| TBD | An AD outage doesn't hang logins | Partial | [Failover docs][d5-failover]; [`LDAPConfig`][d5-timeouts]; [`LDAPContextManager`][d5-timeout-env] | Space-separated URLs give sequential failover, and the connection timeout defaults to 5 seconds. *Read timeout* has no default, so a domain controller that accepts connections but stops responding can hold login requests indefinitely. |
-| TBD | Sync runs and mapper role grants recorded | Partial | [`UserStorageProviderResource`][d5-sync-event]; [`RoleLDAPStorageMapper`][d5-rolemap-grant] | Syncs started by an administrator emit an admin event with added, updated and removed counts, but only when *Save admin events* is on, which it isn't by default. Scheduled syncs write debug logs only. LDAP mappers call `user.grantRole` with only a debug log line, so nothing records which AD group granted which role. |
+| 230, 245 | TLS required for every LDAP connection | Config-dependent | [`LDAPStorageProviderFactory`][d5-url]; [LDAP over SSL docs][d5-tls-doc] | Configuration validation accepts both `ldap://` and `ldaps://`, and *Enable StartTLS* is off unless set. Nothing refuses or warns about a plaintext URL, so user binds and the service account password cross the network in clear text unless an administrator chooses TLS. |
+| 221, 226, 241 | AD's certificate and hostname verified | Yes (when TLS is on) | [`LDAPUtil.shouldUseTruststoreSpi`][d5-truststore]; [Truststore guide][d5-hostname] | With `ldaps://` or StartTLS, Keycloak uses its configured truststore by default, and LDAP connections always use strict hostname checking. This depends on the row above: a plaintext URL has no certificate to check. An administrator can still set the deprecated *Use Truststore SPI* option to Never. |
+| 248, 263 | Same-name AD groups can't reach privileged roles | Partial | [`GroupLDAPStorageMapper`][d5-groupsdn]; [`RoleLDAPStorageMapper`][d5-rolemap]; [26.8.0 upgrade notes][d5-19608] | The group mapper only searches under its *LDAP Groups DN*. The role mapper matches AD group names to Keycloak role names, creates the role if it doesn't exist, and has no admin-role check like the one 26.8.0 added for identity provider mappers. Anyone who can create a correctly named group under the Roles DN gets that role. CVE-2026-19608 is related but narrower: it stopped Authorization Services group policies from matching a bare group name against a same-name group at a different path. |
+| 239, 257 | Least-privileged, protected service account | Partial | [`LDAPConfig.getEditMode`][d5-editmode]; [`LDAPContextManager`][d5-vault] | *Edit Mode* defaults to `READ_ONLY`, and the bind credential can come from a vault, falling back to the stored value. The account's permissions live in AD, and Keycloak has no rotation support, so least privilege and rotation are up to the AD administrator. |
+| 220, 233 | Keycloak stops password spraying before AD locks the account | Config-dependent | [`AbstractUsernameFormAuthenticator`][d5-bf-order]; [`RealmManager`][d5-bf-default] | The brute force check runs before password validation, so a locked-out user never reaches the LDAP bind. But brute force detection is off for new realms, and its thresholds aren't tied to AD's lockout policy. Administrators have to set them below AD's by hand. |
+| 246 | Sync bounded and throttled | Partial | [`LDAPStorageProviderFactory`][d5-pagination]; [`UserStorageSyncTask`][d5-sync-guard]; [`UserStoragePrivateUtil`][d5-manual-sync] | Pagination is on by default, in batches of 1,000, and a cluster lock stops two syncs of the same provider running at once. Syncs started from the Admin Console skip the minimum-interval check that scheduled syncs use, so they can run back to back. No cap on values per attribute was found in the LDAP provider. |
+| 223, 231 | An AD outage doesn't hang logins | Partial | [Failover docs][d5-failover]; [`LDAPConfig`][d5-timeouts]; [`LDAPContextManager`][d5-timeout-env] | Space-separated URLs give sequential failover, and the connection timeout defaults to 5 seconds. *Read timeout* has no default, so a domain controller that accepts connections but stops responding can hold login requests indefinitely. |
+| 244 | Sync runs and mapper role grants recorded | Partial | [`UserStorageProviderResource`][d5-sync-event]; [`RoleLDAPStorageMapper`][d5-rolemap-grant] | Syncs started by an administrator emit an admin event with added, updated and removed counts, but only when *Save admin events* is on, which it isn't by default. Scheduled syncs write debug logs only. LDAP mappers call `user.grantRole` with only a debug log line, so nothing records which AD group granted which role. |
 
 [d5-url]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/federation/ldap/src/main/java/org/keycloak/storage/ldap/LDAPStorageProviderFactory.java#L301-L317
 [d5-tls-doc]: https://github.com/keycloak/keycloak/blob/d052236442de082d459a404ce453713b36549594/docs/documentation/server_admin/topics/user-federation/ldap.adoc?plain=1#L93-L97
@@ -392,17 +430,16 @@ Code links are pinned to the same `main` commit as Interaction 3.
 
 ### Summary of gaps
 
-TBD: the most important gaps across all five interactions, highest priority first.
+The 193 threats in the final model come down to six gaps, highest priority first.
 
-<!--
-Candidate points from Interactions 3 and 4, for whoever writes this summary:
-- Most expected mitigations exist but are off by default: PKCE requirement, exact redirect matching, refresh token rotation, DPoP, SAML signature validation, Issuer check, assertion encryption, Force sync mode. Same pattern the Assurance Cases found.
-- Repudiation is the weakest STRIDE category on default settings. Successful token redemptions and brokered logins aren't saved, and IdP mapper role grants never emit an event.
-- The Keycloak database is the single most sensitive store: plaintext client secrets, the generated signing keys (including the refresh-token HMAC key), and the cluster TLS keys all live there.
-- Upstream closed one of our earlier gaps: 26.8.0 (CVE-2026-12388) stops IdP mappers from granting admin roles. Non-admin business roles are still open, and SR-3.6 (revoke on refresh reuse) is still unimplemented.
--->
+1. **Most protections exist but are off by default.** Brute-force detection (in every realm, including `master`), OTP for admins, PKCE, exact redirect URIs, refresh-token rotation, SAML signature and Issuer checks, LDAP over TLS, and saved events all have to be turned on. Our mitigations depend on that configuration, and a default deployment has almost none of it. Our Assurance Cases found the same pattern.
+2. **Role boundaries are weaker than they look.** A `manage-users` admin can take over a realm admin (ID 294), and both identity provider mappers (ID 27) and the LDAP role mapper (ID 248) can grant business roles such as finance or payroll. 26.8.0 blocked admin roles through identity provider mappers only.
+3. **Repudiation is the weakest STRIDE category on default settings.** Successful logins, token redemptions, brokered logins and admin changes aren't saved, mapper role grants never emit an event, and users aren't told when an admin resets their password.
+4. **The Keycloak database is the single most sensitive store.** It holds client secrets as entered, the generated signing keys (including the refresh-token HMAC key), the cluster TLS keys, and the LDAP bind credential unless it is a vault reference (IDs 56, 257). Read access is enough to forge tokens.
+5. **Availability depends on the reverse proxy.** Keycloak has no per-client rate limiting, `http-max-queued-requests` has no limit by default, and the LDAP read timeout has no default (IDs 93, 231).
+6. **Patch level matters.** 26.8.0 and 26.8.1 fixed CVE-2026-12388, CVE-2026-97177, CVE-2026-94001 and CVE-2026-107121, and CVE-2026-16442 also needs a patched release; all of them affect these interactions. SR-3.6 (revoking the token chain on refresh-token reuse) is still open on `main`.
 
-
+33 threats remain **Needs Investigation**, 24 of them in Interaction 1's password and OTP flows, pending testing against a running deployment.
 
 ---
 
