@@ -1,0 +1,75 @@
+name: Code analysis scans
+
+# Runs only when someone clicks "Run workflow" on the Actions tab.
+on:
+  workflow_dispatch:
+
+# Read-only. Nothing gets pushed back to the repo.
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      # 1. Keycloak's source at the commit our Design links use, into ./keycloak
+      - name: Check out Keycloak at d052236
+        uses: actions/checkout@v7
+        with:
+          repository: keycloak/keycloak
+          ref: d052236442de082d459a404ce453713b36549594
+          path: keycloak
+          persist-credentials: false
+
+      # 2. Semgrep Community Edition: pattern rules over the main (non-test) Java source of our nine modules
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Semgrep
+        continue-on-error: true # if Semgrep fails, CodeQL still runs
+        run: |
+          pip install semgrep
+          mkdir -p out
+          semgrep --version > out/versions.txt
+          cd keycloak
+          semgrep scan --config p/java --config p/findsecbugs \
+            --sarif-output=../out/semgrep.sarif --text-output=../out/semgrep.txt \
+            services/src/main/java server-spi/src/main/java server-spi-private/src/main/java \
+            model/jpa/src/main/java model/infinispan/src/main/java model/storage-private/src/main/java \
+            model/storage-services/src/main/java federation/ldap/src/main/java saml-core/src/main/java
+
+      # 3. CodeQL: builds a Java database straight from source (no Maven build) and runs the security-extended queries
+      - name: Initialize CodeQL
+        id: init
+        uses: github/codeql-action/init@v4
+        with:
+          languages: java-kotlin
+          build-mode: none
+          source-root: keycloak
+          queries: security-extended
+
+      - name: Run CodeQL
+        uses: github/codeql-action/analyze@v4
+        with:
+          upload: never # keep results out of our repo's Security tab
+          output: out/codeql
+          checkout_path: ${{ github.workspace }}/keycloak
+          category: keycloak-d052236
+
+      # 4. A readable copy of the CodeQL results: rule, file:line, message
+      - name: CodeQL results to CSV
+        run: |
+          echo "CodeQL ${{ steps.init.outputs.codeql-version }}" >> out/versions.txt
+          cp out/codeql/*.sarif out/codeql.sarif
+          jq -r '["rule","location","message"], (.runs[].results[] | [.ruleId, ((.locations[0].physicalLocation.artifactLocation.uri // "") + ":" + (.locations[0].physicalLocation.region.startLine | tostring)), .message.text]) | @csv' out/codeql.sarif > out/codeql.csv
+
+      # 5. Download these from the run page and commit them to code-analysis/
+      - name: Upload outputs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: code-analysis-outputs
+          path: out/*.*
+          if-no-files-found: warn
