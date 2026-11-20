@@ -61,6 +61,8 @@ Full HTML report: [view in browser](https://htmlpreview.github.io/?https://githu
 
 TMT generated 193 threats for the final diagram. Each one was reviewed in TMT and given a state: 148 mitigated, 12 not applicable, 33 needs investigation.
 
+Our tables use TMT's own threat IDs (the ID column in TMT's Analysis View). The HTML report numbers the same threats 1–193 in its own order, so use the [TMT ID crosswalk](threat-model/tmt-id-crosswalk.md) to find any of our IDs in the report.
+
 ### Mitigations
 
 <!--
