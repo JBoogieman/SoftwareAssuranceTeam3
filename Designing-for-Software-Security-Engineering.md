@@ -95,7 +95,7 @@ The end user's browser is outside Keycloak's trust boundary. The browser sends a
 | 198 | **Tampering.** Malicious event data reaches unsafe database queries. | Authentication events | Review event persistence through JPA/Hibernate, parameter binding, and custom event-listener extensions for SQL injection. **Needs investigation.** |
 | 199 | **Denial of service.** Excessive authentication events exhaust database storage or processing capacity. | Authentication events | Verify event expiration, retention limits, database capacity, monitoring, and SIEM forwarding. **Needs investigation.** |
 | 70, 67 | **Information disclosure / Spoofing.** Unauthorized access to stored password hashes, OTP secrets, or a substituted credentials database compromises authentication. | User credentials and client registration | Restrict database access, use a dedicated database account, require JDBC TLS certificate validation, and audit privileged access. |
-| 48, 47 | **Denial of service / Spoofing.** Authentication-session records consume excessive resources or are written to an untrusted session store. | Authorization code record | Enforce session and code expiration, bound authentication-session counts, cache sizing, and authenticated TLS-protected cluster communication. |
+| 48, 47 | **Denial of service / Spoofing.** Authentication-session records consume excessive resources or are written to an untrusted session store. | Authorization code record | Enforce session and code expiration, bound authentication-session counts, cache sizing, and verify authenticated, TLS-protected cluster communication |
 
 #### Interaction 2 — Realm admin manages credentials and password policy
 
