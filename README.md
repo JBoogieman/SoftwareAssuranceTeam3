@@ -14,7 +14,7 @@ is scoped to its authorization and credential subsystem.
 | 1 | [Project Proposal](Project-Proposal.md) | Sep 15, 2026 | Complete |
 | 2 | [Requirements for Software Security Engineering](Requirements-for-Software-Security-Engineering.md) | Sep 29, 2026 | Complete |
 | 3 | [Assurance Cases for Software Security Engineering](Assurance-Cases-for-Software-Security-Engineering.md) | Oct 13, 2026 | Complete |
-| 4 | [Designing for Software Security Engineering](Designing-for-Software-Security-Engineering.md) | Nov 20, 2026 | In progress |
+| 4 | [Designing for Software Security Engineering](Designing-for-Software-Security-Engineering.md) | Nov 20, 2026 | Complete |
 | 5 | [Code Analysis for Software Security Engineering](Code-Analysis-for-Software-Security-Engineering.md) | Dec 7, 2026 | In progress |
 | 6 | Recorded Presentation | _TBD_ | Not started |
 
