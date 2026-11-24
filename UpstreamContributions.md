@@ -5,6 +5,7 @@
 | [#20008](https://github.com/keycloak/keycloak/issues/20008) UMA policy creation missing from the admin audit log | [#53316](https://github.com/keycloak/keycloak/pull/53316) | [CWE-778](https://cwe.mitre.org/data/definitions/778.html) Insufficient Logging | Merged |
 | [#53249](https://github.com/keycloak/keycloak/issues/53249) Brute force failure count never reset by identity provider logins | [#53724](https://github.com/keycloak/keycloak/pull/53724) | [CWE-645](https://cwe.mitre.org/data/definitions/645.html) Overly Restrictive Account Lockout Mechanism | PR open, waiting on maintainer review |
 | [#53325](https://github.com/keycloak/keycloak/issues/53325) AuthZen caller can impersonate another client towards client policies | [#55186](https://github.com/keycloak/keycloak/pull/55186) | [CWE-807](https://cwe.mitre.org/data/definitions/807.html) Reliance on Untrusted Inputs in a Security Decision | Merged |
+| [#16597](https://github.com/keycloak/keycloak/issues/16597) Policy evaluation tool ignores the selected client | [#55494](https://github.com/keycloak/keycloak/pull/55494) | [CWE-684](https://cwe.mitre.org/data/definitions/684.html) Incorrect Provision of Specified Functionality | PR open, waiting on maintainer review |
 
 ---
 
@@ -195,3 +196,65 @@ With the whole fix removed, four of the first five fail (all but the baseline). 
 A fix with two layers needs a test for each layer. Our first tests went through the server-side overwrite, so they would have passed with the filter deleted. The way to prove each part is to remove it on its own and check that the right tests fail. And values in a reserved namespace should come from the server, never from the caller.
 
 On process: settling the design with the maintainer on the issue, before writing code, is why the review was quick. The PR didn't have to argue for its approach, only show that it followed the agreed one.
+
+---
+
+## #16597: Policy evaluation tool ignores the selected client
+
+**Status:** [PR #55494](https://github.com/keycloak/keycloak/pull/55494) is open and waiting on maintainer review.
+
+### The issue
+
+The admin console's **Authorization > Evaluate** tab lets an admin test policies before relying on them: pick a client and a user, run the evaluation, and see which permissions are granted. Picking a client other than the resource server had no effect. The evaluation always ran as the resource server's own client, which shows up as the `azp` claim in the token under "Show authorization data". The issue was reported against Keycloak 20 and was still reproducible on current `main`. pedroigor confirmed it on the issue and said the `azp` claim should match the client the admin chose.
+
+**Why it matters for assurance:** this is [CWE-684: Incorrect Provision of Specified Functionality](https://cwe.mitre.org/data/definitions/684.html). The evaluation tool is how an admin checks that a policy does what they think it does. If it silently tests a different client than the one selected, a client policy can look like it denies (or grants) access when it wouldn't for the real client, and the admin trusts a wrong result. It's inside our scoped subsystem (authorization).
+
+### Where it lives in the source
+
+| File | Function or method | What it does |
+|---|---|---|
+| [`admin-ui/.../authorization/AuthorizationEvaluate.tsx`](https://github.com/keycloak/keycloak/blob/main/js/apps/admin-ui/src/clients/authorization/AuthorizationEvaluate.tsx) | `evaluate()` | Builds the evaluation request from the form, including `clientId` |
+| [`admin-ui/.../components/client/ClientSelect.tsx`](https://github.com/keycloak/keycloak/blob/main/js/apps/admin-ui/src/components/client/ClientSelect.tsx) | `ClientSelect` | The client picker. Its `clientKey` prop decides what it stores in the form: the `clientId` name (default) or the internal `id` |
+| [`services/.../admin/PolicyEvaluationService.java`](https://github.com/keycloak/keycloak/blob/main/services/src/main/java/org/keycloak/authorization/admin/PolicyEvaluationService.java) | `createIdentity()` | Looks the client up with `getClientById()` and issues the evaluation token for it. **Falls back to the resource server's client when `clientId` is missing** |
+
+### Thought process
+
+1. **Reproduce it.** On a resource server, evaluate with another client selected, then check the token: `azp` is still the resource server. The request payload had no `clientId` at all.
+2. **Rule out the server.** Calling the evaluation endpoint directly with a `clientId` produced a token for that client, so the server handled it correctly. The bug was in what the admin console sent.
+3. **Follow the form value.** The picker stored the selected client's `clientId` string, its default. The request then read `formValues.client.id`, an `id` property on a string, which is `undefined`. So `clientId` was dropped from the request, and the server fell back to the resource server.
+4. **Send what the server expects.** The server looks the client up by internal id, so the picker should store the id, not the name. The client policy form already uses the same picker with `clientKey="id"`, so this follows an existing pattern. We also checked the sibling Permissions evaluation tab, which already stores ids, so the bug was only here.
+
+### The fix
+
+Two changes in `AuthorizationEvaluate.tsx`. The picker stores the client's internal id, and the request sends it:
+
+```tsx
+<ClientSelect
+  name="client"
+  label="client"
+  helpText={"clientHelp"}
+  clientKey="id"
+  defaultValue={client.id}
+/>
+```
+
+```tsx
+clientId: formValues.client || undefined,
+```
+
+If the admin clears the picker, `clientId` is left out, so the server keeps its old fallback to the resource server. The picker still shows the client's name, because it looks ids up with `clients.findOne()`.
+
+### How we proved it
+
+Two Playwright tests in the admin console's `authorization.spec.ts`. They set up a scope permission whose only policy is a client policy that permits a second client:
+
+| Test | What it checks |
+|---|---|
+| `Should evaluate as the resource server client by default` | With the default client selected, the permission is denied |
+| `Should evaluate as the selected client` | After selecting the second client, the permission is granted |
+
+With the old code, the second test fails: the result is Deny where it expects Permit, which is the bug. With the fix, all 22 tests in the client authorization spec pass, both locally against the Keycloak nightly and in Keycloak's CI.
+
+### Takeaway
+
+When a value is lost between a UI and an API, check the API on its own first. Calling the endpoint directly showed the server already did the right thing, which narrowed a long-standing issue down to one wrong property read in the admin console. A test that checks the *outcome* (Deny vs. Permit) rather than the request payload would also catch any other way the selection could get lost.
