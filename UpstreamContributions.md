@@ -4,7 +4,7 @@
 |---|---|---|---|
 | [#20008](https://github.com/keycloak/keycloak/issues/20008) UMA policy creation missing from the admin audit log | [#53316](https://github.com/keycloak/keycloak/pull/53316) | [CWE-778](https://cwe.mitre.org/data/definitions/778.html) Insufficient Logging | Merged |
 | [#53249](https://github.com/keycloak/keycloak/issues/53249) Brute force failure count never reset by identity provider logins | [#53724](https://github.com/keycloak/keycloak/pull/53724) | [CWE-645](https://cwe.mitre.org/data/definitions/645.html) Overly Restrictive Account Lockout Mechanism | PR open, waiting on maintainer review |
-| [#53325](https://github.com/keycloak/keycloak/issues/53325) AuthZen caller can impersonate another client towards client policies | [#55186](https://github.com/keycloak/keycloak/pull/55186) | [CWE-807](https://cwe.mitre.org/data/definitions/807.html) Reliance on Untrusted Inputs in a Security Decision | PR open, waiting on maintainer review |
+| [#53325](https://github.com/keycloak/keycloak/issues/53325) AuthZen caller can impersonate another client towards client policies | [#55186](https://github.com/keycloak/keycloak/pull/55186) | [CWE-807](https://cwe.mitre.org/data/definitions/807.html) Reliance on Untrusted Inputs in a Security Decision | Merged |
 
 ---
 
@@ -65,7 +65,7 @@ When two operations on the same object behave differently, compare their code pa
 
 ## #53249: Brute force failure count never reset by identity provider logins
 
-**Status:** [PR #53724](https://github.com/keycloak/keycloak/pull/53724) is open and waiting on a maintainer review. On November 14, 2026 it was rebased onto current `main` and squashed to one commit (the only conflict was an admin console message file), so CI now runs on it. Both of Copilot's review points are handled: the first led to the third test below, and its suggestion to move the tests to the new test framework was answered on the PR, since Keycloak's rules for the deprecated testsuite allow adding test cases to an existing test as part of a bug fix.
+**Status:** [PR #53724](https://github.com/keycloak/keycloak/pull/53724) is open and waiting on a maintainer review. On November 14, 2026 it was rebased onto current `main` and squashed to one commit (the only conflict was an admin console message file), so CI now runs on it. Both of Copilot's review points are handled: the first led to the third test below, and its suggestion to move the tests to the new test framework was answered on the PR, since Keycloak's rules for the deprecated testsuite allow adding test cases to an existing test as part of a bug fix. Copilot's review after the rebase recommends approval with no open findings. As of November 24, 2026, no maintainer has reviewed it yet.
 
 ### The issue
 
@@ -125,7 +125,15 @@ Security fixes have side effects. #49996 closed one hole and created this bug, a
 
 ## #53325: AuthZen caller can impersonate another client towards client policies
 
-**Status:** [PR #55186](https://github.com/keycloak/keycloak/pull/55186) is open and waiting on a maintainer review. The maintainer who assigned us the issue agreed on the approach on the issue before we wrote the fix, and said he'll review the PR.
+**Status:** [PR #55186](https://github.com/keycloak/keycloak/pull/55186) was merged into Keycloak `main` on November 23, 2026, and the issue is tagged for the Keycloak 27.0.0 release.
+
+### Working with the maintainers
+
+This one went through the maintainers at every step, not just at review time:
+
+1. **Claim with a plan.** When we asked to take the issue, we posted the planned fix on it (drop request-supplied `kc.*` keys, set `kc.client.id` from the caller's token) and asked whether setting the client id was what they wanted, or whether they'd rather only strip.
+2. **Agree on the approach first.** vramik, who had already self-assigned the issue, handed it to us and answered the design question before any code was written: strip *and* set. He also pointed to where it should go (filter the raw request maps in `evaluateSingle()`, before `convertContext()`) and why stripping alone would break client policies. The PR description says it follows that agreed approach.
+3. **Review and merge.** vramik approved the PR on November 18, saying it followed the agreed approach and calling out the tests for reserved keys the server never overwrites (the gap Copilot's review found, below). He then asked pedroigor to review; pedroigor approved and merged it on November 23.
 
 ### The issue
 
@@ -185,3 +193,5 @@ With the whole fix removed, four of the first five fail (all but the baseline). 
 ### Takeaway
 
 A fix with two layers needs a test for each layer. Our first tests went through the server-side overwrite, so they would have passed with the filter deleted. The way to prove each part is to remove it on its own and check that the right tests fail. And values in a reserved namespace should come from the server, never from the caller.
+
+On process: settling the design with the maintainer on the issue, before writing code, is why the review was quick. The PR didn't have to argue for its approach, only show that it followed the agreed one.
